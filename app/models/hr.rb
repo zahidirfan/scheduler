@@ -1,0 +1,3 @@
+class Hr < User
+  
+end

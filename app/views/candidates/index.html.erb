@@ -1,0 +1,36 @@
+<table width="100%">
+  <tr>
+  <td width="40%"><h1>Listing Candidates</h1></td>
+  <td width="60%"><form class="searchform" style="margin-left: 50px">
+    <input type="text" name="search" id="search" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" /><input class="searchbutton" type="submit" value="Go" />
+    
+  </form>
+  </td>
+</tr>
+</table>
+<br />
+<table id="box-table-a">
+  <thead>
+  <tr>
+    <th scope="col">Name</th>
+    <th scope="col">Assigned</th>
+    <th scope="col">Status</th>
+    <th scope="col">Actions</th>
+    
+  </tr>
+</thead>
+<tbody>
+<% @candidates.each do |candidate| %>
+  <tr>
+    <td><%= candidate.name %></td>
+    <td><%= candidate.user.name %></td>
+    <td><%= candidate.try(:status).try(:name) || "N/A" %></td>
+    <td><%= link_to 'Show', candidate %> | <%= link_to 'Edit', edit_candidate_path(candidate) %> | <%= link_to 'Destroy', candidate, confirm: 'Are you sure?', method: :delete %> | <%= link_to "Archive", candidate_mark_archive_path(candidate), confirm: 'Are you sure?' %></td>
+  </tr>
+<% end %>
+</tody>
+</table>
+
+<br />
+
+<%= link_to 'New Candidate', new_candidate_path %>

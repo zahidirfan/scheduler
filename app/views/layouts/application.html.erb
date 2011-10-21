@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Resume</title>
+  <%= stylesheet_link_tag    "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+<div id="header">
+  <div id="topbar">
+    <%= link_to "Home", candidates_path, :class => "top_link" %> | <%= link_to "Manage Users", users_path, :class => "top_link" %> | <%= link_to "Manage Status", statuses_path, :class => "top_link" %> | <%= link_to "Manage Projects", projects_path, :class => "top_link" %> | <%= link_to "Manage Priorities", priorities_path, :class => "top_link" %>
+</div>
+</div>
+<div id="container">
+  
+<%= yield %>
+</div>
+</body>
+</html>

@@ -1,0 +1,3 @@
+class Interviewer < User
+  
+end

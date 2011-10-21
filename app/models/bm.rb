@@ -1,0 +1,3 @@
+class Bm < User
+  
+end

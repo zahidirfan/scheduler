@@ -1,0 +1,23 @@
+<h1>Listing Priorities</h1>
+
+<table id="box-table-a">
+  <thead>
+  <tr>
+    <th scope="col" width="70%">Name</th>
+    <th scope="col" width="30%">Actions</th>
+    
+  </tr>
+</thead>
+<tbody>
+<% @priorities.each do |priority| %>
+  <tr>
+    <td><%= priority.name %></td>
+    <td><%#= link_to 'Show', priority %> <%= link_to 'Edit', edit_priority_path(priority) %> | <%= link_to 'Destroy', priority, confirm: 'Are you sure?', method: :delete %>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Priority', new_priority_path %>
