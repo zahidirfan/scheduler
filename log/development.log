@@ -1,3 +1,4 @@
+<<<<<<< HEAD
   [1m[36m (0.3ms)[0m  [1mSELECT `schema_migrations`.`version` FROM `schema_migrations` [0m
   [1m[35m (0.2ms)[0m  BEGIN
   [1m[36m (0.4ms)[0m  [1mSELECT 1 FROM `users` WHERE `users`.`username` = BINARY 'rupa' LIMIT 1[0m
@@ -23190,3 +23191,5 @@ ActionController::RoutingError (No route matches [GET] "/assets/images/ui-bg_gla
   
 
 Rendered /usr/local/lib/ruby/gems/1.9.1/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/routing_error.erb within rescues/layout (0.5ms)
+=======
+>>>>>>> 901e8981cac7c6e59a0601769bce780334bdcafc

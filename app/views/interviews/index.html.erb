@@ -1,17 +1,18 @@
-<h1>Listing interviews</h1>
+<h1>Listing Interviews</h1>
 
 <table>
   <tr>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Name</th>
+    <th>Scheduled at</th>
+    <th>Actions</th>
   </tr>
 
 <% @interviews.each do |interview| %>
   <tr>
-    <td><%= link_to 'Show', interview %></td>
-    <td><%= link_to 'Edit', edit_interview_path(interview) %></td>
-    <td><%= link_to 'Destroy', interview, confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= interview.candidate.name %></td>
+    <td><%= interview.scheduled_at.to_s(:simple)%></td>
+    <td></td>
+    <td><%= link_to 'Show', interview %> | <%= link_to 'Edit', edit_interview_path(interview) %> | <%= link_to 'Destroy', interview, confirm: 'Are you sure?', method: :delete %> <%= link_to "Feedback", new_candidate_interview_comment_path(interview.candidate, interview)%></td>
   </tr>
 <% end %>
 </table>

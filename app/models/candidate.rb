@@ -8,9 +8,10 @@ class Candidate < ActiveRecord::Base
   validates_attachment_size :resume, :less_than => 2.megabytes
   validates :name, :presence => true
   
+  has_many :interviews
   belongs_to :user
-  belongs_to :status
+  #belongs_to :status
   
-  scope :active, where(:archive => false)
+  scope :active, where(:archive => false, :order => "")
   
 end

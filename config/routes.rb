@@ -1,5 +1,7 @@
 Resume::Application.routes.draw do
 
+  resources :comments
+
   resources :interviews
 
   resources :priorities
@@ -11,6 +13,9 @@ Resume::Application.routes.draw do
   resources :users
 
   resources :candidates do
+    resources :interviews do
+      resources :comments
+    end
     get 'mark_archive'
   end
 
