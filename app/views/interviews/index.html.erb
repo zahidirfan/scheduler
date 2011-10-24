@@ -1,22 +1,6 @@
-<h1>Your Interview schedule</h1>
-
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Scheduled at</th>
-    <th>Actions</th>
-  </tr>
-
-<% @interviews.each do |interview| %>
-  <tr>
-    <td><%= interview.candidate.name %></td>
-    <td><%= interview.scheduled_at.to_s(:simple)%></td>
-    <td></td>
-    <td><%= link_to 'Show', interview %> | <%= link_to 'Edit', edit_interview_path(interview) %> | <%= link_to 'Destroy', interview, confirm: 'Are you sure?', method: :delete %> <%= link_to "Feedback", new_candidate_interview_comment_path(interview.candidate, interview)%></td>
-  </tr>
-<% end %>
+<h1>Listing Interviews</h1>
+<table id="box-table-a">
+  <%= render :partial => "today_interview_schedule"%>
+  <%= render :partial => "this_week_interview_schedule"%>
+  <%= render :partial => "this_month_interview_schedule"%>
 </table>
-
-<br />
-
-<%= link_to 'New Interview', new_interview_path %>

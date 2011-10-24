@@ -11,20 +11,15 @@
   </ul>
 </div>
 <% end %>
-<div class="float-left interview_schedule">
-  <div class="field">
-    <%= f.label :scheduled_at %>
-    <br />
-    <%= f.text_field :scheduled_at, :size => 10, :autocomplete => :off %>
-  </div>
-  <div class="field">
-    <%= f.label :schedule_time %>
-    <br />
-    <%= f.text_field :schedule_time, :size => 10, :autocomplete => :off %>
-  </div>
+<div class="field">
+  <%= f.label :scheduled_at %>
+  <br />
+  <%= f.text_field :scheduled_at, :size => 10, :autocomplete => :off %>
 </div>
-<div class="float-right interview_editor">
-  <div id="editor"></div>
+<div class="field">
+  <%= f.label :schedule_time %>
+  <br />
+  <%= f.text_field :schedule_time, :size => 10, :autocomplete => :off %>
 </div>
 <div class="actions">
   <%= f.submit %>
@@ -42,15 +37,6 @@
       show24Hours : false,
       separator : ':',
       step : 15
-    });
-    elRTE.prototype.options.panels.customPanel = ['copy', 'cut', 'paste', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontsize', 'fontname', 'horizontalrule', 'insertorderedlist', 'insertunorderedlist', 'forecolor'];
-    elRTE.prototype.options.toolbars.customToolbar = ['customPanel'];
-    $('#editor').elrte({
-      height      : 450,
-      width       : 500,
-      allowSource : false,
-      toolbar     : 'customToolbar',
-      cssfiles    : ['/assets/elrte-inner.css']
     });
   });
 
