@@ -1,30 +1,43 @@
 <%= form_for(@interview) do |f| %>
-  <% if @interview.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@interview.errors.count, "error") %> prohibited this interview from being saved:</h2>
-
-      <ul>
-      <% @interview.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :scheduled_at %><br />
-    <%= f.date_select :scheduled_at %>
-  </div>
-  <div class="field">
-    <%= f.label :schedule_time %><br />
-    <%= f.text_field :schedule_time %>
-  </div>
-  <div class="field">
-    <%= f.label :user_id, "Assigned to" %><br />
-    <%= f.select :user_id, User.interview_panel.collect{|u| [ u.name, u.id ] }, {:prompt => 'Select Person'} %>
-  </div>
-    <input type="hidden" name="candidate_id" value="<%= params[:candidate_id] %>">
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% if @interview.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@interview.errors.count, "error") %> prohibited this interview from being saved:</h2>
+  <ul>
+    <% @interview.errors.full_messages.each do |msg| %>
+    <li>
+      <%= msg %>
+    </li>
+    <% end %>
+  </ul>
+</div>
 <% end %>
+<div class="field">
+  <%= f.label :scheduled_at %>
+  <br />
+  <%= f.text_field :scheduled_at, :size => 10 %>
+</div>
+<div class="field">
+  <%= f.label :schedule_time %>
+  <br />
+  <%= f.text_field :schedule_time, :size => 10 %>
+</div>
+<div class="actions">
+  <%= f.submit %>
+</div>
+<% end %>
+<script>
+  $(function() {
+    $("#interview_scheduled_at").datepicker({
+      dateFormat: 'dd-mm-yy',
+      minDate: 0
+    });
+    $("#interview_schedule_time").timePicker({
+      startTime: "08:00 AM",
+      endTime: "08:00 PM",
+      show24Hours : false,
+      separator : ':',
+      step : 15
+    });
+  });
+
+</script>
