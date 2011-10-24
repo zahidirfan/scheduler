@@ -1,7 +1,10 @@
-<tr>
-  <td colspan="3"><h3>This month's Interview schedules</h3></td>
-</tr>
+<h3>This Month Interview Schedule</h3>
+
 <% unless @this_month_interviews.blank?%>
+<table id="box-table-a">
+<tr>
+  <td colspan="3"></td>
+</tr>
 <tr>
   <th>Name</th>
   <th>Scheduled at</th>
@@ -14,8 +17,7 @@
   <td><%= link_to 'Show', interview %> | <%= link_to 'Edit', edit_interview_path(interview) %> | <%= link_to 'Destroy', interview, confirm: 'Are you sure?', method: :delete %> <%= link_to "Feedback", new_candidate_interview_comment_path(interview.candidate, interview)%></td>
 </tr>
 <% end %>
+</table>
 <%else%>
-<tr>
-  <td colspan="3" class="no_interview_schedule">No Interview Schedule for this month</td>
-</tr>
+<p class="no_interview_schedule">No Interview Schedule for this month</p>
 <%end%>
