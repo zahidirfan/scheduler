@@ -11,15 +11,20 @@
   </ul>
 </div>
 <% end %>
-<div class="field">
-  <%= f.label :scheduled_at %>
-  <br />
-  <%= f.text_field :scheduled_at, :size => 10 %>
+<div class="float-left interview_schedule">
+  <div class="field">
+    <%= f.label :scheduled_at %>
+    <br />
+    <%= f.text_field :scheduled_at, :size => 10, :autocomplete => :off %>
+  </div>
+  <div class="field">
+    <%= f.label :schedule_time %>
+    <br />
+    <%= f.text_field :schedule_time, :size => 10, :autocomplete => :off %>
+  </div>
 </div>
-<div class="field">
-  <%= f.label :schedule_time %>
-  <br />
-  <%= f.text_field :schedule_time, :size => 10 %>
+<div class="float-right interview_editor">
+  <div id="editor"></div>
 </div>
 <div class="actions">
   <%= f.submit %>
@@ -28,15 +33,24 @@
 <script>
   $(function() {
     $("#interview_scheduled_at").datepicker({
-      dateFormat: 'dd-mm-yy',
-      minDate: 0
+      dateFormat : 'dd-mm-yy',
+      minDate : 0
     });
     $("#interview_schedule_time").timePicker({
-      startTime: "08:00 AM",
-      endTime: "08:00 PM",
+      startTime : "08:00 AM",
+      endTime : "08:00 PM",
       show24Hours : false,
       separator : ':',
       step : 15
+    });
+    elRTE.prototype.options.panels.customPanel = ['copy', 'cut', 'paste', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontsize', 'fontname', 'horizontalrule', 'insertorderedlist', 'insertunorderedlist', 'forecolor'];
+    elRTE.prototype.options.toolbars.customToolbar = ['customPanel'];
+    $('#editor').elrte({
+      height      : 450,
+      width       : 500,
+      allowSource : false,
+      toolbar     : 'customToolbar',
+      cssfiles    : ['/assets/elrte-inner.css']
     });
   });
 
