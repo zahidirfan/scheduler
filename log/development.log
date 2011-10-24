@@ -1,0 +1,415 @@
+
+
+Started GET "/interviews" for 127.0.0.1 at 2011-10-24 16:29:54 +0530
+
+Mysql2::Error (Can't connect to local MySQL server through socket '/opt/local/var/run/mysql5/mysqld.sock' (2)):
+  
+
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.6ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (13.0ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (38.0ms)
+
+
+Started GET "/interviews" for 127.0.0.1 at 2011-10-24 16:30:29 +0530
+
+Mysql2::Error (Can't connect to local MySQL server through socket '/opt/local/var/run/mysql5/mysqld.sock' (2)):
+  
+
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.6ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (10.0ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (30.7ms)
+
+
+Started GET "/interviews" for 127.0.0.1 at 2011-10-24 16:31:51 +0530
+
+Mysql2::Error (Can't connect to local MySQL server through socket '/opt/local/var/run/mysql5/mysqld.sock' (2)):
+  
+
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.5ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.1ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (6.0ms)
+
+
+Started GET "/interviews" for 127.0.0.1 at 2011-10-24 16:33:40 +0530
+
+Mysql2::Error (Can't connect to local MySQL server through socket '/opt/local/var/run/mysql5/mysqld.sock' (2)):
+  
+
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.erb (2.2ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.4ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (8.2ms)
+
+
+Started GET "/interviews" for 127.0.0.1 at 2011-10-24 16:33:42 +0530
+
+Mysql2::Error (Can't connect to local MySQL server through socket '/opt/local/var/run/mysql5/mysqld.sock' (2)):
+  
+
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.erb (1.6ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.erb (1.2ms)
+Rendered /Users/paddy/.rvm/gems/ruby-1.9.2-p180@pmt/gems/actionpack-3.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (5.6ms)
+
+
+Started GET "/interviews" for 127.0.0.1 at 2011-10-24 16:34:25 +0530
+  Processing by InterviewsController#index as HTML
+  [1m[36mUser Load (0.6ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`id` = 3 LIMIT 1[0m
+  [1m[35mInterview Load (0.6ms)[0m  SELECT `interviews`.* FROM `interviews` WHERE `interviews`.`user_id` = 3
+  [1m[36mCandidate Load (0.5ms)[0m  [1mSELECT `candidates`.* FROM `candidates` WHERE `candidates`.`id` = 2 LIMIT 1[0m
+Rendered interviews/index.html.erb within layouts/application (149.0ms)
+Compiled application.css  (21ms)  (pid 50569)
+Compiled candidates.css  (78ms)  (pid 50569)
+Compiled comments.css  (10ms)  (pid 50569)
+Compiled datepicker.css  (1ms)  (pid 50569)
+Compiled interviews.css  (7ms)  (pid 50569)
+Compiled priorities.css  (8ms)  (pid 50569)
+Compiled projects.css  (13ms)  (pid 50569)
+Compiled scaffolds.css  (23ms)  (pid 50569)
+Compiled sessions.css  (12ms)  (pid 50569)
+Compiled statuses.css  (7ms)  (pid 50569)
+Compiled timePicker.css  (0ms)  (pid 50569)
+Compiled users.css  (7ms)  (pid 50569)
+Compiled application.js  (11ms)  (pid 50569)
+Compiled jquery.js  (21ms)  (pid 50569)
+Compiled jquery_ujs.js  (2ms)  (pid 50569)
+Compiled candidates.js  (213ms)  (pid 50569)
+Compiled comments.js  (107ms)  (pid 50569)
+Compiled interviews.js  (170ms)  (pid 50569)
+Compiled jquery-datepicker.js  (3ms)  (pid 50569)
+Compiled jquery.timePicker.min.js  (0ms)  (pid 50569)
+Compiled jquery.toggleformtext.js  (0ms)  (pid 50569)
+Compiled priorities.js  (110ms)  (pid 50569)
+Compiled projects.js  (116ms)  (pid 50569)
+Compiled sessions.js  (121ms)  (pid 50569)
+Compiled statuses.js  (167ms)  (pid 50569)
+Compiled users.js  (130ms)  (pid 50569)
+Completed 200 OK in 5652ms (Views: 5433.9ms | ActiveRecord: 16.3ms)
+
+
+Started GET "/assets/comments.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /comments.css - 304 Not Modified (9ms)
+
+
+Started GET "/assets/priorities.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /priorities.css - 304 Not Modified (3ms)
+
+
+Started GET "/assets/datepicker.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /datepicker.css - 200 OK (2ms)
+
+
+Started GET "/assets/interviews.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /interviews.css - 304 Not Modified (3ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /application.css - 200 OK (0ms)
+
+
+Started GET "/assets/candidates.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /candidates.css - 304 Not Modified (3ms)
+
+
+Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /scaffolds.css - 304 Not Modified (42ms)
+
+
+Started GET "/assets/projects.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /projects.css - 304 Not Modified (2ms)
+
+
+Started GET "/assets/sessions.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /sessions.css - 304 Not Modified (4ms)
+
+
+Started GET "/assets/statuses.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /statuses.css - 304 Not Modified (3ms)
+
+
+Started GET "/assets/candidates.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /candidates.js - 304 Not Modified (5ms)
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /users.css - 304 Not Modified (7ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /jquery.js - 304 Not Modified (7ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /jquery_ujs.js - 304 Not Modified (8ms)
+
+
+Started GET "/assets/timePicker.css?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /timePicker.css - 200 OK (3ms)
+
+
+Started GET "/assets/comments.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /comments.js - 304 Not Modified (2ms)
+
+
+Started GET "/assets/interviews.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /interviews.js - 304 Not Modified (4ms)
+
+
+Started GET "/assets/jquery-datepicker.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /jquery-datepicker.js - 200 OK (3ms)
+
+
+Started GET "/assets/jquery.timePicker.min.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /jquery.timePicker.min.js - 200 OK (2ms)
+
+
+Started GET "/assets/jquery.toggleformtext.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /jquery.toggleformtext.js - 304 Not Modified (4ms)
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /users.js - 304 Not Modified (2ms)
+
+
+Started GET "/assets/projects.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /projects.js - 304 Not Modified (2ms)
+
+
+Started GET "/assets/sessions.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /sessions.js - 304 Not Modified (3ms)
+
+
+Started GET "/assets/priorities.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:31 +0530
+Served asset /priorities.js - 304 Not Modified (2ms)
+
+
+Started GET "/assets/statuses.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:32 +0530
+Served asset /statuses.js - 304 Not Modified (2ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2011-10-24 16:34:32 +0530
+Served asset /application.js - 200 OK (1ms)
+
+
+Started GET "/candidates/2/interviews/17/comments/new" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+  Processing by CommentsController#new as HTML
+  Parameters: {"candidate_id"=>"2", "interview_id"=>"17"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT `users`.* FROM `users` WHERE `users`.`id` = 3 LIMIT 1
+Rendered comments/_form.html.erb (4.8ms)
+Rendered comments/new.html.erb within layouts/application (37.4ms)
+Completed 200 OK in 157ms (Views: 59.7ms | ActiveRecord: 7.1ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /application.css - 304 Not Modified (2ms)
+
+
+Started GET "/assets/datepicker.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /datepicker.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/candidates.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /candidates.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/priorities.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /priorities.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/interviews.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /interviews.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/comments.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /comments.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/projects.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /projects.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/statuses.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /statuses.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/timePicker.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /timePicker.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /scaffolds.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sessions.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /sessions.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /users.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:13 +0530
+Served asset /jquery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/candidates.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /candidates.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/comments.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /comments.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/interviews.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /interviews.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery-datepicker.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /jquery-datepicker.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.timePicker.min.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /jquery.timePicker.min.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/projects.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /projects.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sessions.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /sessions.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/statuses.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /statuses.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.toggleformtext.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /jquery.toggleformtext.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/priorities.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /priorities.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /users.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2011-10-24 16:35:14 +0530
+Served asset /application.js - 304 Not Modified (7ms)
+
+
+Started GET "/interviews" for 127.0.0.1 at 2011-10-24 16:38:13 +0530
+  Processing by InterviewsController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT `users`.* FROM `users` WHERE `users`.`id` = 3 LIMIT 1[0m
+  [1m[35mInterview Load (0.6ms)[0m  SELECT `interviews`.* FROM `interviews` WHERE `interviews`.`user_id` = 3
+  [1m[36mCandidate Load (0.7ms)[0m  [1mSELECT `candidates`.* FROM `candidates` WHERE `candidates`.`id` = 2 LIMIT 1[0m
+Rendered interviews/index.html.erb within layouts/application (62.6ms)
+Completed 200 OK in 174ms (Views: 81.4ms | ActiveRecord: 14.4ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /application.css - 304 Not Modified (3ms)
+
+
+Started GET "/assets/datepicker.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /datepicker.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/candidates.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /candidates.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/comments.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /comments.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/priorities.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /priorities.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/interviews.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /interviews.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/projects.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /projects.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/scaffolds.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /scaffolds.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sessions.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /sessions.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/statuses.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /statuses.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/timePicker.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /timePicker.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/users.css?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /users.css - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /jquery.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /jquery_ujs.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/candidates.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /candidates.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/comments.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /comments.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/interviews.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /interviews.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery-datepicker.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /jquery-datepicker.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.timePicker.min.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /jquery.timePicker.min.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/jquery.toggleformtext.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /jquery.toggleformtext.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/sessions.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /sessions.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/priorities.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /priorities.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/projects.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /projects.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/statuses.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /statuses.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/users.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /users.js - 304 Not Modified (0ms)
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2011-10-24 16:38:14 +0530
+Served asset /application.js - 304 Not Modified (1ms)
