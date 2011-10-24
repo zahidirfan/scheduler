@@ -5,8 +5,11 @@ class InterviewsController < ApplicationController
   def index
     
     #@interviews = Interview.all
-    @interviews = current_user.interviews.all
-
+    user_interviews = current_user.interviews
+    @today_interviews = user_interviews.today
+    @this_week_interviews = user_interviews.this_week
+    @this_month_interviews = user_interviews.this_month
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @interviews }

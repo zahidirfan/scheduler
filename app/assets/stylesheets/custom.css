@@ -1,12 +1,3 @@
-.float-left {
-  float: left;
-}
-.float-right {
-  float: right;
-}
-.interview_schedule {
-  width: 30%;
-}
-.interview_editor {
-  width: 60%;
+.no_interview_schedule{
+  text-align: center;
 }

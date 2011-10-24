@@ -1,0 +1,21 @@
+<tr>
+  <td colspan="3"><h3>Today Interview schedules</h3></td>
+</tr>
+<% unless @today_interviews.blank?%>
+<tr>
+  <th scope="col">Name</th>
+  <th scope="col">Scheduled at</th>
+  <th scope="col">Actions</th>
+</tr>
+<% @today_interviews.each do |interview| %>
+<tr>
+  <td><%= interview.candidate.name %></td>
+  <td><%= interview.scheduled_at.to_s(:simple)%> at <%= interview.schedule_time%></td>
+  <td><%= link_to 'Show', interview %> | <%= link_to 'Edit', edit_interview_path(interview) %> | <%= link_to 'Destroy', interview, confirm: 'Are you sure?', method: :delete %> <%= link_to "Feedback", new_candidate_interview_comment_path(interview.candidate, interview)%></td>
+</tr>
+<% end %>
+<%else%>
+<tr>
+  <td colspan="3" class="no_interview_schedule">No Interview Schedule for Today</td>
+</tr>
+<%end%>
