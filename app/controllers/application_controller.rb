@@ -1,7 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  helper_method :current_user, :user_roles_hash, :authenticate_admin, :check_user_privilege
+  helper_method :feedback_status_hash, :check_user_privilege, :check_user_privilege, :user_roles_hash, :current_user
+  
   private
 
   def check_user_privilege
@@ -21,6 +22,10 @@ class ApplicationController < ActionController::Base
   
   def user_roles_hash
     {"Business Manager" => "Bm", "Human Resource" => "Hr", "Interviewer" => "Interviewer", "Project Lead" => "Pl", "Administrator" => "Administrator"}
+  end
+  
+  def feedback_status_hash
+    {"Proceed to Next Round" => "1", "Put on Hold" => "2", "Rejected" => "3"}
   end
     
 end

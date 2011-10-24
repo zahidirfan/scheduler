@@ -15,12 +15,13 @@
     <%= f.label :description %><br />
     <%= f.text_area :description %>
   </div>
+  <div class="field">
     <%= f.hidden_field :interview_id, :value => params[:interview_id] %>
     <%= f.hidden_field :candidate_id, :value => params[:candidate_id] %>
   </div>
   <div class="field">
     <%= f.label :status %><br />
-    <%= f.text_field :status %>
+    <%= f.select(:status, feedback_status_hash, :selected => @comment.status) %>
   </div>
   <div class="actions">
     <%= f.submit %>
