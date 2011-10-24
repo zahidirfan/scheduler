@@ -1,0 +1,1 @@
+Date::DATE_FORMATS[:simple] = "%a, %d-%b-%Y"

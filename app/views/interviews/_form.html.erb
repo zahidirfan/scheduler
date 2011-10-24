@@ -13,13 +13,17 @@
 
   <div class="field">
     <%= f.label :scheduled_at %><br />
-    <%= f.text_field :scheduled_at %>
+    <%= f.date_select :scheduled_at %>
   </div>
   <div class="field">
     <%= f.label :schedule_time %><br />
     <%= f.text_field :schedule_time %>
   </div>
-
+  <div class="field">
+    <%= f.label :user_id, "Assigned to" %><br />
+    <%= f.select :user_id, User.interview_panel.collect{|u| [ u.name, u.id ] }, {:prompt => 'Select Person'} %>
+  </div>
+    <input type="hidden" name="candidate_id" value="<%= params[:candidate_id] %>">
   <div class="actions">
     <%= f.submit %>
   </div>

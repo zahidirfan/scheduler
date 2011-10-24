@@ -1,8 +1,11 @@
 class InterviewsController < ApplicationController
   # GET /interviews
   # GET /interviews.json
+  before_filter :check_interview_schedule, :only => [:new]
   def index
-    @interviews = Interview.all
+    
+    #@interviews = Interview.all
+    @interviews = current_user.interviews.all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +28,6 @@ class InterviewsController < ApplicationController
   # GET /interviews/new.json
   def new
     @interview = Interview.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @interview }
@@ -40,7 +42,8 @@ class InterviewsController < ApplicationController
   # POST /interviews
   # POST /interviews.json
   def create
-    @interview = Interview.new(params[:interview])
+    @candidate = Candidate.find(params[:candidate_id])
+    @interview = @candidate.interviews.new(params[:interview])
 
     respond_to do |format|
       if @interview.save
@@ -80,4 +83,17 @@ class InterviewsController < ApplicationController
       format.json { head :ok }
     end
   end
+  
+  protected
+  
+  def check_interview_schedule
+    @candidate = Candidate.find(params[:candidate_id])
+    unless @candidate.interviews.nil?
+      i = @candidate.interviews.last
+      if i.scheduled_at > Date.today
+        redirect_to edit_candidate_interview_path(@candidate, i)
+      end
+    end
+  end
+  
 end

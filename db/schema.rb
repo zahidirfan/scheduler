@@ -11,13 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111021045206) do
+ActiveRecord::Schema.define(:version => 20111021092040) do
 
   create_table "candidates", :force => true do |t|
     t.string   "name"
-    t.integer  "project_id"
-    t.integer  "user_id"
-    t.integer  "status_id"
     t.integer  "priority_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -26,6 +23,20 @@ ActiveRecord::Schema.define(:version => 20111021045206) do
     t.integer  "resume_file_size"
     t.datetime "resume_updated_at"
     t.boolean  "archive",             :default => false
+    t.string   "email"
+    t.string   "mobile"
+    t.string   "phone"
+    t.string   "status"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.text     "description"
+    t.integer  "user_id"
+    t.integer  "interview_id"
+    t.string   "status"
+    t.integer  "candidate_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "interviews", :force => true do |t|

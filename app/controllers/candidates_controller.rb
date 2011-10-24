@@ -2,6 +2,7 @@ class CandidatesController < ApplicationController
   # GET /candidates
   # GET /candidates.json
   before_filter :authenticate
+  before_filter :check_user_privilege
   
   def index
     if params[:search]
