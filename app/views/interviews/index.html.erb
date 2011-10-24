@@ -1,5 +1,5 @@
-<h1>Listing Interviews</h1>
+<h1>Interview Schedule ~ Overview</h1>
 
-  <%= render :partial => "today_interview_schedule"%>
-  <%= render :partial => "this_week_interview_schedule"%>
-  <%= render :partial => "this_month_interview_schedule"%>
+  <%= render :partial => "today_interview_schedule", :object => @interviews.today %>
+  <%= render :partial => "this_week_interview_schedule", :object => @interviews.this_week %>
+  <%= render :partial => "this_month_interview_schedule", :object => @interviews.this_month %>

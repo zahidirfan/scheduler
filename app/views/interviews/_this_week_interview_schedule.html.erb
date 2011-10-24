@@ -1,5 +1,5 @@
-<h3>This week's Interview schedules</h3>
-<% unless @this_week_interviews.blank?%>
+<h3>This week Interview Schedule</h3>
+<% unless this_week_interview_schedule.blank?%>
 <table id="box-table-a">
 <tr>
   <td colspan="3"></td>
@@ -10,7 +10,7 @@
   <th>Scheduled at</th>
   <th>Actions</th>
 </tr>
-<% @this_week_interviews.each do |interview| %>
+<% this_week_interview_schedule.each do |interview| %>
 <tr>
   <td><%= interview.candidate.name %></td>
   <td><%= interview.scheduled_at.to_s(:simple)%> at <%= interview.schedule_time%></td>
