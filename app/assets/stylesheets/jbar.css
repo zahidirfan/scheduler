@@ -32,12 +32,12 @@ a.jbar-cross {
   position: absolute;
   width: 31px;
   height: 31px;
-  background: transparent url(<%= asset_path "cross.png" %>) no-repeat top left;
+  background: transparent url('/assets/cross.png') no-repeat top left;
   cursor: pointer;
   right: 10px;
 }
 a.jbar-cross:hover {
-  background-image: url(<%= asset_path "cross_hover.png" %>)
+  background-image: url('/assets/cross_hover.png')
 }
 .jbar-top a.jbar-cross {
   top: 8px;

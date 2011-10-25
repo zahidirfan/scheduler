@@ -8,8 +8,8 @@
     <%= flash_notifications %>
   </head>
   <body>
+    <a id="notification_bar"></a>
     <div id="header">
-      <a id="notification_bar"></a>
       <%= render :partial => "shared/top_menu" unless current_user.blank?%>
     </div>
     <div id="container">

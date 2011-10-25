@@ -28,7 +28,7 @@
 						_wrap_bar.css({"cursor"	: "pointer"});
 						_wrap_bar.click(function(e){$.fn.bar.removebar();})
 					}
-					_wrap_bar.append(_message_span).append(_remove_cross).hide().insertBefore($('.header')).fadeIn('fast');
+					_wrap_bar.append(_message_span).append(_remove_cross).hide().insertBefore($('#header')).fadeIn('fast');
 				}
 			})
 
