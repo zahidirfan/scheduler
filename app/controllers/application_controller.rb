@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-
+  #check_authorization
+  
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :notice => exception.message
+  end
+  
   helper_method :feedback_status_hash, :check_user_privilege, :check_user_privilege, :user_roles_hash, :current_user
   
   private
