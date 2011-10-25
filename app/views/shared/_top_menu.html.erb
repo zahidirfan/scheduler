@@ -1,0 +1,10 @@
+<div id="top_left_bar">
+  <%= link_to "Home", candidates_path, :class => "top_link" %> |
+  <%= link_to "Manage Users", users_path, :class => "top_link" %> |
+  <%= link_to "Manage Candidates", candidates_path, :class => "top_link" %> |
+  <%= link_to "Manage Interviews", interviews_path, :class => "top_link" %>
+</div>
+<div id="top_right_bar">
+  <%= current_user.name%> |
+  <%= link_to "Logout",log_out_path, :class => "top_link"%>
+</div>
