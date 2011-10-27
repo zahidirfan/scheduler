@@ -2,8 +2,9 @@ class InterviewsController < ApplicationController
   # GET /interviews
   # GET /interviews.json
   before_filter :check_interview_schedule, :only => [:new]
+  before_filter :load_candidate
   def index
-    @interviews = ["Administrator", "Hr"].include?(current_user.type) ? Interview : current_user.interviews
+    @interviews = ["Administrator", "Hr"].include?(current_user.type) ? Interview.dummy : current_user.interviews
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @interviews }
@@ -84,13 +85,17 @@ class InterviewsController < ApplicationController
   protected
   
   def check_interview_schedule
-    @candidate = Candidate.find(params[:candidate_id])
+    load_candidate
     unless @candidate.interviews.empty?
       i = @candidate.interviews.last
       if i.scheduled_at > Date.today
         redirect_to edit_candidate_interview_path(@candidate, i)
       end
     end
+  end
+  
+  def load_candidate
+    @candidate = Candidate.find(params[:candidate_id])
   end
   
 end

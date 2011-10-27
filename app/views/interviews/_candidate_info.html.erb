@@ -1,0 +1,15 @@
+<table width="90%" cellpadding="5" cellspacing="5" style="border: 1px solid #ccc">
+  <tr>
+    <td width="50%"><strong>Name: </strong><%= @candidate.name %></td>
+    <td width="50%"><strong>Email: </strong><%= @candidate.email %></td>
+  </tr>
+  <tr>
+    <td width="50%"><strong>Mobile: </strong><%= @candidate.mobile %></td>
+    <td width="50%"><strong>Landline: </strong><%= @candidate.phone %></td>
+  </tr>
+  <tr>
+    <td width="50%"><strong>Desc: </strong></td>
+    <td width="50%"><%= show_tags(@candidate) %></td>
+  </tr>
+</table>
+<p>&nbsp;</p>

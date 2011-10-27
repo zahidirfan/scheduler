@@ -11,27 +11,21 @@
   </ul>
 </div>
 <% end %>
-<div class="field">
-  <%= f.label :scheduled_at %>
-  <br />
-  <%= f.text_field :scheduled_at, :size => 10, :autocomplete => :off %>
-</div>
-<div class="field">
-  <%= f.label :schedule_time %>
-  <br />
-  <%= f.text_field :schedule_time, :size => 10, :autocomplete => :off %>
-</div>
-<div class="field">
-  <%= f.label :user_id %>
-  <br />
-  <%= f.select :user_id, User.interview_panel.collect{|u| [ u.name, u.id ] } %>
-  <%= f.hidden_field :candidate_id, :value => params[:candidate_id] %>
-</div>
-
+<table width="90%" cellpadding="5" cellspacing="5" style="border: 1px solid #ccc">
+  <tr>
+    <td width="33%"><strong><%= f.label :scheduled_at %>: </strong><%= f.text_field :scheduled_at, :size => 10, :autocomplete => :off %></td>
+    <td width="33%"><strong><%= f.label :schedule_time %>: </strong><%= f.text_field :schedule_time, :size => 10, :autocomplete => :off %></td>
+    <td width="33%"><strong><%= f.label :user_id, "Assigned to" %>: </strong><%= f.select :user_id, User.interview_panel.collect{|u| [ u.name, u.id ] } %>
+    <%= f.hidden_field :candidate_id, :value => params[:candidate_id] %></td>
+  </tr>
+  <tr>
+    <td colspan="3"><%= f.submit %>&nbsp;<input type="button" value="Cancel" onclick="window.location.href = '<%= interviews_path %>'">
+  </tr>
 <div class="actions">
-  <%= f.submit %>
+  
 </div>
 <% end %>
+</table>
 <script>
   $(function() {
     $("#interview_scheduled_at").datepicker({
