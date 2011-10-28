@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, :notice => exception.message
   end
   
-  helper_method :feedback_status_hash, :check_user_privilege, :check_user_privilege, :user_roles_hash, :current_user
+  helper_method :feedback_status_hash, :check_user_privilege, :check_user_privilege, :user_roles_hash, :current_user, :check_admin_or_hr, :load_candidate
   
   private
 
@@ -30,7 +30,15 @@ class ApplicationController < ActionController::Base
   end
   
   def feedback_status_hash
-    {"Proceed to Next Round" => "1", "Put on Hold" => "2", "Rejected" => "3"}
+    {"Proceed" => "1", "Put on Hold" => "2", "Rejected" => "3"}
   end
-    
+  
+  def check_admin_or_hr(t)
+    return ["Administrator", "Hr"].include?(t) ? true : false
+  end
+  
+  def load_candidate
+    @candidate = Candidate.find(params[:candidate_id]) if params[:candidate_id]
+  end
+  
 end

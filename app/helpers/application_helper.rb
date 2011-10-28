@@ -5,9 +5,7 @@ module ApplicationHelper
   
   def show_tags(c)
     return if c.tags.empty?
-    c.tags.split(',').each do |t|
-      "<span class='label'>#{t}</span>"
-    end
+    c.tag_list
   end
   
   def flash_notifications
@@ -17,4 +15,10 @@ module ApplicationHelper
     "<script>$(function() { $(\"#notification_bar\").bar({background_color:'#fbef75',message:\"#{message}\"})\; })\;</script>".html_safe
     end
   end
+  
+  def show_comment_status(i)
+    val = feedback_status_hash.key(i.to_s)
+    "<span class='comment_status_#{i}'>#{val}</span>".html_safe
+  end  
+  
 end

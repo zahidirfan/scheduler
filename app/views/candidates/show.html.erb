@@ -1,25 +1,7 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Name:</b>
-  <%= @candidate.name %>
-</p>
-
-<p>
-  <b>Project:</b>
-  <%#= @candidate.project_id %>
-</p>
-
-<p>
-  <b>Assigned to:</b>
-  <%#= @candidate.user_id %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%#= @candidate.status_id %>
-</p>
-
+<h1>Candidate ~ <%= @candidate.name %></h1>
+<%= render '/interviews/candidate_info' %>
+<%= render :partial => '/interviews/feed_back_info', :object => @candidate.interviews %>
 
 <%= link_to 'Edit', edit_candidate_path(@candidate) %> |
+<%= link_to 'Add a Interview Schedule', new_candidate_interview_path(@candidate) %> | 
 <%= link_to 'Back', candidates_path %>

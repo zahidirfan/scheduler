@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    ["Hr","Administrator"].include?(user.type.to_s)
+    if ["Hr","Administrator"].include?(user.type.to_s)
       can :manage, :all
     end
     

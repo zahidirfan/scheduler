@@ -48,8 +48,8 @@
 		background_color 	: '#FFFFFF',
 		color 				: '#000',
 		position		 	: 'top',
-		removebutton     	: true,
-		time			 	: 0 // in milliseconds, but '0' defines never closes the bar
+		removebutton   : true,
+		time			 	: 2000 // in milliseconds, but '0' defines never closes the bar
 	};
 
 })(jQuery);

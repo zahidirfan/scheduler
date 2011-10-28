@@ -14,3 +14,16 @@ span.label{
 	 padding: 3px;
 	 margin-right: 10px;
 }
+
+span.comment_status_1{
+	 color: #448f00;
+	 font-weight: bold;
+}
+span.comment_status_2{
+	 color: #c17d00;
+	 font-weight: bold;
+}
+span.comment_status_3{
+	 color: #c00814;
+	 font-weight: bold;
+}

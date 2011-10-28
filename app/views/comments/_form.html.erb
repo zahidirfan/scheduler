@@ -1,5 +1,4 @@
 <%= form_for(@comment) do |f| %>
-
 <% if @comment.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(@comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
@@ -13,8 +12,6 @@
 </div>
 <% end %>
 <div class="field">
-  <%= f.label :description %>
-  <br />
   <%= f.text_area :description %>
 </div>
 <%= f.hidden_field :interview_id, :value => params[:interview_id] %>
@@ -33,7 +30,7 @@
     elRTE.prototype.options.panels.customPanel = ['copy', 'cut', 'paste', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontsize', 'fontname', 'horizontalrule', 'insertorderedlist', 'insertunorderedlist', 'forecolor'];
     elRTE.prototype.options.toolbars.customToolbar = ['customPanel'];
     $('#comment_description').elrte({
-      height : 270,
+      height : 170,
       width : 600,
       allowSource : false,
       toolbar : 'customToolbar',

@@ -37,7 +37,8 @@ a.jbar-cross {
   right: 10px;
 }
 a.jbar-cross:hover {
-  background-image: url('/assets/cross_hover.png')
+  background-image: url('/assets/cross_hover.png');
+	background-color: #fff;
 }
 .jbar-top a.jbar-cross {
   top: 8px;

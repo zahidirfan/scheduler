@@ -1,0 +1,18 @@
+<% unless @candidate.interviews.blank? %>
+<h3>Previous Schedule</h3>
+<table id="box-table-a">
+<tr>
+  <th>Scheduled On</th>
+  <th>Interviewer</th>
+  <th>Status</th>
+</tr>
+<% @candidate.interviews.each do |interview| %>
+<tr>
+  <td><%= interview.scheduled_at.to_s(:simple)%> at <%= interview.schedule_time%></td>
+  <td><%= User.find(interview.user_id).name %></td>
+  <td><%= show_comment_status(interview.comments.try(:first).try(:status)) %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;</p>
+<% end %>

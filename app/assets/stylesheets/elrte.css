@@ -237,8 +237,10 @@ a {
   display: block
 }
 .el-rte {
-  font-family: Trebuchet MS, Verdana, Geneva, sans-serif;
-  overflow: hidden
+/*  font-family: Trebuchet MS, Verdana, Geneva, sans-serif;*/
+	font-family: Verdana,Arial,sans-serif;
+  overflow: hidden;
+	
 }
 .el-rte.el-fullscreen {
   position: absolute;
@@ -493,7 +495,7 @@ a {
   border: 1px solid #eee;
   border-top: 0;
   height: 400px;
-  overflow: hidden
+  overflow: hidden;
 }
 .el-rte.small .workzone {
   min-height: 250px
