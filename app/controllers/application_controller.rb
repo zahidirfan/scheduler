@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
   
   def feedback_status_hash
-    {"Proceed" => "1", "Put on Hold" => "2", "Rejected" => "3"}
+    {"Clear" => "1", "Hold" => "2", "Drop" => "3"}
   end
   
   def check_admin_or_hr(t)
