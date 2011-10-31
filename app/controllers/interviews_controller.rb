@@ -35,18 +35,17 @@ class InterviewsController < ApplicationController
 
   # GET /interviews/1/edit
   def edit
-    @interview = Interview.find(params[:id])
+    @interview = @candidate.interviews.find(params[:id])
+    #@interview = Interview.find(params[:id])
   end
 
   # POST /interviews
   # POST /interviews.json
   def create
-    @candidate = Candidate.find(params[:interview][:candidate_id])
     @interview = @candidate.interviews.new(params[:interview])
-
     respond_to do |format|
       if @interview.save
-        format.html { redirect_to @interview, notice: 'Interview was successfully created.' }
+        format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully created.' }
         format.json { render json: @interview, status: :created, location: @interview }
       else
         format.html { render action: "new" }
@@ -59,10 +58,9 @@ class InterviewsController < ApplicationController
   # PUT /interviews/1.json
   def update
     @interview = Interview.find(params[:id])
-
     respond_to do |format|
       if @interview.update_attributes(params[:interview])
-        format.html { redirect_to @interview, notice: 'Interview was successfully updated.' }
+        format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -74,11 +72,11 @@ class InterviewsController < ApplicationController
   # DELETE /interviews/1
   # DELETE /interviews/1.json
   def destroy
-    @interview = Interview.find(params[:id])
+    @interview = @candidate.interviews.find(params[:id])
     @interview.destroy
 
     respond_to do |format|
-      format.html { redirect_to interviews_url }
+      format.html { redirect_to candidate_path(@candidate) }
       format.json { head :ok }
     end
   end

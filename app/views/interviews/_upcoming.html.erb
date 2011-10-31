@@ -1,0 +1,18 @@
+<% unless upcoming.blank? %>
+<h3>Upcoming Schedule</h3>
+<table id="box-table-a" style="width: 95%">
+<tr>
+  <th>Scheduled On</th>
+  <th>Interviewer</th>
+  <th>Status</th>
+</tr>
+<% upcoming.each do |interview| %>
+<tr>
+  <td><%= interview.scheduled_at.to_s(:simple)%> at <%= interview.schedule_time%> | <%= link_to "Change", edit_candidate_interview_path(@candidate, interview)%> | <%= link_to "Cancel", candidate_interview_path(@candidate, interview), :method => :delete, :confirm => "Are you sure?"%></td>
+  <td><%= User.find(interview.user_id).name %></td>
+  <td><%= show_comment_status(interview.comments.try(:first).try(:status)) %></td>
+  </tr>
+<% end %>
+</table>
+<p>&nbsp;</p>
+<% end %>

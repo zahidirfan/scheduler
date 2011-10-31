@@ -38,7 +38,9 @@ class ApplicationController < ActionController::Base
   end
   
   def load_candidate
-    @candidate = Candidate.find(params[:candidate_id]) if params[:candidate_id]
+    key = params[:controller].to_s.singularize.to_sym
+    c = params.key?(key) ? params[key][:candidate_id] : params[:candidate_id]
+    @candidate = Candidate.find(c)
   end
   
 end

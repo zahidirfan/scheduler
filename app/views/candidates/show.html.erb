@@ -1,6 +1,7 @@
 <h1>Candidate ~ <%= @candidate.name %></h1>
 <%= render '/interviews/candidate_info' %>
 <%= render :partial => '/interviews/feed_back_info', :object => @candidate.interviews %>
+<%= render :partial => '/interviews/upcoming', :object => @candidate.interviews.upcoming %>
 
 <%= link_to 'Edit', edit_candidate_path(@candidate) %> |
 <%= link_to 'Add a Interview Schedule', new_candidate_interview_path(@candidate) %> | 
