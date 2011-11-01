@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style>
+      table.contact_mail_block {
+        border-collapse: collapse;
+        width: 60%;
+      }
+      .contact_label {
+        vertical-align: top;
+        width: 15%
+      }
+      .contact_value {
+        text-align: justify;
+      }
+      td.contact_label, td.contact_value {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Hi,
+    </p>
+    <p>
+      The interview feedback for the candidate <%= @candidate.name%> is as follows.
+    </p>
+    <table class="contact_mail_block" border="1">
+      <tr>
+        <td class="contact_label"> Interview Date </td>
+        <td class="contact_value"> <%= @interview.scheduled_at%> </td>
+      </tr>
+      <tr>
+        <td class="contact_label"> Interview Time </td>
+        <td class="contact_value"> <%= @interview.schedule_time %> </td>
+      </tr>
+      <tr>
+        <td class="contact_label"> Feedback </td>
+        <td class="contact_value"> <%= simple_format(@comment.description) %> </td>
+      </tr>
+    </table>
+    <p>
+      Thanks!
+    </p>
+    <p>
+      <%= @user.name%>
+    </p>
+  </body>
+</html>
