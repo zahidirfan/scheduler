@@ -3,18 +3,18 @@
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
     <style>
-      table.contact_mail_block {
+      table.mail_block {
         border-collapse: collapse;
         width: 60%;
       }
-      .contact_label {
+      .label {
         vertical-align: top;
-        width: 15%
+        width: 20%;
       }
-      .contact_value {
+      .value {
         text-align: justify;
       }
-      td.contact_label, td.contact_value {
+      td.label, td.value {
         padding: 5px;
       }
     </style>
@@ -26,18 +26,18 @@
     <p>
       The interview feedback for the candidate <%= @candidate.name%> is as follows.
     </p>
-    <table class="contact_mail_block" border="1">
+    <table class="mail_block" border="1">
       <tr>
-        <td class="contact_label"> Interview Date </td>
-        <td class="contact_value"> <%= @interview.scheduled_at%> </td>
+        <td class="label"> Interview Date </td>
+        <td class="value"> <%= @interview.scheduled_at%> </td>
       </tr>
       <tr>
-        <td class="contact_label"> Interview Time </td>
-        <td class="contact_value"> <%= @interview.schedule_time %> </td>
+        <td class="label"> Interview Time </td>
+        <td class="value"> <%= @interview.schedule_time %> </td>
       </tr>
       <tr>
-        <td class="contact_label"> Feedback </td>
-        <td class="contact_value"> <%= simple_format(@comment.description) %> </td>
+        <td class="label"> Feedback </td>
+        <td class="value"> <%= simple_format(@comment.description) %> </td>
       </tr>
     </table>
     <p>
