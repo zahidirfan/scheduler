@@ -10,7 +10,13 @@
 <tr>
   <td><%= interview.candidate.name %></td>
   <td><%= interview.scheduled_at.to_s(:simple)%> at <%= interview.schedule_time%></td>
-  <td><%= link_to 'Show', interview %> | <%= link_to 'Edit', edit_interview_path(interview) %> | <%= link_to 'Destroy', interview, confirm: 'Are you sure?', method: :delete %> <%= link_to "Feedback", new_candidate_interview_comment_path(interview.candidate, interview)%></td>
+  <td><%= link_to 'Show', interview %> | <%= link_to 'Edit', edit_interview_path(interview) %> | <%= link_to 'Destroy', interview, confirm: 'Are you sure?', method: :delete %> | 
+  <% unless interview.comments.exists? %>
+    <%= link_to "Feedback", new_candidate_interview_comment_path(interview.candidate, interview)%>
+  <% else %>
+    <%= link_to "Edit Feedback", edit_candidate_interview_comment_path(interview.candidate, interview, interview.comments.first)%>
+  <% end %>
+  </td>
 </tr>
 <% end %>
 </table>
