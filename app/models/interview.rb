@@ -7,6 +7,14 @@ class Interview < ActiveRecord::Base
     self.candidate.update_attribute("status", "Scheduled")
   end
 
+  after_create do |interview|
+    Notifier.delay.interview_schedule_mail(interview)
+  end
+  
+  after_update do |interview|
+    Notifier.delay.interview_reschedule_mail(interview)
+  end
+  
   scope :dummy, where("1 = 1")
   scope :today, where(:scheduled_at => Date.today).order("schedule_time")
   scope :upcoming, where("scheduled_at  >= ? ", Date.today)

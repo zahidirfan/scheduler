@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <style>
+      table.mail_block {
+        border-collapse: collapse;
+        width: 60%;
+      }
+      .label {
+        vertical-align: top;
+        width: 20%;
+      }
+      .value {
+        text-align: justify;
+      }
+      td.label, td.value {
+        padding: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <p>
+      Hi,
+    </p>
+    <p>
+      The interview feedback for the candidate <%= @candidate.name%> is as follows.
+    </p>
+    <table class="mail_block" border="1">
+      <tr>
+        <td class="label"> Interview Date </td>
+        <td class="value"> <%= @interview.scheduled_at%> </td>
+      </tr>
+      <tr>
+        <td class="label"> Interview Time </td>
+        <td class="value"> <%= @interview.schedule_time %> </td>
+      </tr>
+      <tr>
+        <td class="label"> Feedback </td>
+        <td class="value"> <%= simple_format(@comment.description) %> </td>
+      </tr>
+    </table>
+    <p>
+      Thanks!
+    </p>
+    <p>
+      <%= @user.name%>
+    </p>
+  </body>
+</html>

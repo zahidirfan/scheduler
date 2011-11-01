@@ -36,7 +36,6 @@ class InterviewsController < ApplicationController
   # GET /interviews/1/edit
   def edit
     @interview = @candidate.interviews.find(params[:id])
-    #@interview = Interview.find(params[:id])
   end
 
   # POST /interviews

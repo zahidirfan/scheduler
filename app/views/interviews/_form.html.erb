@@ -16,7 +16,7 @@
     <td width="33%"><strong><%= f.label :scheduled_at %>: </strong><%= f.text_field :scheduled_at, :size => 10, :autocomplete => :off %></td>
     <td width="33%"><strong><%= f.label :schedule_time %>: </strong><%= f.text_field :schedule_time, :size => 10, :autocomplete => :off %></td>
     <td width="33%"><strong><%= f.label :user_id, "Assigned to" %>: </strong><%= f.select :user_id, User.interview_panel.collect{|u| [ u.name, u.id ] } %>
-    <%= f.hidden_field :candidate_id, :value => params[:candidate_id] %></td>
+    <%= f.hidden_field :candidate_id, :value => (params[:candidate_id] ? params[:candidate_id] : @interview.candidate_id) %></td>
   </tr>
   <tr>
     <td colspan="3"><%= f.submit %>&nbsp;<input type="button" value="Cancel" onclick="window.location.href = '<%= interviews_path %>'">
