@@ -1,5 +1,17 @@
-<h1>New Feedback ~ <%= @candidate.name %></h1>
-
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td width="75%"><h1>New Feedback ~ <%= @candidate.name %></h1></td>
+    <td align="right"><%= download_resume(@candidate)%></td>
+  </tr>
+</table>
 <%= render '/interviews/candidate_info' %>
+
+<table width="90%" cellpadding="5" cellspacing="5" border="0" style="border: 1px solid #ccc">
+  <tr>
+    <td width="50%"><strong>Schedule at: </strong><%= @interview.scheduled_at.to_s(:simple)%> @ <%= @interview.schedule_time %></td>
+    <td width="50%"><strong>Reviewer: </strong><%= User.find(@interview.user_id).name %></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
 
 <%= render 'form' %>
