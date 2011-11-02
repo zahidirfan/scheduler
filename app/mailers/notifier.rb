@@ -27,12 +27,12 @@ class Notifier < ActionMailer::Base
     mail :to => @user.email, :from => "rapbhantest@gmail.com", :subject => "Interview rescheduled"
   end
 
-  def interview_cancel_mail(interview,delete=false)
-    user_id = (delete ? interview.user_id : interview.user_id_was)
-    @user = User.find_by_id(user_id)
-    @candidate = Candidate.find_by_id(interview.candidate_id)
-    @interview = interview
-    mail :to => @user.email, :from => "rapbhantest@gmail.com", :subject => "Interview cancelled"
+  def interview_cancel_mail(user_id,candidate_id,scheduled_at,schedule_time)
+    @usr = User.find_by_id(user_id.to_s)
+    @candidate_obj = Candidate.find_by_id(candidate_id)
+    @scheduled_at = scheduled_at
+    @schedule_time = schedule_time
+    mail :to => @usr.email, :from => "rapbhantest@gmail.com", :subject => "Interview cancelled"
   end
 
   def interview_feedback_mail(comment)

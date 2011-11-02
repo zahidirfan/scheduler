@@ -13,7 +13,7 @@ class Interview < ActiveRecord::Base
 
   after_update do |interview|
     if interview.user_id != interview.user_id_was
-    Notifier.delay.interview_cancel_mail(interview,false)
+    Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate_id,scheduled_at_was,schedule_time_was)
     Notifier.delay.interview_schedule_mail(interview)
     else
     Notifier.delay.interview_reschedule_mail(interview)
@@ -21,7 +21,7 @@ class Interview < ActiveRecord::Base
   end
 
   after_destroy do |interview|
-    Notifier.delay.interview_cancel_mail(interview,true)
+    Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,scheduled_at,schedule_time)
   end
 
   scope :dummy, where("1 = 1")
