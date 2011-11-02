@@ -17,6 +17,7 @@ class Notifier < ActionMailer::Base
     @user = User.find_by_id(interview.user_id)
     @candidate = Candidate.find_by_id(interview.candidate_id)
     @interview = interview
+    attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
     mail :to => @user.email, :from => "rapbhantest@gmail.com", :subject => "Interview Scheduled"
   end
 
@@ -24,6 +25,7 @@ class Notifier < ActionMailer::Base
     @user = User.find_by_id(interview.user_id)
     @candidate = Candidate.find_by_id(interview.candidate_id)
     @interview = interview
+    attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
     mail :to => @user.email, :from => "rapbhantest@gmail.com", :subject => "Interview rescheduled"
   end
 
