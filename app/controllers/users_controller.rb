@@ -87,6 +87,6 @@ class UsersController < ApplicationController
 
   def password_change
     @user = current_user
-    flash[:notice] = 'Password changed successfully.' if not params[:user].blank?  and @user.update_attributes(params[:user])
+    redirect_to :root, notice: 'Password changed successfully.' if not params[:user].blank?  and @user.update_attributes(params[:user])
   end
 end
