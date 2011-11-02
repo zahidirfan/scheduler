@@ -4,4 +4,8 @@
 
 <%= render 'form' %>
 
+<%= render :partial => '/interviews/upcoming', :object => @candidate.interviews.upcoming %>
+
+<%= render 'previous_schedules' %>
+
 <%#= link_to 'Back', interviews_path %>

@@ -2,6 +2,8 @@ class CandidatesController < ApplicationController
   # GET /candidates
   # GET /candidates.json
   before_filter :authenticate
+  load_and_authorize_resource
+  
   #before_filter :check_user_privilege
   
   def index

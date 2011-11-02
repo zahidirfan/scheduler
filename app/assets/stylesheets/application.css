@@ -123,3 +123,15 @@ a.top_link:link, a.top_link:active, a.top_link:visited {
   /*filter: progid :DXImageTransform.Microsoft.gradient(startColorstr='#9e9e9e', endColorstr='#454545'); /* ie7 */
   /*-ms-filter: progid :DXImageTransform.Microsoft.gradient(startColorstr='#9e9e9e', endColorstr='#454545'); /* ie8 */
 }
+
+
+a.download:link, a.download:active, a.download:visited{
+	text-decoration: none;
+	color: #ff0000;
+	font-weight: bold;
+	margin-right: 30px;
+}
+
+a.download:hover{
+	text-decoration: underline;
+}

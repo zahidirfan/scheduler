@@ -24,12 +24,11 @@
     <td><%= candidate.name %></td>
     <td><%= show_candidate_status(candidate)%></td>
     <td><%= candidate.subject%></td>
-    <td><%= link_to 'Show', candidate %> | <%#= link_to "Schedule", new_candidate_interview_path(candidate) %><%= link_to 'Edit', edit_candidate_path(candidate) %> | <%= link_to 'Destroy', candidate, confirm: 'Are you sure?', method: :delete %> | <%= link_to "Archive", candidate_mark_archive_path(candidate), confirm: 'Are you sure?' %></td>
+    <td><%= cta_links(:candidate, candidate) %> </td>
   </tr>
 <% end %>
 </tody>
 </table>
 
 <br />
-
-<%= link_to 'New Candidate', new_candidate_path %>
+<%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
