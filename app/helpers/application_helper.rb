@@ -21,4 +21,21 @@ module ApplicationHelper
     "<span class='comment_status_#{i}'>#{val}</span>".html_safe
   end  
   
+  def cta_links(res, obj)
+    cnt = [link_to('Show', obj)]
+    if can?(:update, obj)
+      cnt << link_to('Edit', self.send("edit_#{res}_path".to_sym, obj))
+      cnt << link_to('Archive', self.send("edit_#{res}_path".to_sym, obj))
+    end
+    if can?(:destroy, obj)
+      cnt << link_to('Remove', obj, confirm: 'Are you sure?', method: :delete)
+    end
+    cnt.join(" | ").html_safe    
+  end
+  
+  def download_resume(c)
+    style = c.resume_content_type == "application/pdf" ? "icon_pdf.gif" : "icon_word.png"    
+    ("<span class='download'>"+ image_tag("#{style}", :align => "absmiddle") + "&nbsp;" + link_to("Download Resume", c.resume.url, :class => "download")+"</span>").html_safe
+  end
+  
 end

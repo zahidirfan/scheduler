@@ -3,7 +3,11 @@ class ApplicationController < ActionController::Base
   #check_authorization
   
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :notice => exception.message
+    if current_user.type.to_s == "Interviewer" 
+      redirect_to interviews_url, :notice => exception.message
+    else
+      redirect_to root_url, :notice => exception.message
+    end
   end
   
   helper_method :feedback_status_hash, :check_user_privilege, :check_user_privilege, :user_roles_hash, :current_user, :check_admin_or_hr, :load_candidate

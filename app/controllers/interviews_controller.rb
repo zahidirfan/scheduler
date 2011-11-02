@@ -1,11 +1,12 @@
 class InterviewsController < ApplicationController
   # GET /interviews
   # GET /interviews.json
-  before_filter :check_interview_schedule, :only => [:new]
+  #before_filter :check_interview_schedule, :only => [:new]
+  load_and_authorize_resource
   before_filter :load_candidate, :except => [:index]
   
   def index
-    @interviews = check_admin_or_hr(current_user.type) ? Interview.dummy : current_user.interviews
+    @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy 
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @interviews }

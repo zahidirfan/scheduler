@@ -1,8 +1,17 @@
-<h1>Candidate ~ <%= @candidate.name %></h1>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+  <tr>
+    <td width="75%"><h1>Candidate ~ <%= @candidate.name %></h1></td>
+    <td align="right"><%= download_resume(@candidate)%></td>
+  </tr>
+</table>
 <%= render '/interviews/candidate_info' %>
 <%= render :partial => '/interviews/feed_back_info', :object => @candidate.interviews %>
 <%= render :partial => '/interviews/upcoming', :object => @candidate.interviews.upcoming %>
 
-<%= link_to 'Edit', edit_candidate_path(@candidate) %> |
-<%= link_to 'Add a Interview Schedule', new_candidate_interview_path(@candidate) %> | 
-<%= link_to 'Back', candidates_path %>
+<% if can?(:update, Candidate) %>
+<%= link_to 'Edit', edit_candidate_path(@candidate)  %> | 
+<%= link_to 'Add a Interview Schedule', new_candidate_interview_path(@candidate) %> |
+<% end %>
+<%= link_to('Back', root_path) %>
+<br /><br />
+
