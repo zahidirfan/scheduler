@@ -42,7 +42,7 @@ class CommentsController < ApplicationController
   # POST /comments.json
   def create
     @comment = current_user.comments.new(params[:comment])
-
+    @comment.status_value = feedback_status_hash.key(@comment.status)
     respond_to do |format|
       if @comment.save
         format.html { redirect_to interviews_path, notice: 'Comment was successfully created.' }
@@ -58,6 +58,7 @@ class CommentsController < ApplicationController
   # PUT /comments/1.json
   def update
     @comment = Comment.find(params[:id])
+    params[:comment][:status_value] = feedback_status_hash.key(params[:comment][:status])
     respond_to do |format|
       if @comment.update_attributes(params[:comment])
         format.html { redirect_to interviews_path, notice: 'Comment was successfully updated.' }
