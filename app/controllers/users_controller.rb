@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   before_filter :authenticate, :except => [:new, :create]
   load_and_authorize_resource
   #before_filter :authenticate_admin
-
   # GET /users
   # GET /users.json
   def index
@@ -84,5 +83,10 @@ class UsersController < ApplicationController
       format.html { redirect_to users_url }
       format.json { head :ok }
     end
+  end
+
+  def password_change
+    @user = current_user
+    redirect_to :root, notice: 'Password changed successfully.' if not params[:user].blank?  and @user.update_attributes(params[:user])
   end
 end

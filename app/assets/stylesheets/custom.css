@@ -1,29 +1,38 @@
-.no_interview_schedule{
+.no_interview_schedule {
   padding-left: 20px;
-	font-style: italic;
-	font-size: 12px;
+  font-style: italic;
+  font-size: 12px;
 }
-
 /*General Label Style*/
 
-span.label{
-	 background-color: #ccc;
-	 font-color: #999;
-	 font-size: 10px;
-	 font-weight: bold;
-	 padding: 3px;
-	 margin-right: 10px;
+span.label {
+  background-color: #ccc;
+  color: #999;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 3px;
+  margin-right: 10px;
 }
-
-span.comment_status_1{
-	 color: #448f00;
-	 font-weight: bold;
+span.comment_status_1 {
+  color: #448f00;
+  font-weight: bold;
 }
-span.comment_status_2{
-	 color: #c17d00;
-	 font-weight: bold;
+span.comment_status_2 {
+  color: #c17d00;
+  font-weight: bold;
 }
-span.comment_status_3{
-	 color: #c00814;
-	 font-weight: bold;
+span.comment_status_3 {
+  color: #c00814;
+  font-weight: bold;
+}
+.change_password {
+  width: 500px;
+}
+.change_password p {
+  margin: 0;
+}
+.submit_button {
+  background-color: #B0A089;
+  border-radius: 4px 4px 4px 4px;
+  color: #FFFFFF;
 }
