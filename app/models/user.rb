@@ -1,12 +1,13 @@
 class User < ActiveRecord::Base
-  
   authenticates
-  validates :name, :email, :presence => true
-  
   has_many :candidates
   has_many :interviews
   has_many :comments
   
+  attr_accessor :password, :password_confirmation
+  
+  validates :name, :email, :password, :password_confirmation, :presence => true
+  validates :password, :confirmation => true
   
   def admin?
     false

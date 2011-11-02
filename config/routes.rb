@@ -27,6 +27,7 @@ Resume::Application.routes.draw do
   resources :hr, :bm, :administrator, :pl, :interviewer, :controller => "users"
   resources :sessions
   
+  match "password_change" => "users#password_change", :as => "password_change"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -14,6 +14,7 @@
   <% end %>
 </div>
 <div id="top_right_bar">
+  <%= link_to "Change password", password_change_path%> | 
   <%= current_user.name%> |
   <%= link_to "Logout",log_out_path, :confirm => "Are you sure?", :class => "top_link"%>
 </div>
