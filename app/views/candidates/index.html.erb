@@ -1,34 +1,34 @@
 <table width="100%">
   <tr>
-  <td width="40%"><h1>Listing Candidates</h1></td>
-  <td width="60%"><form class="searchform" style="margin-left: 50px">
-    <input type="text" name="search" id="search" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" /><input class="searchbutton" type="submit" value="Go" />
-    
-  </form>
-  </td>
-</tr>
+    <td width="40%"><h1>Listing Candidates</h1></td>
+    <td width="40%">
+    <form class="searchform" style="margin-left: 50px">
+      <input type="text" name="search" id="search" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" />
+      <input class="searchbutton" type="submit" value="Go" />
+    </form></td>
+    <td width="20%"> <%= select("filter","status", feedback_status_hash, :prompt => "Filter Candidate By") %> </td>
+  </tr>
 </table>
 <br />
 <table id="box-table-a" style="width: 95%">
   <thead>
-  <tr>
-    <th scope="col">Name</th>
-    <th scope="col">Status</th>
-    <th scope="col">Subject</th>
-    <th scope="col">Actions</th>
-  </tr>
-</thead>
-<tbody>
-<% @candidates.each do |candidate| %>
-  <tr>
-    <td><%= candidate.name %></td>
-    <td><%= show_candidate_status(candidate)%></td>
-    <td><%= candidate.subject%></td>
-    <td><%= cta_links(:candidate, candidate) %> </td>
-  </tr>
-<% end %>
-</tody>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Status</th>
+      <th scope="col">Subject</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @candidates.each do |candidate| %>
+    <tr>
+      <td><%= candidate.name %></td>
+      <td><%= show_candidate_status(candidate)%></td>
+      <td><%= candidate.subject%></td>
+      <td><%= cta_links(:candidate, candidate) %> </td>
+    </tr>
+    <% end %>
+    </tody>
 </table>
-
 <br />
-<%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
+<%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %> 
