@@ -12,6 +12,11 @@
     <div id="header">
       <%= render :partial => "shared/top_menu" unless current_user.blank?%>
     </div>
+            <span>
+          <div id='loading' style="display:none;">
+            Loading...
+          </div>
+        </span>
     <div id="container">
       <%= yield %>
     </div>
