@@ -3,9 +3,9 @@ class InterviewsController < ApplicationController
   # GET /interviews.json
   before_filter :check_interview_schedule, :only => [:new]
   before_filter :load_candidate
-  
+
   def index
-    @interviews = check_admin_or_hr(current_user.type) ? Interview.dummy : current_user.interviews
+#    @interviews = check_admin_or_hr(current_user.type) ? Interview.dummy : current_user.interviews
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @interviews }
@@ -59,15 +59,39 @@ class InterviewsController < ApplicationController
   # PUT /interviews/1.json
   def update
     @interview = Interview.find(params[:id])
-
+    @interview.update_attributes(params[:interview])
     respond_to do |format|
-      if @interview.update_attributes(params[:interview])
-        format.html { redirect_to @interview, notice: 'Interview was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @interview.errors, status: :unprocessable_entity }
-      end
+       format.html { redirect_to root_path, notice: 'Interview was successfully updated.' }
+       format.js { render :index }
+       format.json { render json: @interview, status: :updated }
+    end
+  end
+
+  def get_interviews
+    @interviews = Interview.find(:all, :conditions => ["scheduled_at between '#{Time.at(params['start'].to_i).to_formatted_s(:db)}' and '#{Time.at(params['end'].to_i).to_formatted_s(:db)}'"] )
+    interviews = []
+    @interviews.each do |interview|
+      interviews << {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{Candidate.find(interview.candidate_id).name}", :description => "<label>Assigned To:</label> #{User.find(interview.user_id).name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :allDay => false, :recurring => false }
+    end
+    render :text => interviews.to_json
+  end
+
+  def move
+    @interview = Interview.find(params[:id])
+    if @interview
+      @interview.starttime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.starttime))
+      @interview.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.endtime))
+#      @interview.all_day = params[:all_day]
+      @interview.save
+    end
+  end
+
+
+  def resize
+    @event = Interview.find(params[:id])
+    if @event
+      @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
+      @event.save
     end
   end
 
@@ -77,21 +101,18 @@ class InterviewsController < ApplicationController
     @interview = Interview.find(params[:id])
     @interview.destroy
 
-    respond_to do |format|
-      format.html { redirect_to interviews_url }
-      format.json { head :ok }
-    end
+    render :index
   end
-  
+
   protected
-  
+
   def check_interview_schedule
     load_candidate
     unless @candidate.interviews.empty?
       i = @candidate.interviews.last
-      if i.scheduled_at > Date.today
+      if i.scheduled_at > Time.now.utc
         redirect_to edit_candidate_interview_path(@candidate, i)
       end
     end
-  end  
+  end
 end

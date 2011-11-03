@@ -10,7 +10,8 @@ gem 'paperclip'
 gem 'json'
 gem 'acts-as-taggable-on', '~>2.1.0'
 gem 'quo_vadis'
-gem "cancan"
+gem 'mongrel'
+gem 'cancan'
 
 # Gems used only for assets and not required
 # in production environments by default.
