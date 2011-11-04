@@ -29,7 +29,7 @@
     <table class="mail_block" border="1">
       <tr>
         <td class="label"> Interview Date </td>
-        <td class="value"> <%= @interview.scheduled_at%> </td>
+        <td class="value"> <%= @interview.scheduled_at.strftime("%d %b %Y")%> </td>
       </tr>
       <tr>
         <td class="label"> Interview Time </td>
