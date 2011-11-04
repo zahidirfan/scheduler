@@ -3,14 +3,13 @@ class CandidatesController < ApplicationController
   # GET /candidates.json
   before_filter :authenticate
   load_and_authorize_resource
-  #before_filter :check_user_privilege
   def index
     if params[:search]
-    @candidates = Candidate.tagged_with(params[:search])
-    elsif not params[:filter].blank? and not params[:filter][:status].blank?
-    @candidates = Candidate.find_all_by_status(params[:filter][:status])
+      @candidates = Candidate.tagged_with(params[:search])
+    elsif !params[:status].blank?
+      @candidates = Candidate.find_all_by_status(params[:status])
     else
-    @candidates = Candidate.active
+      @candidates = Candidate.active
     end
 
     respond_to do |format|

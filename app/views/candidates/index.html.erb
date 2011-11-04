@@ -8,7 +8,7 @@
     </form></td>
     <td width="20%">
     <form id ="filter_candidate_by_status">
-      <%= select("filter","status", feedback_status_hash, :selected => (params[:filter][:status] unless params[:filter].blank?), :include_blank => "Filter Candidate By") %>
+      <%= select_tag('status', options_from_collection_for_select(feedback_status_hash, :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
     </form></td>
   </tr>
 </table>
@@ -43,8 +43,11 @@
 <%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#filter_status").change(function() {
-      $('#filter_candidate_by_status').submit();
+    $("#status").change(function() {
+      if($("#status").val() == "")      
+        alert("Please select a valid filter.")
+      else
+        $('#filter_candidate_by_status').submit();
     });
   });
 
