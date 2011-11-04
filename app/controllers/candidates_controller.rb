@@ -3,14 +3,12 @@ class CandidatesController < ApplicationController
   # GET /candidates.json
   before_filter :authenticate
   load_and_authorize_resource
-  
   #before_filter :check_user_privilege
-  
   def index
     if params[:search]
-      @candidates = Candidate.tagged_with(params[:search])
+    @candidates = Candidate.tagged_with(params[:search])
     else
-      @candidates = Candidate.active
+    @candidates = Candidate.active
     end
 
     respond_to do |format|
@@ -89,11 +87,17 @@ class CandidatesController < ApplicationController
       format.json { head :ok }
     end
   end
-  
+
   def mark_archive
     @candidate = Candidate.find(params[:candidate_id])
     @candidate.update_attribute(:archive, true)
     redirect_to candidates_url
   end
-  
+
+  def filter_candidate_by_status
+    status = params[:filter][:status] if not params[:filter].blank? and not params[:filter][:status].blank?
+    @candidates = Candidate.find_all_by_status(status)
+    render :action => "index"
+  end
+
 end

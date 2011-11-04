@@ -1,12 +1,14 @@
 <table width="100%">
   <tr>
     <td width="40%"><h1>Listing Candidates</h1></td>
-    <td width="40%">
+    <td width="33%">
     <form class="searchform" style="margin-left: 50px">
       <input type="text" name="search" id="search" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" />
       <input class="searchbutton" type="submit" value="Go" />
     </form></td>
-    <td width="20%"> <%= select("filter","status", feedback_status_hash, :prompt => "Filter Candidate By") %> </td>
+    <td width="20%"> <%= form_tag(filter_candidate_by_status_path, :method => "put", :id => "filter_candidate_by_status") do %>
+    <%= select("filter","status", feedback_status_hash, :selected => (params[:filter][:status] unless params[:filter].blank?), :include_blank => "Filter Candidate By") %>
+    <%end%> </td>
   </tr>
 </table>
 <br />
@@ -20,6 +22,7 @@
     </tr>
   </thead>
   <tbody>
+    <% unless @candidates.blank? %>
     <% @candidates.each do |candidate| %>
     <tr>
       <td><%= candidate.name %></td>
@@ -28,7 +31,20 @@
       <td><%= cta_links(:candidate, candidate) %> </td>
     </tr>
     <% end %>
+    <%else%>
+    <tr>
+      <td colspan="4" class="no_records_found"> No candidates found for the status <b><%= params[:filter][:status] unless params[:filter].blank?%></b>. </td>
+    </tr>
+    <%end%>
     </tody>
 </table>
 <br />
-<%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %> 
+<%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#filter_status").change(function() {
+      $('#filter_candidate_by_status').submit();
+    });
+  });
+
+</script>
