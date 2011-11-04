@@ -27,8 +27,6 @@ Resume::Application.routes.draw do
   resources :sessions
 
   match "password_change" => "users#password_change", :as => "password_change"
-
-  match "filter_candidate_by_status" => "candidates#filter_candidate_by_status", :as => "filter_candidate_by_status"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -7,6 +7,8 @@ class CandidatesController < ApplicationController
   def index
     if params[:search]
     @candidates = Candidate.tagged_with(params[:search])
+    elsif not params[:filter].blank? and not params[:filter][:status].blank?
+    @candidates = Candidate.find_all_by_status(params[:filter][:status])
     else
     @candidates = Candidate.active
     end
@@ -93,11 +95,4 @@ class CandidatesController < ApplicationController
     @candidate.update_attribute(:archive, true)
     redirect_to candidates_url
   end
-
-  def filter_candidate_by_status
-    status = params[:filter][:status] if not params[:filter].blank? and not params[:filter][:status].blank?
-    @candidates = Candidate.find_all_by_status(status)
-    render :action => "index"
-  end
-
 end
