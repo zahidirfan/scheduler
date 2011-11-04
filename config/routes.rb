@@ -19,14 +19,18 @@ Resume::Application.routes.draw do
     get 'mark_archive'
   end
 
-  get "log_out" => "sessions#destroy", :as => "log_out"
-  get "log_in" => "sessions#new", :as => "log_in"
-  get "sign_up" => "users#new", :as => "sign_up"
   resources :users
   resources :hr, :bm, :administrator, :pl, :interviewer, :controller => "users"
   resources :sessions
 
+  get "log_out" => "sessions#destroy", :as => "log_out"
+  get "log_in" => "sessions#new", :as => "log_in"
+  get "sign_up" => "users#new", :as => "sign_up"
+
   match "password_change" => "users#password_change", :as => "password_change"
+  match 'get_interviews' => "interviews#get_interviews" , :as => :get_interviews
+  match 'interview/:view' => 'interviews#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

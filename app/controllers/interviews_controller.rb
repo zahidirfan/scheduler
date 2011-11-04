@@ -3,10 +3,12 @@ class InterviewsController < ApplicationController
   # GET /interviews.json
   #before_filter :check_interview_schedule, :only => [:new]
   load_and_authorize_resource
-  before_filter :load_candidate, :except => [:index]
-  
+  before_filter :load_candidate, :except => [:index, :get_interviews]
+
   def index
-    @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy 
+    if (params[:view] != 'calendar')
+      @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @interviews }
@@ -60,12 +62,42 @@ class InterviewsController < ApplicationController
     @interview = Interview.find(params[:id])
     respond_to do |format|
       if @interview.update_attributes(params[:interview])
-        format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully updated.' }
-        format.json { head :ok }
+       format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully updated.' }
+       format.js { render :index }
+       format.json { render json: @interview, status: :updated }
       else
         format.html { render action: "edit" }
+        format.js { render :index }
         format.json { render json: @interview.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def get_interviews
+    meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+    @interviews = meth.fetch_interviews(params['start'], params['end'])
+    desc_interviews = @interviews.collect do |interview|
+      {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{interview.user.type}", :allDay => false, :recurring => false }
+    end
+    render :text => desc_interviews.to_json
+  end
+
+  def move
+    @interview = Interview.find(params[:id])
+    if @interview
+      @interview.starttime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.starttime))
+      @interview.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.endtime))
+#      @interview.all_day = params[:all_day]
+      @interview.save
+    end
+  end
+
+
+  def resize
+    @event = Interview.find(params[:id])
+    if @event
+      @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
+      @event.save
     end
   end
 
@@ -77,19 +109,20 @@ class InterviewsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to candidate_path(@candidate) }
+      format.js { render :index }
       format.json { head :ok }
     end
   end
-  
+
   protected
-  
+
   def check_interview_schedule
     load_candidate
     unless @candidate.interviews.empty?
       i = @candidate.interviews.last
-      if i.scheduled_at > Date.today
+      if i.scheduled_at > Time.now.utc
         redirect_to edit_candidate_interview_path(@candidate, i)
       end
     end
-  end  
+  end
 end

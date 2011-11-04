@@ -8,8 +8,24 @@
 
 body {
   margin: 0px;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 13px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 13px;
+}
+#loading{
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background-color: #dd0000;
+  font-weight:bold;
+  color: white;
+  margin: 5px;
+  padding: 3px;
+}
+span > div#loading {
+  position: fixed;
+}
+h1{
+font-size: 16px;
 }
 #header {
   background-color: #b0a089;
@@ -69,6 +85,9 @@ a.top_link:link, a.top_link:active, a.top_link:visited {
 #box-table-a tr:hover td {
   background: none repeat scroll 0 0 #ddd;
   /*    color: #fff;*/
+}
+#event_desc label {
+  font-weight: bold;
 }
 /* search form
  -------------------------------------- */

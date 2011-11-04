@@ -1,5 +1,12 @@
+<center>
 <h1>Interview Schedule ~ Overview</h1>
-
+</center>
+<br>
+<% if params['view'] != "calendar" %>
   <%= render :partial => "today_interview_schedule", :object => @interviews.today %>
   <%= render :partial => "this_week_interview_schedule", :object => @interviews.this_week %>
   <%= render :partial => "this_month_interview_schedule", :object => @interviews.this_month %>
+<% else %>
+  <%= render :partial => "calendar_view" %>
+<% end %>
+
