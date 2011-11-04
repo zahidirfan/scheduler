@@ -36,3 +36,7 @@ span.comment_status_3 {
   border-radius: 4px 4px 4px 4px;
   color: #FFFFFF;
 }
+.no_records_found {
+  font-style: italic;
+  text-align: center;
+}

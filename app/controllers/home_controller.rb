@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     if ["Interviewer", "Bm"].include?(current_user.type.to_s)
       redirect_to interviews_url, :notice => flash[:notice]
     else
-      redirect_to candidates_url
+      redirect_to candidates_url, :notice => flash[:notice]
     end
   end
   
