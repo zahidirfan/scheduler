@@ -24,7 +24,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
-gem "therubyracer"
+gem 'therubyracer'
 gem 'ruby-debug19', '0.11.6', :require => 'ruby-debug', :groups => [:development, :test]
 
 # To use ActiveModel has_secure_password

@@ -1,20 +1,18 @@
 <div id="top_left_bar">
   <% if current_user.type.to_s == "Interviewer" %>
     <%= link_to "Home", interviews_path, :class => "top_link" %> |
-    <%= link_to "Manage Interviews", interviews_path, :class => "top_link" %>
   <% elsif current_user.type.to_s == "Bm" %>
     <%= link_to "Home", candidates_path, :class => "top_link" %> |
     <%= link_to "Manage Candidates", candidates_path, :class => "top_link" %> |
-    <%= link_to "Manage Interviews", interviews_path, :class => "top_link" %>
   <% else %>
     <%= link_to "Home", candidates_path, :class => "top_link" %> |
     <%= link_to "Manage Users", users_path, :class => "top_link" %> |
-    <%= link_to "Manage Candidates", candidates_path, :class => "top_link" %> |
-    <%= link_to "Manage Interviews", interviews_path, :class => "top_link" %>
   <% end %>
+    <%= link_to "Manage Interviews", interviews_path, :class => "top_link" %>
+    <%= link_to "(Calender View)", interviews_path(:view => 'calendar'), :class => "top_link" %>
 </div>
 <div id="top_right_bar">
   <%= current_user.name%> |
-  <%= link_to "Change password", password_change_path%> | 
+  <%= link_to "Change password", password_change_path%> |
   <%= link_to "Logout",log_out_path, :confirm => "Are you sure?", :class => "top_link"%>
 </div>

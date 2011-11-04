@@ -28,6 +28,8 @@ function resizeEvent(event, dayDelta, minuteDelta){
 
 function showEventDetails(event){
     $('#event_desc').html(event.description);
+    title = event.title;
+    if(event.user_type == "Administrator" || event.user_type == "Bm") {
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", "+ event.candidate_id+")'>Edit</a>");
     if (event.recurring) {
         title = event.title + "(Recurring)";
@@ -36,8 +38,8 @@ function showEventDetails(event){
         $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", \"future\")'>Delete All Future Events</a>")
     }
     else {
-        title = event.title;
         $('#delete_event').html("<a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + false + ")'>Delete</a>");
+    }
     }
     $('#desc_dialog').dialog({
         title: title,

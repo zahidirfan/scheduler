@@ -1,20 +1,14 @@
 class InterviewsController < ApplicationController
   # GET /interviews
   # GET /interviews.json
-<<<<<<< HEAD
   #before_filter :check_interview_schedule, :only => [:new]
   load_and_authorize_resource
-  before_filter :load_candidate, :except => [:index]
+  before_filter :load_candidate, :except => [:index, :get_interviews]
 
   def index
-    @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
-=======
-  before_filter :check_interview_schedule, :only => [:new]
-  before_filter :load_candidate
-
-  def index
-#    @interviews = check_admin_or_hr(current_user.type) ? Interview.dummy : current_user.interviews
->>>>>>> calendar
+    if (params[:view] != 'calendar')
+      @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @interviews }
@@ -80,13 +74,12 @@ class InterviewsController < ApplicationController
   end
 
   def get_interviews
-    @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
-    @interviews = Interview.fetch_interviews(params['start'], params['end'])
-    interviews = []
-    @interviews.each do |interview|
-      interviews << {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{Candidate.find(interview.candidate_id).name}", :description => "<label>Assigned To:</label> #{User.find(interview.user_id).name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :allDay => false, :recurring => false }
+    meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+    @interviews = meth.fetch_interviews(params['start'], params['end'])
+    desc_interviews = @interviews.collect do |interview|
+      {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{interview.user.type}", :allDay => false, :recurring => false }
     end
-    render :text => interviews.to_json
+    render :text => desc_interviews.to_json
   end
 
   def move

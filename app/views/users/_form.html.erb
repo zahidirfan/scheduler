@@ -26,9 +26,13 @@
     <%= f.password_field :password %>
   </p>
   <p>
+    <%= f.label :password_confirmation %><br />
+    <%= f.password_field :password_confirmation %>
+  </p>
+  <p>
     <%= f.label :type %><br />
     <%= f.select(:type, user_roles_hash, :selected => @user.type) %>
   </p>
-  
+
   <p class="button"><%= f.submit %></p>
 <% end %>

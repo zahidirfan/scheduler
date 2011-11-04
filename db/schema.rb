@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20111031134159) do
   add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
 
   create_table "interviews", :force => true do |t|
-    t.date     "scheduled_at"
+    t.datetime "scheduled_at"
     t.string   "schedule_time"
     t.integer  "candidate_id"
     t.integer  "user_id"

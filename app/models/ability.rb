@@ -16,7 +16,8 @@ class Ability
         can [:read], Interview
         can :update, :user, [:password, :password_confirmation, :commit]
         can :password_change, User
-      end      
+        can :get_interviews, Interview
+      end
     end
   end
 end
