@@ -8,7 +8,7 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-      You are scheduled an interview with the candidate <b><%= @candidate.name%></b> on <b><%= @interview.scheduled_at%></b> at <b><%= @interview.schedule_time%></b>
+      You are scheduled an interview with the candidate <b><%= @candidate.name%></b> on <b><%= @interview.scheduled_at.strftime("%d %b %Y")%></b> at <b><%= @interview.schedule_time%></b>
     </p>
     <p>
       Thanks for cooperating.

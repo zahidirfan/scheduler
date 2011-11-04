@@ -8,7 +8,7 @@
       Dear <%= @usr.name %>,
     </p>
     <p>
-      Your scheduled interview with the candidate <b><%= @candidate_obj.name%></b> on <b><%= @scheduled_at%></b> at <b><%= @schedule_time%></b> is cancelled due to some reason.
+      Your scheduled interview with the candidate <b><%= @candidate_obj.name%></b> on <b><%= @scheduled_at.strftime("%d %b %Y")%></b> at <b><%= @schedule_time%></b> is cancelled due to some reason.
     </p>
     <p>
       Thanks for cooperating.
