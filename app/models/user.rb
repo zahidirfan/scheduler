@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
   has_many :interviews
   has_many :comments
 
-  attr_accessor :password, :password_confirmation
+  # attr_accessor :password, :password_confirmation
 
   validates :name, :email, :password, :password_confirmation, :presence => true
   validates :password, :confirmation => true
