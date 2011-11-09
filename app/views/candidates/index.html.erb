@@ -41,14 +41,29 @@
 </table>
 <br />
 <%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
+<p>
+  <%= text_field_tag 'candidate_name', nil,:id => "autocomplete", :size => "30"%>
+  <%= hidden_field_tag 'candidate_id'%>
+</p>
+<script type="text/javascript" src="/assets/jquery.tokeninput.js"></script>
 <script type="text/javascript">
   $(document).ready(function() {
-    $("#status").change(function() {
-      if($("#status").val() == "")      
-        alert("Please select a valid filter.")
-      else
-        $('#filter_candidate_by_status').submit();
-    });
-  });
+$("#status").change(function() {
+if($("#status").val() == "")
+alert("Please select a valid filter.")
+else
+$('#filter_candidate_by_status').submit();
+});
 
+$('#autocomplete').tokenInput("<%= fetch_candidates_path %>",
+  { theme: "facebook",
+    onAdd: function(item) {
+      $("#candidate_id").val([$("#candidate_id").val(),item.id]);
+    }, resultsFormatter: function(item) {
+      return "<li><div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.name + "</div><div class='email'>" + item.subject + "</div></div></li>"
+    }, tokenFormatter: function(item) {
+      return "<li><p>" + item.name + "</p></li>"
+    }
+  });
+  });
 </script>

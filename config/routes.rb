@@ -30,6 +30,8 @@ Resume::Application.routes.draw do
   match "password_change" => "users#password_change", :as => "password_change"
   match 'get_interviews' => "interviews#get_interviews" , :as => :get_interviews
   match 'interview/:view' => 'interviews#index'
+  
+  match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

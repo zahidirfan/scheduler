@@ -5,11 +5,11 @@ class CandidatesController < ApplicationController
   load_and_authorize_resource
   def index
     if params[:search]
-      @candidates = Candidate.tagged_with(params[:search])
+    @candidates = Candidate.tagged_with(params[:search])
     elsif !params[:status].blank?
-      @candidates = Candidate.find_all_by_status(params[:status])
+    @candidates = Candidate.find_all_by_status(params[:status])
     else
-      @candidates = Candidate.active
+    @candidates = Candidate.active.order("name")
     end
 
     respond_to do |format|
@@ -93,5 +93,16 @@ class CandidatesController < ApplicationController
     @candidate = Candidate.find(params[:candidate_id])
     @candidate.update_attribute(:archive, true)
     redirect_to candidates_url
+  end
+
+  def fetch_candidates
+    if params[:q]
+    like= "%".concat(params[:q].concat("%"))
+    candidates = Candidate.where("name like ?", like).order("name")
+    else
+    candidates = Candidate.all.order("name")
+    end
+    list = candidates.map {|c| Hash[ id: c.id, name: c.name, subject: (c.subject ? c.subject : "")]}
+    render json: list
   end
 end
