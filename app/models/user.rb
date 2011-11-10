@@ -10,12 +10,11 @@ class User < ActiveRecord::Base
   validates :name, :email, :password, :password_confirmation, :presence => true
   validates :password, :confirmation => true
   validates :password, :length => { :minimum => 6 }
+
+  scope :interview_panel, where(:type => ["Interviewer", "Bm", "Hr"])
+
   def admin?
     false
-  end
-
-  def self.interview_panel
-    Interviewer.all + Bm.all + Hr.all
   end
 
 end

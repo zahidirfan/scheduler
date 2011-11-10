@@ -6,6 +6,8 @@ class Interview < ActiveRecord::Base
   before_save :update_schedule
   after_save :update_candidate_status
 
+  validates :scheduled_at, :presence => true
+
   def update_schedule
     self.schedule_time = self.scheduled_at.strftime("%I:%M:%S %p")
     self.endtime = self.scheduled_at.advance(:minutes => 30)
@@ -39,6 +41,7 @@ class Interview < ActiveRecord::Base
   scope :this_month, where("scheduled_at > ? and scheduled_at <= ?", Date.today.end_of_week, Date.today.end_of_month).order("scheduled_at,schedule_time")
   scope :fetch_interviews, lambda { |start, endtime| where("scheduled_at between ? and ? ", Time.at(start.to_i).to_formatted_s(:db), Time.at(endtime.to_i).to_formatted_s(:db))
  }
+  scope :by_user_id, lambda { |user_id| where("user_id = ?", user_id) }
 
   def formated_scheduled_at
     self.scheduled_at.strftime("%d-%m-%Y %I:%M %p") unless self.scheduled_at.nil?

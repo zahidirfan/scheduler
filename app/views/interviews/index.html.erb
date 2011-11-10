@@ -1,7 +1,22 @@
-<center>
-<h1>Interview Schedule ~ Overview</h1>
-</center>
+<div style="float:left"><h1>Interview Schedule ~ Overview</h1></div>
+  <div style="float:right" id="select_filter_by_interviewer">
+        <form id ="filter_by_interviewer">
+      <% if params[:view]=="calendar" %>
+        <input type="hidden" value="calendar" name="view" />
+      <% end %>
+       <div class="styled-select">
+      <%= select_tag('interviewer_filter', options_from_collection_for_select(User.interview_panel.collect{|u| [ u.id, u.name ] }, :first, :last, params[:interviewer_filter]), {:prompt => "Filter Interviews By"} ) %>
+      </div>
+    </form>
+  </div>
+<div style="clear:both"></div>
 <br>
+<% if check_admin_or_hr(current_user.type) %>
+<div id = "create_event_dialog">
+  <div id = "create_event">
+  </div>
+</div>
+<% end %>
 <% if params['view'] != "calendar" %>
   <%= render :partial => "today_interview_schedule", :object => @interviews.today %>
   <%= render :partial => "this_week_interview_schedule", :object => @interviews.this_week %>

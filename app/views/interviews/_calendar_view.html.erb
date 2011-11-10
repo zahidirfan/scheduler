@@ -31,7 +31,7 @@
               else
                   $('#loading').hide();
           },
-          events: "/get_interviews",
+          events: "/get_interviews/<%= params['interviewer_filter'] %>",
           timeFormat: 'h:mm t{ - h:mm t} ',
           dragOpacity: "0.5",
           eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
@@ -92,9 +92,5 @@
   <div id = "event_actions">
     <span id = "edit_event"></span>
     <span id = "delete_event"></span>
-  </div>
-</div>
-<div id = "create_event_dialog" style ="display:none;">
-  <div id = "create_event">
   </div>
 </div>

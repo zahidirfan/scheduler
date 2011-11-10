@@ -53,6 +53,14 @@ function showEventDetails(event){
 
 }
 
+$(function() {
+$("#interviewer_filter").change(function() {
+if($("#interviewer_filter").val() == "")
+alert("Please select a valid filter.")
+else
+$('#filter_by_interviewer').submit();
+});
+});
 
 function editEvent(interview_id, candidate_id){
     jQuery.ajax({

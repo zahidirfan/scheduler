@@ -7,7 +7,11 @@ class InterviewsController < ApplicationController
 
   def index
     if (params[:view] != 'calendar')
-      @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+      if(params[:interviewer_filter])
+        @interviews = Interview.by_user_id(params[:interviewer_filter])
+      else
+        @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+      end
     end
     @interview = Interview.new
     respond_to do |format|
@@ -77,9 +81,15 @@ class InterviewsController < ApplicationController
   end
 
   def get_interviews
-    meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
-    @interviews = meth.fetch_interviews(params['start'], params['end'])
-    desc_interviews = @interviews.collect do |interview|
+    if params[:interviewer_id]
+      meth = Interview.by_user_id(params[:interviewer_id])
+    else
+      meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+    end
+
+#    meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+    interviews = meth.fetch_interviews(params['start'], params['end'])
+    desc_interviews = interviews.collect do |interview|
       {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{current_user.type}", :allDay => false, :recurring => false }
     end
     render :text => desc_interviews.to_json
