@@ -57,8 +57,10 @@ $('#filter_candidate_by_status').submit();
 
 $('#autocomplete').tokenInput("<%= fetch_candidates_path %>",
   { theme: "facebook",
+    tokenLimit: 1,
+    preventDuplicates: true,
     onAdd: function(item) {
-      $("#candidate_id").val([$("#candidate_id").val(),item.id]);
+      $("#candidate_id").val(item.id);
     }, resultsFormatter: function(item) {
       return "<li><div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.name + "</div><div class='email'>" + item.subject + "</div></div></li>"
     }, tokenFormatter: function(item) {
