@@ -9,7 +9,11 @@
   </tr>
   <tr>
     <td width="50%"><strong>Subject: </strong><%= @candidate.subject %></td>
-    <td width="50%"><strong>Tags: </strong> <%= show_tags(@candidate) %></td>
+    <td width="50%"><strong>Tags: </strong> <%unless @candidate.tags.empty?%>
+    <% @candidate.tag_list.each do |tag| %> <span class='tag'><%= tag%></span> <%end%> </td>
+    <%end%>
   </tr>
 </table>
-<p>&nbsp;</p>
+<p>
+  &nbsp;
+</p>
