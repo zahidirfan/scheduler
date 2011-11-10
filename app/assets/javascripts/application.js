@@ -13,7 +13,7 @@ function moveEvent(event, dayDelta, minuteDelta, allDay){
         data: 'id=' + event.id + '&title=' + event.title + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta + '&all_day=' + allDay,
         dataType: 'script',
         type: 'post',
-        url: "/events/move"
+        url: "/interviews/move"
     });
 }
 
@@ -22,23 +22,38 @@ function resizeEvent(event, dayDelta, minuteDelta){
         data: 'id=' + event.id + '&title=' + event.title + '&day_delta=' + dayDelta + '&minute_delta=' + minuteDelta,
         dataType: 'script',
         type: 'post',
-        url: "/events/resize"
+        url: "/interviews/resize"
     });
 }
+
+function showNewInterview(start, end, event){
+
+      $('#new_interview_dialog').dialog({
+        title: title,
+        modal: true,
+        width: 500,
+        close: function(event, ui){
+            $('#desc_dialog').dialog('destroy')
+        }
+
+    });
+
+}
+
 
 function showEventDetails(event){
     $('#event_desc').html(event.description);
     title = event.title;
     if(event.user_type == "Administrator" || event.user_type == "Bm") {
-    $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", "+ event.candidate_id+")'>Edit</a>");
+    $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+")'>Edit</a>");
     if (event.recurring) {
         title = event.title + "(Recurring)";
-        $('#delete_event').html("&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + false + ")'>Delete Only This Occurrence</a>");
+        $('#delete_event').html("&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete Only This Occurrence</a>");
         $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + true + ")'>Delete All In Series</a>")
         $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", \"future\")'>Delete All Future Events</a>")
     }
     else {
-        $('#delete_event').html("<a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + false + ")'>Delete</a>");
+        $('#delete_event').html("<a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete</a>");
     }
     }
     $('#desc_dialog').dialog({
@@ -63,14 +78,14 @@ function editEvent(interview_id, candidate_id){
     });
 }
 
-function deleteEvent(interview_id, delete_all){
+function deleteEvent(interview_id, candidate_id, delete_all){
   var answer = confirm("Are you sure to delete this interview schedule?")
     if(answer) {
     jQuery.ajax({
         data: 'id=' + interview_id + '&delete_all='+delete_all,
         dataType: 'script',
         type: 'delete',
-        url: "/interviews/"+interview_id
+        url: "/candidates/"+candidate_id+"/interviews/"+interview_id
     });
     }
 }
@@ -98,9 +113,8 @@ function showPeriodAndFrequency(value){
         default:
             $('#frequency').hide();
     }
-
-
-
-
 }
+
+
+
 

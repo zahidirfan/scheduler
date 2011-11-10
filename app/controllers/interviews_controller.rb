@@ -9,6 +9,7 @@ class InterviewsController < ApplicationController
     if (params[:view] != 'calendar')
       @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
     end
+    @interview = Interview.new
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @interviews }
@@ -48,9 +49,11 @@ class InterviewsController < ApplicationController
     respond_to do |format|
       if @interview.save
         format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully created.' }
+        format.js { render :index }
         format.json { render json: @interview, status: :created, location: @interview }
       else
         format.html { render action: "new" }
+        format.js { render :index }
         format.json { render json: @interview.errors, status: :unprocessable_entity }
       end
     end
@@ -77,7 +80,7 @@ class InterviewsController < ApplicationController
     meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
     @interviews = meth.fetch_interviews(params['start'], params['end'])
     desc_interviews = @interviews.collect do |interview|
-      {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{interview.user.type}", :allDay => false, :recurring => false }
+      {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{current_user.type}", :allDay => false, :recurring => false }
     end
     render :text => desc_interviews.to_json
   end

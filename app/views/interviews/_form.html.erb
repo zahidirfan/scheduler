@@ -1,4 +1,5 @@
-<%= form_for [@candidate,@interview], :html => {:id => "interview_form", :remote => true} do |f| %>
+<% obj = @candidate.nil? ? @interview : [@candidate,@interview] %>
+<%= form_for obj, :html => {:id => "interview_form", :remote => true} do |f| %>
 <% if @interview.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(@interview.errors.count, "error") %> prohibited this interview from being saved:</h2>
@@ -13,12 +14,23 @@
 <% end %>
 <table width="90%" cellpadding="5" cellspacing="5" style="border: 1px solid #ccc">
   <tr>
-    <td width="33%"><strong><%= f.label :scheduled_at %>: </strong><%= f.text_field :scheduled_at, :value => f.object.formated_scheduled_at, :size => 23, :autocomplete => :off %></td>
-    <td width="33%"><strong><%= f.label :user_id, "Assigned to" %>: </strong><%= f.select :user_id, User.interview_panel.collect{|u| [ u.name, u.id ] } %>
-    <%= f.hidden_field :candidate_id, :value => (params[:candidate_id] ? params[:candidate_id] : @interview.candidate_id) %></td>
+    <td width="33%"><strong><%= f.label :user_id, "Assigned to" %>: </strong><%= f.select :user_id, User.interview_panel.collect{|u| [ u.name, u.id ] } %></td>
+    <td width="33%"><strong><%= f.label :scheduled_at %>: </strong><%= f.text_field :scheduled_at, :value => f.object.formated_scheduled_at, :size => 23, :autocomplete => :off, :class => "datetime_picker" %>
+    </td>
   </tr>
   <tr>
-    <td colspan="2"><%= f.submit %>  <span id = "updating_events" style = "display:none;">Updating, Please wait...</span><span id = "updated" style = "display:none;">Updated</span>
+    <td colspan="2">
+      <% if @candidate.nil? %>
+          <strong><%= label_tag "Candidate Name" %>: </strong>
+          <%= text_field_tag :candidate_name, nil, :id => "autocomplete", :size => "20" %>
+          <%= f.hidden_field 'candidate_id', :id => "candidate_id" %>
+      <% else %>
+        <%= f.hidden_field :candidate_id, :value => (params[:candidate_id] ? params[:candidate_id] : @interview.candidate_id) %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2"><%= f.submit %><span id = "updated" style = "display:none;">Updated</span>
 
   </tr>
 <div class="actions">
@@ -28,22 +40,39 @@
 </table>
 <script>
   $(function() {
-    var toggleLoading = function() { $("#updating_events").toggle() };
+      $('#interview_user_id').focus();
       $("#interview_form")
-    .bind("ajaxSend", toggleLoading)
-    .bind("ajax:complete", toggleLoading)
-    .bind("ajax:success", function(event, data, status, xhr) {
-      $("#updated").show().fadeOut(5000);
+      .bind("ajax:success", function(event, data, status, xhr) {
+        $(this)[0].reset();
     });
-/*    $("#interview_scheduled_at").datepicker({
-      dateFormat : 'dd-mm-yy',
-      minDate : 0
-    }); */
-    $('#interview_scheduled_at').datetimepicker({
+
+  if(!$('#token-input-autocomplete').length) {
+  $('#autocomplete').tokenInput("<%= fetch_candidates_path %>",
+  {
+    theme: "facebook",
+    tokenLimit: 1,
+    preventDuplicates: true,
+    onAdd: function(item) {
+      $("#candidate_id").val(item.id);
+    }, resultsFormatter: function(item) {
+      return "<li><div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.name + "</div><div class='email'>" + item.subject + "</div></div></li>"
+    }, tokenFormatter: function(item) {
+      return "<li><p>" + item.name + "</p></li>"
+    }
+  });
+  }
+
+    $('.datetime_picker').datetimepicker({
       dateFormat : 'dd-mm-yy',
       ampm: true
     });
-/*    $("#interview_schedule_time").timePicker({
+
+/*    $("#interview_scheduled_at").datepicker({
+      dateFormat : 'dd-mm-yy',
+      minDate : 0
+    });
+
+    $("#interview_schedule_time").timePicker({
       startTime : "08:00 AM",
       endTime : "08:00 PM",
       show24Hours : false,

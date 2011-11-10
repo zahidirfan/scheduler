@@ -1,16 +1,26 @@
-<p>
-<%#=link_to 'Add Interview', :url => {:action => :new}, :before => "$('#loading').show()", :complete => "$('#loading').hide()", :remote => true %>
-</p>
-
 <script>
   $(document).ready(function(){
       // page is now ready, initialize the calendar...
-      $('#calendar').fullCalendar({
+      var calendar = $('#calendar').fullCalendar({
           editable: true,
           header: {
               left: 'prev,next today',
               center: 'title',
               right: 'month,agendaWeek,agendaDay'
+            },
+          selectable: true,
+          selectHelper: true,
+          select: function(start, end, allDay) {
+            $('#interview_scheduled_at').val(my_convertDate(start));
+            $('#new_interview_dialog').dialog({
+            title: "New Interview Schedule",
+            modal: true,
+            width: 500,
+            close: function(event, ui){
+                $('#interview_form')[0].reset();
+                $('#new_interview_dialog').dialog('destroy')
+              }
+            });
           },
           defaultView: 'agendaWeek',
           height: 500,
@@ -45,16 +55,34 @@
           eventClick: function(event, jsEvent, view){
               showEventDetails(event);
           },
-
-
-
-
       });
-  });
+    });
+
+    function my_convertDate(date) {
+    date_obj = new Date(date);
+    date_obj_hours = date_obj.getHours();
+    date_obj_mins = date_obj.getMinutes();
+
+    if (date_obj_mins < 10) { date_obj_mins = "0" + date_obj_mins; }
+
+    if (date_obj_hours > 11) {
+        date_obj_hours = date_obj_hours - 12;
+        date_obj_am_pm = " PM";
+    } else {
+        date_obj_am_pm = " AM";
+    }
+
+    date_obj_time = " "+date_obj_hours+":"+date_obj_mins+date_obj_am_pm;
+    return $.datepicker.formatDate("dd-mm-yy", date_obj)+date_obj_time;
+  }
+
 </script>
 <div>
   <div id='calendar'>
   </div>
+</div>
+<div id = "new_interview_dialog" style ="display:none;">
+  <%= render 'form' %>
 </div>
 <div id = "desc_dialog" style ="display:none;">
   <div id = "event_desc">
