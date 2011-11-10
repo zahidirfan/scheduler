@@ -8,7 +8,9 @@
     </form></td>
     <td width="20%">
     <form id ="filter_candidate_by_status">
+      <div class="styled-select">
       <%= select_tag('status', options_from_collection_for_select(feedback_status_hash, :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
+      </div>
     </form></td>
   </tr>
 </table>

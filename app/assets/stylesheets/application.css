@@ -154,3 +154,19 @@ a.download:link, a.download:active, a.download:visited{
 a.download:hover{
 	text-decoration: underline;
 }
+
+.styled-select {
+   width: 240px;
+   height: 30px;
+   overflow: hidden;
+   background: url("/assets/down_arrow_select.jpg") no-repeat right #ddd;
+}
+
+.styled-select select {
+   background: transparent;
+   width: 268px;
+   padding: 4px;
+   font-size: 14px;
+   border: 1px solid #ccc;
+   height: 34px;
+}
