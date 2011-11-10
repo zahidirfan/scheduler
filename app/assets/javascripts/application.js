@@ -26,21 +26,6 @@ function resizeEvent(event, dayDelta, minuteDelta){
     });
 }
 
-function showNewInterview(start, end, event){
-
-      $('#new_interview_dialog').dialog({
-        title: title,
-        modal: true,
-        width: 500,
-        close: function(event, ui){
-            $('#desc_dialog').dialog('destroy')
-        }
-
-    });
-
-}
-
-
 function showEventDetails(event){
     $('#event_desc').html(event.description);
     title = event.title;

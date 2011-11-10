@@ -30,7 +30,7 @@
     </td>
   </tr>
   <tr>
-    <td colspan="2"><%= f.submit %><span id = "updated" style = "display:none;">Updated</span>
+    <td colspan="2"><%= f.submit %><span id="msg" class="red"></span><span id = "updated" style = "display:none;">Updated</span>
 
   </tr>
 <div class="actions">
@@ -42,6 +42,12 @@
   $(function() {
       $('#interview_user_id').focus();
       $("#interview_form")
+      .bind("submit", function() {
+      if ($("#candidate_id").val() == "" || $("#autocomplete").val().trim() == "") {
+        $("#msg").text("Please Choose any Candidate!").show().fadeOut(5000);
+        return false;
+      }
+    })
       .bind("ajax:success", function(event, data, status, xhr) {
         $(this)[0].reset();
     });
