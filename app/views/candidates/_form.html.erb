@@ -1,45 +1,51 @@
 <%= form_for(@candidate, :html => { :multipart => true }) do |f| %>
-  <% if @candidate.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
-
-      <ul>
-      <% @candidate.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :email, "Email Address" %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :mobile, "Mobile Number" %><br />
-    <%= f.text_field :mobile %>
-  </div>
-  <div class="field">
-    <%= f.label :phone, "Landline Number" %><br />
-    <%= f.text_field :phone %>
-  </div>
-  <div class="field">
-    <%= f.label :subject, "Subject" %><br />
-    <%= f.text_field :subject %>
-  </div>
-  <div class="field">
-    <%= f.label :resume, "Resume" %><br />
-    <%= f.file_field :resume %>
-  </div>
-  <div class="field">
-    <%= "Tag List" %><br />
-    <%= f.text_area :tag_list, :rows => "5", :cols => "40" %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<% if @candidate.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(@candidate.errors.count, "error") %> prohibited this candidate from being saved:</h2>
+  <ul>
+    <% @candidate.errors.full_messages.each do |msg| %>
+    <li>
+      <%= msg %>
+    </li>
+    <% end %>
+  </ul>
+</div>
 <% end %>
+<table class="create_edit_form" cellpadding="5" cellspacing="5">
+  <tbody>
+    <tr>
+      <td class="form_label"><%= f.label :name %></td>
+      <td class="form_input"><%= f.text_field :name %></td>
+    </tr>
+    <tr>
+      <td class="form_label"><%= f.label :email, "Email Address" %></td>
+      <td class="form_input"><%= f.text_field :email %></td>
+    </tr>
+    <tr>
+      <td class="form_label"><%= f.label :mobile, "Mobile Number" %></td>
+      <td class="form_input"><%= f.text_field :mobile %></td>
+    </tr>
+    <tr>
+      <td class="form_label"><%= f.label :phone, "Landline Number" %></td>
+      <td class="form_input"><%= f.text_field :phone %></td>
+    </tr>
+    <tr>
+      <td class="form_label"><%= f.label :subject %></td>
+      <td class="form_input"><%= f.text_field :subject %></td>
+    </tr>
+    <tr>
+      <td class="form_label"><%= f.label :resume%></td>
+      <td class="form_input"><%= f.file_field :resume %><td>
+        <%= show_resume(@candidate) unless @candidate.resume.blank?%>
+    </tr>
+    <tr>
+      <td class="form_label">Tag List</td>
+      <td class="form_input"><%= f.text_area :tag_list, :rows => "5", :cols => "40" %></td>
+    </tr>
+    <tr class="button">
+      <td></td>
+      <td class="form_input"><%= f.submit %></td>
+    </tr>
+  </tbody>
+</table>
+<% end %> 

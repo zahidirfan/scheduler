@@ -4,7 +4,12 @@
   font-size: 12px;
 }
 /*General Label Style*/
-
+input, textarea, select{
+  border: 1px solid #8496BA;
+}
+a{
+  text-decoration: none;
+}
 span.label {
   background-color: #ccc;
   color: #999;
@@ -39,4 +44,34 @@ span.comment_status_3 {
 .no_records_found {
   font-style: italic;
   text-align: center;
+}
+.create_edit_form{
+/*  width: 55%;*/
+}
+.create_edit_form td{
+  padding: 5px 0px;
+}
+.create_edit_form tr.actions input{
+
+}
+.button input{
+  border: 1px solid #8496BA !important;
+}
+
+.tag, .button input{
+  background-color: #EFF2F7;
+  border: 1px solid #CCD5E4;
+  border-radius: 5px 5px 5px 5px;
+  color: #000000;
+  cursor: default;
+  height: auto !important;
+  margin: 3px;
+  overflow: hidden;
+  padding: 1px 3px;
+}
+.form_label{
+  width: 30%;
+}
+.form_input{
+/*  width: 69%;*/
 }
