@@ -5,11 +5,11 @@ class CandidatesController < ApplicationController
   load_and_authorize_resource
   def index
     if params[:search]
-    @candidates = Candidate.tagged_with(params[:search])
+    @candidates = Candidate.tagged_with(params[:search]).paginate(:page => params[:page], :per_page => "10")
     elsif !params[:status].blank?
-    @candidates = Candidate.find_all_by_status(params[:status])
+    @candidates = Candidate.paginate(:page => params[:page], :per_page => "10").find_all_by_status(params[:status])
     else
-    @candidates = Candidate.active.order("name")
+    @candidates = Candidate.active.order("name").paginate(:page => params[:page], :per_page => "10")
     end
 
     respond_to do |format|
