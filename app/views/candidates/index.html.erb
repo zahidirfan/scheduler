@@ -51,10 +51,6 @@
 <%end%>
 <br />
 <%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
-<p>
-  <%= text_field_tag 'candidate_name', nil,:id => "autocomplete", :size => "30"%>
-  <%= hidden_field_tag 'candidate_id'%>
-</p>
 <script type="text/javascript">
   $(document).ready(function() {
     //Script for filtering the candidates by status
@@ -63,21 +59,6 @@
         alert("Please select a valid filter.")
       else
         $('#filter_candidate_by_status').submit();
-    });
-    //Script for Autocomplete
-    $('#autocomplete').tokenInput("/fetch_candidates", {
-      theme : "facebook",
-      tokenLimit : 1,
-      preventDuplicates : true,
-      onAdd : function(item) {
-        $("#candidate_id").val(item.id);
-      },
-      resultsFormatter : function(item) {
-        return "<li><div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.name + "</div><div class='email'>" + item.subject + "</div></div></li>"
-      },
-      tokenFormatter : function(item) {
-        return "<li><p>" + item.name + "</p></li>"
-      }
     });
     //Script for select all
     $("#select_all").click(function() {
@@ -89,10 +70,13 @@
     });
     //Script for changing the status of the selected candidates
     $("#change_status").change(function() {
-      if($("#change_status").val() == "")
-        alert("Please select a valid status.")
-      else
+      if($(".select_candidate:checked").length == 0) {
+        alert("Please select atleast one candidate.");
+      } else if($("#change_status").val() == "") {
+        alert("Please select a valid status.");
+      } else {
         $("form#modify_status").submit();
+      }
     });
   });
 
