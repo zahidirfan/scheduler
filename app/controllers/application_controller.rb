@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  helper_method :feedback_status_hash, :check_user_privilege, :check_user_privilege, :user_roles_hash, :current_user, :check_admin_or_hr, :load_candidate
+  helper_method :hiring_status_hash, :feedback_status_hash, :check_user_privilege, :check_user_privilege, :user_roles_hash, :current_user, :check_admin_or_hr, :load_candidate
 
   private
 

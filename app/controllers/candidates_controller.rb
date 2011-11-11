@@ -105,4 +105,16 @@ class CandidatesController < ApplicationController
     list = candidates.map {|c| Hash[ id: c.id, name: c.name, subject: (c.subject ? c.subject : "")]}
     render json: list
   end
+
+  def mark_archive_for_selected_candidates
+    candidates = Candidate.find_all_by_id(params[:select].values) unless params[:select].blank?
+    unless candidates.blank?
+      candidates.each do |candidate|
+        candidate.update_attribute(:status, params[:change_status])
+      end
+    redirect_to candidates_url, :notice => 'Status was successfully updated.'
+    else
+    redirect_to candidates_url, :notice => 'No candidates selected for update.'
+    end
+  end
 end
