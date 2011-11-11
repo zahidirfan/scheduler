@@ -37,6 +37,10 @@ class ApplicationController < ActionController::Base
     {"Clear" => "Clear", "Hold" => "Hold", "Drop" => "Drop"}
   end
 
+  def hiring_status_hash
+    {"Archive" => "Archive", "Hired" => "Hired", "Bench" => "Bench"}
+  end
+
   def check_admin_or_hr(t)
     return ["Administrator", "Hr"].include?(t) ? true : false
   end
