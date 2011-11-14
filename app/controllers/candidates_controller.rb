@@ -5,11 +5,11 @@ class CandidatesController < ApplicationController
   load_and_authorize_resource
   def index
     if params[:search]
-    @candidates = Candidate.tagged_with(params[:search])
+    @candidates = Candidate.tagged_with(params[:search]).paginate(:page => params[:page], :per_page => "10")
     elsif !params[:status].blank?
-    @candidates = Candidate.find_all_by_status(params[:status])
+    @candidates = Candidate.paginate(:page => params[:page], :per_page => "10").find_all_by_status(params[:status])
     else
-    @candidates = Candidate.active.order("name")
+    @candidates = Candidate.active.order("name").paginate(:page => params[:page], :per_page => "10")
     end
 
     respond_to do |format|
@@ -104,5 +104,17 @@ class CandidatesController < ApplicationController
     end
     list = candidates.map {|c| Hash[ id: c.id, name: c.name, subject: (c.subject ? c.subject : "")]}
     render json: list
+  end
+
+  def mark_archive_for_selected_candidates
+    candidates = Candidate.find_all_by_id(params[:select].values) unless params[:select].blank?
+    unless candidates.blank?
+      candidates.each do |candidate|
+        candidate.update_attribute(:status, params[:change_status])
+      end
+    redirect_to candidates_url, :notice => 'Status was successfully updated.'
+    else
+    redirect_to candidates_url, :notice => 'No candidates selected for update.'
+    end
   end
 end

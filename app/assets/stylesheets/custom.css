@@ -75,3 +75,12 @@ span.comment_status_3 {
 .form_input{
 /*  width: 69%;*/
 }
+.pagination{
+  background: none repeat scroll 0 0 #EEEEEE;
+  float: right;
+  height: 20px;
+  padding-top: 5px;
+}
+.list_top_bar{
+  width: 95%;
+}

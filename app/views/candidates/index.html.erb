@@ -1,23 +1,32 @@
 <table width="100%">
   <tr>
-    <td width="25%"><h1>Listing Candidates</h1></td>
+    <td width="30%"><h1>List of Candidates</h1></td>
     <td width="33%">
-    <form class="searchform" style="margin-left: 50px">
+    <form class="searchform">
       <input type="text" name="search" id="search" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" />
       <input class="searchbutton" type="submit" value="Go" />
     </form></td>
-    <td width="20%">
+    <td width="25%">
     <form id ="filter_candidate_by_status">
       <div class="styled-select">
-      <%= select_tag('status', options_from_collection_for_select(feedback_status_hash, :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
+        <%= select_tag('status', options_from_collection_for_select(feedback_status_hash, :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
       </div>
     </form></td>
-    <td width="21%"> <%= select_tag("archive")%> </td>
   </tr>
 </table>
 <br />
+<%= form_tag(mark_archive_for_selected_candidates_path,:id => "modify_status") do%>
 <table id="box-table-a" style="width: 95%">
   <thead>
+    <div class="list_top_bar">
+      <div class="styled-select" style="float:left;">
+        <%= select_tag("change_status", options_from_collection_for_select(hiring_status_hash, :first, :last), {:prompt => "Mark as"}) %>
+      </div>
+      <div class="pagination">
+        <%= will_paginate(@candidates)%>
+      </div>
+    </div>
+    <br />
     <tr>
       <th scope="col"><%= check_box_tag("select_all")%></th>
       <th scope="col">Name</th>
@@ -30,7 +39,7 @@
     <% unless @candidates.blank? %>
     <% @candidates.each do |candidate| %>
     <tr>
-      <td><%= check_box_tag("select", nil, nil, :class=>"select_candidate")%></td>
+      <td><%= check_box_tag("select", nil, nil, :name =>"select[candidate_#{candidate.id}]", :value => candidate.id, :class=>"select_candidate")%></td>
       <td><%= candidate.name %></td>
       <td><%= show_candidate_status(candidate)%></td>
       <td><%= candidate.subject%></td>
@@ -39,45 +48,41 @@
     <% end %>
     <%else%>
     <tr>
-      <td colspan="4" class="no_records_found"> No candidates found. </td>
+      <td colspan="5" class="no_records_found"> No candidates found. </td>
     </tr>
     <%end%>
     </tody>
 </table>
+<%end%>
 <br />
 <%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
-<p>
-  <%= text_field_tag 'candidate_name', nil,:id => "autocomplete", :size => "30"%>
-  <%= hidden_field_tag 'candidate_id'%>
-</p>
 <script type="text/javascript">
   $(document).ready(function() {
-$("#status").change(function() {
-if($("#status").val() == "")
-alert("Please select a valid filter.")
-else
-$('#filter_candidate_by_status').submit();
-});
-
-$('#autocomplete').tokenInput("<%= fetch_candidates_path %>",
-  { theme: "facebook",
-    tokenLimit: 1,
-    preventDuplicates: true,
-    onAdd: function(item) {
-      $("#candidate_id").val(item.id);
-    }, resultsFormatter: function(item) {
-      return "<li><div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.name + "</div><div class='email'>" + item.subject + "</div></div></li>"
-    }, tokenFormatter: function(item) {
-      return "<li><p>" + item.name + "</p></li>"
-    }
+    //Script for filtering the candidates by status
+    $("#status").change(function() {
+      if($("#status").val() == "")
+        alert("Please select a valid filter.")
+      else
+        $('#filter_candidate_by_status').submit();
+    });
+    //Script for select all
+    $("#select_all").click(function() {
+      if($('#select_all').is(':checked')) {
+        $(".select_candidate").prop('checked', true);
+      } else {
+        $(".select_candidate").prop('checked', false);
+      }
+    });
+    //Script for changing the status of the selected candidates
+    $("#change_status").change(function() {
+      if($(".select_candidate:checked").length == 0) {
+        alert("Please select atleast one candidate.");
+      } else if($("#change_status").val() == "") {
+        alert("Please select a valid status.");
+      } else {
+        $("form#modify_status").submit();
+      }
+    });
   });
 
-  $("#select_all").click(function() {
-    if($('#select_all').is(':checked')) {
-      $(".select_candidate").prop('checked', true);
-    } else{
-      $(".select_candidate").prop('checked', false);
-    }
-  });
-  });
 </script>

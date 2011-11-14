@@ -44,5 +44,10 @@ module ApplicationHelper
     ("<span class='download'>"+ image_tag("#{style}", :align => "absmiddle") + "&nbsp; #{candidate.resume_file_name} </span>").html_safe
     end
   end
+  
+  def show_interview_title 
+    u = ""; u = "for " + User.find(params[:interviewer_filter]).name if params[:interviewer_filter]
+    "Interview Schedule #{u}  ~ Overview"
+  end
 
 end

@@ -10,4 +10,9 @@ module CommonAppMethods
   def check_admin_or_hr(t)
     return ["Administrator", "Hr"].include?(t) ? true : false
   end
+
+  def hiring_status_hash
+    {"Archive" => "Archive", "Hired" => "Hired", "Bench" => "Bench"}
+  end
+
 end

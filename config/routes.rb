@@ -33,6 +33,7 @@ Resume::Application.routes.draw do
   match 'interview/:view' => 'interviews#index'
 
   match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'
+  match 'mark_archive_for_selected_candidates' => 'candidates#mark_archive_for_selected_candidates', :as => 'mark_archive_for_selected_candidates'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

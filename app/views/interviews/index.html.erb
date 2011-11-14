@@ -1,14 +1,16 @@
-<div style="float:left"><h1>Interview Schedule ~ Overview</h1></div>
-  <div style="float:right" id="select_filter_by_interviewer">
-        <form id ="filter_by_interviewer">
-      <% if params[:view]=="calendar" %>
-        <input type="hidden" value="calendar" name="view" />
-      <% end %>
-       <div class="styled-select">
-      <%= select_tag('interviewer_filter', options_from_collection_for_select(User.interview_panel.collect{|u| [ u.id, u.name ] }, :first, :last, params[:interviewer_filter]), {:prompt => "Filter Interviews By"} ) %>
-      </div>
-    </form>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<tr>
+  <td width="70%"><h1><%= show_interview_title %></h1></td>
+  <td width="30%" align="right"><form id ="filter_by_interviewer">
+  <% if params[:view]=="calendar" %>
+    <input type="hidden" value="calendar" name="view" />
+  <% end %>
+   <div class="styled-select">
+  <%= select_tag('interviewer_filter', options_from_collection_for_select(User.interview_panel.collect{|u| [ u.id, u.name ] }, :first, :last, params[:interviewer_filter]), {:prompt => "Filter Interviews By"} ) %>
   </div>
+</form></td>
+</tr>
+</table>
 <div style="clear:both"></div>
 <br>
 <% if check_admin_or_hr(current_user.type) %>
@@ -24,4 +26,3 @@
 <% else %>
   <%= render :partial => "calendar_view" %>
 <% end %>
-
