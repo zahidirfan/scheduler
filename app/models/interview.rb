@@ -9,7 +9,7 @@ class Interview < ActiveRecord::Base
   validates :scheduled_at, :presence => true
 
   def update_schedule
-    self.schedule_time = self.scheduled_at.strftime("%I:%M:%S %p")
+    self.schedule_time = self.scheduled_at.strftime("%I:%M %p")
     self.endtime = self.scheduled_at.advance(:minutes => 30)
   end
 
@@ -46,5 +46,4 @@ class Interview < ActiveRecord::Base
   def formated_scheduled_at
     self.scheduled_at.strftime("%d-%m-%Y %I:%M %p") unless self.scheduled_at.nil?
   end
-
 end

@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   #check_authorization
+  include CommonAppMethods
 
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.type.to_s == "Interviewer"
@@ -27,18 +28,6 @@ class ApplicationController < ActionController::Base
 
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
-  end
-
-  def user_roles_hash
-    {"Business Manager" => "Bm", "Human Resource" => "Hr", "Interviewer" => "Interviewer", "Project Lead" => "Pl", "Administrator" => "Administrator"}
-  end
-
-  def feedback_status_hash
-    {"Clear" => "Clear", "Hold" => "Hold", "Drop" => "Drop"}
-  end
-
-  def check_admin_or_hr(t)
-    return ["Administrator", "Hr"].include?(t) ? true : false
   end
 
   def load_candidate
