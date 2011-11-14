@@ -1,5 +1,6 @@
 module CommonAppMethods
-    def user_roles_hash
+private
+  def user_roles_hash
     {"Business Manager" => "Bm", "Human Resource" => "Hr", "Interviewer" => "Interviewer", "Project Lead" => "Pl", "Administrator" => "Administrator"}
   end
 
