@@ -1,11 +1,10 @@
 namespace :db do
-  require "faker"
-  require "common_app_methods"
-  include CommonAppMethods
   namespace :populate do
+  require "faker"
+  TAGS = ["ruby", "ruby on rails", "jquery", "iphone", "Android", "java", "UI developer", "UI designer"]
   task :users => :environment do
     passwd = 'password'
-    user_types = user_roles_hash.values
+    user_types = USER_ROLES.values
     user_types.delete("Administrator")
     2.times do
       name = Faker::Internet.user_name
@@ -27,7 +26,8 @@ namespace :db do
         priority_id = rand(3)
         subject = Faker::Lorem.sentences(1).first
         resume = File.open(Dir.glob(File.join(Rails.root, 'public','sample_resumes','*')).sample)
-        Candidate.create!(:name => name, :email => email, :mobile => mobile, :phone => phone, :priority_id => priority_id, :resume => resume, :subject => subject)
+        tag_list = TAGS.sample(2)
+        Candidate.create!(:name => name, :email => email, :mobile => mobile, :phone => phone, :priority_id => priority_id, :resume => resume, :subject => subject, :tag_list => tag_list)
         puts "Candidate Created (Name: #{name})."
       end
     end

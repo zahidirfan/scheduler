@@ -35,7 +35,7 @@
     </tr>
     <tr>
       <td class="form_label"><%= f.label :type %></td>
-      <td class="form_input"><%= f.select(:type, user_roles_hash, :selected => @user.type) %></td>
+      <td class="form_input"><%= f.select(:type, USER_ROLES, :selected => @user.type) %></td>
     </tr>
     <tr class="button">
       <td></td>
@@ -43,4 +43,4 @@
     </tr>
   </tbody>
 </table>
-<% end %> 
+<% end %>

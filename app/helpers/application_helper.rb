@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def show_comment_status(i)
-    val = feedback_status_hash.key(i.to_s)
+    val = FEEDBACK_STATUS.key(i.to_s)
     "<span class='comment_status_#{i}'>#{val}</span>".html_safe
   end
 
@@ -44,8 +44,8 @@ module ApplicationHelper
     ("<span class='download'>"+ image_tag("#{style}", :align => "absmiddle") + "&nbsp; #{candidate.resume_file_name} </span>").html_safe
     end
   end
-  
-  def show_interview_title 
+
+  def show_interview_title
     u = ""; u = "for " + User.find(params[:interviewer_filter]).name if params[:interviewer_filter]
     "Interview Schedule #{u}  ~ Overview"
   end

@@ -18,8 +18,8 @@
 <%= f.hidden_field :candidate_id, :value => params[:candidate_id] %>
 <br />
 <div class="field">
-  <%= f.label :status %>: 
-  <%= f.select(:status, feedback_status_hash, :selected => @comment.status) %>
+  <%= f.label :status %>:
+  <%= f.select(:status, FEEDBACK_STATUS, :selected => @comment.status) %>
 </div>
 <br />
 <div class="actions">

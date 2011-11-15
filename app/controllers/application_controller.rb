@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   #check_authorization
-  include CommonAppMethods
 
   rescue_from CanCan::AccessDenied do |exception|
     if current_user.type.to_s == "Interviewer"
@@ -11,9 +10,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  helper_method :hiring_status_hash, :feedback_status_hash, :check_user_privilege, :user_roles_hash, :current_user, :check_admin_or_hr, :load_candidate
+  helper_method :check_user_privilege, :current_user, :check_admin_or_hr, :load_candidate
 
   private
+
+  def check_admin_or_hr(t)
+    return ["Administrator", "Hr"].include?(t) ? true : false
+  end
 
   def check_user_privilege
     unless current_user.type == "Hr"

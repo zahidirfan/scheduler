@@ -9,7 +9,7 @@
     <td width="25%">
     <form id ="filter_candidate_by_status">
       <div class="styled-select">
-        <%= select_tag('status', options_from_collection_for_select(feedback_status_hash, :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
+        <%= select_tag('status', options_from_collection_for_select(FEEDBACK_STATUS, :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
       </div>
     </form></td>
   </tr>
@@ -20,7 +20,7 @@
   <thead>
     <div class="list_top_bar">
       <div class="styled-select" style="float:left;">
-        <%= select_tag("change_status", options_from_collection_for_select(hiring_status_hash, :first, :last), {:prompt => "Mark as"}) %>
+        <%= select_tag("change_status", options_from_collection_for_select(HIRING_STATUS, :first, :last), {:prompt => "Mark as"}) %>
       </div>
       <div class="pagination">
         <%= will_paginate(@candidates)%>
