@@ -12,6 +12,9 @@ class InterviewsController < ApplicationController
       else
         @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
       end
+      @calendar = false
+    else
+      @calendar = true
     end
     @interview = Interview.new
     respond_to do |format|
@@ -44,6 +47,7 @@ class InterviewsController < ApplicationController
   # GET /interviews/1/edit
   def edit
     @interview = @candidate.interviews.find(params[:id])
+    @calendar = params[:view] != 'calendar' ? true : false
   end
 
   # POST /interviews
