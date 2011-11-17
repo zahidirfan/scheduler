@@ -1,5 +1,5 @@
 <% obj = @candidate.nil? ? @interview : [@candidate,@interview] %>
-<%= form_for obj, :html => {:id => "interview_form", :remote => true} do |f| %>
+<%= form_for obj, :html => {:id => "interview_form", :remote => @calendar} do |f| %>
 <% if @interview.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(@interview.errors.count, "error") %> prohibited this interview from being saved:</h2>
@@ -30,8 +30,7 @@
     </td>
   </tr>
   <tr>
-    <td colspan="2"><%= f.submit %><span id="msg" class="red margin-left"></span><span id = "updated" style = "display:none;">Updated</span>
-
+    <td colspan="2"><%= f.submit %><span id="msg" style = "display:none;" class="red margin-left"></span>
   </tr>
 <div class="actions">
 
@@ -48,7 +47,9 @@
         return false;
       }
     })
-      .bind("ajax:success", function(event, data, status, xhr) {
+    .bind("ajax:success", function(event, data, status, xhr) {
+        $('.token-input-dropdown-facebook').hide();
+        $('#autocomplete').tokenInput("clear");
         $(this)[0].reset();
     });
 
