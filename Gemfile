@@ -11,7 +11,7 @@ gem 'json'
 gem 'acts-as-taggable-on', '~>2.1.0'
 gem 'quo_vadis'
 gem 'delayed_job'
-gem 'mongrel', ">= 1.2.0.pre2"
+#gem 'mongrel', ">= 1.2.0.pre2"
 gem 'cancan'
 gem 'will_paginate'
 
