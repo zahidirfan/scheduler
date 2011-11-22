@@ -1,0 +1,49 @@
+<div>
+  <h2> Create Technologies as Tag </h2>
+  <% if !@tag.nil? && @tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tag.errors.count, "error") %> prohibited this  from being saved:</h2>
+      <ul>
+        <% @tag.errors.full_messages.each do |msg| %>
+        <li>
+          <%= msg.sub("Name", "Tag Name") %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<%= form_tag do %>
+<%= text_field_tag "name", nil %>
+<%= submit_tag "Create Tag" %>
+<% end %>
+</div>
+<div>
+  <h2> List of Technologies as Tag </h2>
+  <%= @tag_list.map { |tag| "<span class='del'>" + (link_to tag.name, tag_candidates_path(tag.name)) + (link_to "[X]", nil, :class => "del hide", :id => tag.id, :name => tag.name, :confirm => "Are you sure???") + "</span>" }.join(", ").html_safe %>
+</div>
+<script>
+  $(function() {
+    $('a.del')
+      .hide()
+      .click(function() {
+        //var answer = confirm("Are you sure to delete this tag?");
+        //if(answer) {
+        jQuery.ajax({
+            data: 'id=' + this.id,
+            dataType: 'script',
+            type: 'delete',
+            url: "/candidates/tag/"+this.name
+          });
+        //}
+    });
+    $('span.del').hover(
+    function() {
+      $(this).find('a.del').show();
+    },
+    function() {
+      $(this).find('a.del').hide();
+    }
+  );
+});
+</script>

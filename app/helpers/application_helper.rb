@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include ActsAsTaggableOn::TagsHelper
+
   def show_candidate_status(c)
     c.status.nil? ? "New" : c.status
   end

@@ -13,6 +13,9 @@ Resume::Application.routes.draw do
   resources :users
 
   resources :candidates do
+    collection do
+      get :tag
+    end
     resources :interviews do
       resources :comments
     end
@@ -31,9 +34,12 @@ Resume::Application.routes.draw do
   match 'get_interviews' => "interviews#get_interviews" , :as => :get_interviews
   match 'get_interviews/:interviewer_id' => "interviews#get_interviews" , :as => :get_interviews
   match 'interview/:view' => 'interviews#index'
-
+  match 'interviews/move' => "interviews#move"
+  match 'create_custom_tags' => 'candidates#create_custom_tags'
+  match 'pull_tags' => 'candidates#pull_tags'
   match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'
   match 'mark_archive_for_selected_candidates' => 'candidates#mark_archive_for_selected_candidates', :as => 'mark_archive_for_selected_candidates'
+  match "candidates/tag/:name" => "candidates#tag", :as => :tag_candidates
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

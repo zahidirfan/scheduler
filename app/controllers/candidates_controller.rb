@@ -3,6 +3,7 @@ class CandidatesController < ApplicationController
   # GET /candidates.json
   before_filter :authenticate
   load_and_authorize_resource
+
   def index
     if params[:search]
     @candidates = Candidate.tagged_with(params[:search]).paginate(:page => params[:page], :per_page => "10")
@@ -11,11 +12,28 @@ class CandidatesController < ApplicationController
     else
     @candidates = Candidate.active.order("name").paginate(:page => params[:page], :per_page => "10")
     end
-
+    @tags = Candidate.tag_counts_on(:tags)
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @candidates }
     end
+  end
+
+  def tag
+    if request.delete?
+      Candidate.tagged_with(params[:name]).each { |c| c.tag_list.remove(params[:name]) }
+      ActsAsTaggableOn::Tag.delete(params[:id])
+    else
+      @candidates = Candidate.tagged_with(params[:name]).paginate(:page => params[:page], :per_page => "10")
+      @tags = Candidate.tag_counts_on(:tags)
+      render :action => 'index'
+    end
+  end
+
+  def tag_delete
+    @candidates = Candidate.tagged_with(params[:name]).paginate(:page => params[:page], :per_page => "10")
+    @tags = Candidate.tag_counts_on(:tags)
+    render :action => 'index'
   end
 
   # GET /candidates/1
@@ -117,4 +135,18 @@ class CandidatesController < ApplicationController
     redirect_to candidates_url, :notice => 'No candidates selected for update.'
     end
   end
+
+  def create_custom_tags
+    tag_name = params[:name]
+    if tag_name
+      @tag = ActsAsTaggableOn::Tag.create(:name => tag_name.downcase)
+      flash.now.notice = "Custom Tag Created Successfully"
+    end
+    @tag_list = ActsAsTaggableOn::Tag.all
+  end
+
+  def pull_tags
+    render json: ActsAsTaggableOn::Tag.where("name LIKE ?", "#{params[:q]}%")
+  end
+
 end

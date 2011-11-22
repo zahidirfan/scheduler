@@ -1,6 +1,6 @@
 class Candidate < ActiveRecord::Base
 
-  acts_as_taggable
+  acts_as_taggable_on :tags
 
   has_attached_file :resume, :content_type => 'image/jpeg'
   validates_attachment_presence :resume

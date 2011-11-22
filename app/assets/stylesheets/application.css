@@ -11,6 +11,15 @@ body {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 13px;
 }
+a:link, a:visited, a:active {
+  font-size: 12px;
+  text-decoration: none;
+  color: #000;
+}
+a:hover {
+  text-decoration: underline;
+}
+
 #loading {
   position: absolute;
   right: 0px;
@@ -38,6 +47,10 @@ h1 {
 .margin-left {
   margin-left: 5px;
 }
+.hide {
+  display: none;
+}
+
 #select_filter_by_interviewer {
   margin: 5px 5px 0 0;
 }
@@ -98,6 +111,10 @@ a.top_link:link, a.top_link:active, a.top_link:visited {
 #event_desc label {
   font-weight: bold;
 }
+.tag_cloud1 { font-size: 0.6em !important; }
+.tag_cloud2 { font-size: 0.8em !important; }
+.tag_cloud3 { font-size: 1.0em !important; }
+.tag_cloud4 { font-size: 1.2em !important; }
 /* search form
  -------------------------------------- */
 .searchform {
@@ -164,7 +181,7 @@ a.download:hover {
   width: 220px;
   height: 30px;
   overflow: hidden;
-  background: url("/assets/down_arrow_select.jpg") no-repeat right #ddd;
+  background: url("down_arrow_select.jpg") no-repeat right #ddd;
 }
 .styled-select select {
   background: transparent;

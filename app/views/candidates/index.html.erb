@@ -51,11 +51,20 @@
       <td colspan="5" class="no_records_found"> No candidates found. </td>
     </tr>
     <%end%>
-    </tody>
+    </tbody>
 </table>
 <%end%>
 <br />
-<%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
+<% if can? :create, Candidate %>
+<%= link_to 'New Candidate', new_candidate_path %> <%= " | " %>
+<%= link_to 'Manage Custom Tags', create_custom_tags_path %>
+<% end %>
+<br />
+<h4>Tag Cloud:</h4>
+<% tag_cloud(@tags, %w(tag_cloud1 tag_cloud2 tag_cloud3 tag_cloud4)) do |tag, css_class| %>
+  <%= link_to tag.name, tag_candidates_path(tag.name), :class => css_class %>
+<% end %>
+
 <script type="text/javascript">
   $(document).ready(function() {
     //Script for filtering the candidates by status

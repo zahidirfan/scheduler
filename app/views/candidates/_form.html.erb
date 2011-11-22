@@ -40,7 +40,9 @@
     </tr>
     <tr>
       <td class="form_label">Tag List</td>
-      <td class="form_input"><%= f.text_area :tag_list, :rows => "5", :cols => "40" %></td>
+      <td class="form_input">
+        <%= f.text_field :tag_list, :id => "autocomplete", :size => "20"  %>
+      </td>
     </tr>
     <tr class="button">
       <td></td>
@@ -48,4 +50,20 @@
     </tr>
   </tbody>
 </table>
-<% end %> 
+<% end %>
+<script type="text/javascript">
+  $('#autocomplete').tokenInput("<%= pull_tags_path %>",
+  {
+    theme: "facebook",
+    tokenLimit: 5,
+    tokenValue: "name",
+    preventDuplicates: true,
+    onAdd: function(item) {
+      $("#candidate_id").val(item.id);
+    }, resultsFormatter: function(item) {
+      return "<li><div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.name + "</div></div></li>"
+    }, tokenFormatter: function(item) {
+      return "<li><p>" + item.name + "</p></li>"
+    }
+  });
+</script>

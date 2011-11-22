@@ -3,7 +3,7 @@ class InterviewsController < ApplicationController
   # GET /interviews.json
   #before_filter :check_interview_schedule, :only => [:new]
   load_and_authorize_resource
-  before_filter :load_candidate, :except => [:index, :get_interviews]
+  before_filter :load_candidate, :except => [:index, :get_interviews, :move, :resize]
 
   def index
     if (params[:view] != 'calendar')
@@ -12,9 +12,6 @@ class InterviewsController < ApplicationController
       else
         @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
       end
-      @calendar = false
-    else
-      @calendar = true
     end
     @interview = Interview.new
     respond_to do |format|
@@ -47,7 +44,6 @@ class InterviewsController < ApplicationController
   # GET /interviews/1/edit
   def edit
     @interview = @candidate.interviews.find(params[:id])
-    @calendar = params[:view] != 'calendar' ? true : false
   end
 
   # POST /interviews
@@ -90,8 +86,6 @@ class InterviewsController < ApplicationController
     else
       meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
     end
-
-#    meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
     interviews = meth.fetch_interviews(params['start'], params['end'])
     desc_interviews = interviews.collect do |interview|
       {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{current_user.type}", :allDay => false, :recurring => false }
@@ -102,7 +96,7 @@ class InterviewsController < ApplicationController
   def move
     @interview = Interview.find(params[:id])
     if @interview
-      @interview.starttime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.starttime))
+      @interview.scheduled_at = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.scheduled_at))
       @interview.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.endtime))
 #      @interview.all_day = params[:all_day]
       @interview.save
