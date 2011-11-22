@@ -76,10 +76,10 @@ span.comment_status_3 {
 /*  width: 69%;*/
 }
 .pagination{
-  background: none repeat scroll 0 0 #EEEEEE;
+/*  background: none repeat scroll 0 0 #EEEEEE;*/
   float: right;
-  height: 20px;
-  padding-top: 5px;
+  height: 30px;
+  padding-top: 0px;
 }
 .list_top_bar{
   width: 95%;

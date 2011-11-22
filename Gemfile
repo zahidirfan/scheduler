@@ -11,7 +11,7 @@ gem 'json'
 gem 'acts-as-taggable-on', '~>2.1.0'
 gem 'quo_vadis'
 gem 'delayed_job'
-gem 'mongrel', ">= 1.2.0.pre2"
+#gem 'mongrel', ">= 1.2.0.pre2"
 gem 'cancan'
 gem 'will_paginate'
 
@@ -27,7 +27,7 @@ end
 gem 'jquery-rails'
 gem 'therubyracer'
 gem 'faker'
-gem 'ruby-debug19', '0.11.6', :require => 'ruby-debug', :groups => [:development, :test]
+#gem 'ruby-debug19', '0.11.6', :require => 'ruby-debug', :groups => [:development, :test]
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

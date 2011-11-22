@@ -3,17 +3,17 @@ namespace :db do
   require "faker"
   TAGS = ["ruby", "ruby on rails", "jquery", "iphone", "Android", "java", "UI developer", "UI designer"]
   task :users => :environment do
-    passwd = 'password'
-    user_types = USER_ROLES.values
-    user_types.delete("Administrator")
-    2.times do
-      name = Faker::Internet.user_name
-#      email = Faker::Internet.email
-      email = name+"@imaginea.com"
-      type = user_types.sample
-      User.create!(:name => name, :username => name, :email => email, :password => passwd, :password_confirmation => passwd, :type => type)
-      puts "User Created (username: #{name}, password: #{passwd})."
-    end
+#     passwd = 'password'
+#     user_types = USER_ROLES.values
+#     user_types.delete("Administrator")
+#     2.times do
+#       name = Faker::Internet.user_name
+# #      email = Faker::Internet.email
+#       email = name+"@imaginea.com"
+#       type = user_types.sample
+#       User.create!(:name => name, :username => name, :email => email, :password => passwd, :password_confirmation => passwd, :type => type)
+#       puts "User Created (username: #{name}, password: #{passwd})."
+#     end
   end
 
     task :candidates => :environment do
