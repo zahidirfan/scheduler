@@ -20,22 +20,18 @@
 </div>
 <div>
   <h2> List of Technologies as Tag </h2>
-  <%= @tag_list.map { |tag| "<span class='del'>" + (link_to tag.name, tag_candidates_path(tag.name)) + (link_to "[X]", nil, :class => "del hide", :id => tag.id, :name => tag.name, :confirm => "Are you sure???") + "</span>" }.join(", ").html_safe %>
+  <%= @tag_list.map { |tag| "<span class='del'>" + (link_to tag.name, tag_candidates_path(tag.name)) + (link_to "[X]", nil, :class => "del hide", :id => tag.id, :name => tag.name, :confirm => "Are you sure?") + "</span>" }.join(", ").html_safe %>
 </div>
 <script>
   $(function() {
     $('a.del')
-      .hide()
       .click(function() {
-        //var answer = confirm("Are you sure to delete this tag?");
-        //if(answer) {
         jQuery.ajax({
             data: 'id=' + this.id,
             dataType: 'script',
             type: 'delete',
             url: "/candidates/tag/"+this.name
           });
-        //}
     });
     $('span.del').hover(
     function() {

@@ -2,9 +2,9 @@
   <tr>
     <td width="30%"><h1>List of Candidates</h1></td>
     <td width="33%">
-    <form class="searchform">
-      <input type="text" name="search" id="search" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" />
-      <input class="searchbutton" type="submit" value="Go" />
+      <form class="searchform" id="searchform">
+      <input type="text" name="search" id="tag_autocomplete" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" data-pre="<%= @search_tags.map(&:attributes).to_json unless @search_tags.blank?  %>" />
+      <input class="searchbutton hide" type="submit" value="Go" />
     </form></td>
     <td width="25%">
     <form id ="filter_candidate_by_status">

@@ -62,6 +62,42 @@ alert("Please select a valid filter.")
 else
 $('#filter_by_interviewer').submit();
 });
+
+$('#tag_autocomplete').tokenInput("/pull_tags",
+{
+  theme: "facebook",
+  tokenLimit: 10,
+  tokenValue: "name",
+  preventDuplicates: true,
+  prePopulate: $("#tag_autocomplete").data("pre"),
+  hintText: "Type in a Tag Name",
+  noResultsText: "No Tag Found",
+  searchingText: "Searching Tags...",
+  onAdd: function(item) {
+  }, resultsFormatter: function(item) {
+    return "<li><div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.name + "</div></div></li>"
+  }, tokenFormatter: function(item) {
+    return "<li><p>" + item.name + "</p></li>"
+  }
+});
+
+if($('li.token-input-token-facebook').length == 0) {
+   $('#token-input-tag_autocomplete').val('Search by Tags');
+}
+
+$('#token-input-tag_autocomplete').focus(function() {
+  $(this).val('');
+})
+.blur(function() {
+   if($('li.token-input-token-facebook').length == 0) {
+    $(this).val('Search by Tags');
+    var style = $(this).attr('style');
+    $(this).attr('style', style.replace(/width: \d\dpx;/g, ''));
+   } else {
+    $('#searchform').submit();
+   }
+ });
+
 });
 
 function editEvent(interview_id, candidate_id){

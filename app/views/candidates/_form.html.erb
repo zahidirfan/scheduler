@@ -39,9 +39,9 @@
         <%= show_resume(@candidate) unless @candidate.resume.blank?%>
     </tr>
     <tr>
-      <td class="form_label">Tag List</td>
+      <td class="form_label">Tag List (upto 10 Tags)</td>
       <td class="form_input">
-        <%= f.text_field :tag_list, :id => "autocomplete", :size => "20"  %>
+        <%= f.text_field :tag_list, :data => {:pre => @candidate.tags.map(&:attributes).to_json}, :id => "tag_autocomplete", :size => "20"  %>
       </td>
     </tr>
     <tr class="button">
@@ -51,19 +51,3 @@
   </tbody>
 </table>
 <% end %>
-<script type="text/javascript">
-  $('#autocomplete').tokenInput("<%= pull_tags_path %>",
-  {
-    theme: "facebook",
-    tokenLimit: 5,
-    tokenValue: "name",
-    preventDuplicates: true,
-    onAdd: function(item) {
-      $("#candidate_id").val(item.id);
-    }, resultsFormatter: function(item) {
-      return "<li><div style='display: inline-block; padding-left: 10px;'><div class='full_name'>" + item.name + "</div></div></li>"
-    }, tokenFormatter: function(item) {
-      return "<li><p>" + item.name + "</p></li>"
-    }
-  });
-</script>

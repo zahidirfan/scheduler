@@ -6,7 +6,9 @@ class CandidatesController < ApplicationController
 
   def index
     if params[:search]
-    @candidates = Candidate.tagged_with(params[:search]).paginate(:page => params[:page], :per_page => "10")
+    @candidates = Candidate.tagged_with(params[:search], :any => true).paginate(:page => params[:page], :per_page => "10")
+    @search_tags = ActsAsTaggableOn::Tag.named_like_any(params[:search].split(','))
+
     elsif !params[:status].blank?
     @candidates = Candidate.paginate(:page => params[:page], :per_page => "10").find_all_by_status(params[:status])
     else
@@ -23,6 +25,7 @@ class CandidatesController < ApplicationController
     if request.delete?
       Candidate.tagged_with(params[:name]).each { |c| c.tag_list.remove(params[:name]) }
       ActsAsTaggableOn::Tag.delete(params[:id])
+      flash.now.notice = "Tag Name and its associated taggings are sucessfully deleted."
     else
       @candidates = Candidate.tagged_with(params[:name]).paginate(:page => params[:page], :per_page => "10")
       @tags = Candidate.tag_counts_on(:tags)
@@ -30,11 +33,6 @@ class CandidatesController < ApplicationController
     end
   end
 
-  def tag_delete
-    @candidates = Candidate.tagged_with(params[:name]).paginate(:page => params[:page], :per_page => "10")
-    @tags = Candidate.tag_counts_on(:tags)
-    render :action => 'index'
-  end
 
   # GET /candidates/1
   # GET /candidates/1.json
@@ -146,7 +144,7 @@ class CandidatesController < ApplicationController
   end
 
   def pull_tags
-    render json: ActsAsTaggableOn::Tag.where("name LIKE ?", "#{params[:q]}%")
+    render json: ActsAsTaggableOn::Tag.where("name LIKE ?", "%#{params[:q]}%")
   end
 
 end
