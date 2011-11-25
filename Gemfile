@@ -14,6 +14,7 @@ gem 'delayed_job'
 #gem 'mongrel', ">= 1.2.0.pre2"
 gem 'cancan'
 gem 'will_paginate'
+gem 'icalendar'
 
 # Gems used only for assets and not required
 # in production environments by default.

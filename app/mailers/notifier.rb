@@ -13,12 +13,14 @@ end
 
 
 class Notifier < ActionMailer::Base
+  include UserInfo
   def interview_schedule_mail(interview)
     @user = User.find_by_id(interview.user_id)
     @candidate = Candidate.find_by_id(interview.candidate_id)
     @interview = interview
     attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
-    mail :to => @user.email, :from => "rapbhantest@gmail.com", :subject => "Interview Scheduled"
+    attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("tmp/ics_files/invite_#{interview.candidate.name}_#{interview.user.name}.ics")}
+    mail :to => @user.email, :from => current_user.email, :subject => "Interview Scheduled"
   end
 
   def interview_reschedule_mail(interview)
@@ -26,7 +28,8 @@ class Notifier < ActionMailer::Base
     @candidate = Candidate.find_by_id(interview.candidate_id)
     @interview = interview
     attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
-    mail :to => @user.email, :from => "rapbhantest@gmail.com", :subject => "Interview rescheduled"
+    attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("tmp/ics_files/invite_#{interview.candidate.name}_#{interview.user.name}.ics")}
+    mail :to => @user.email, :from => current_user.email, :subject => "Interview rescheduled"
   end
 
   def interview_cancel_mail(user_id,candidate_id,scheduled_at,schedule_time)
@@ -34,7 +37,7 @@ class Notifier < ActionMailer::Base
     @candidate_obj = Candidate.find_by_id(candidate_id)
     @scheduled_at = scheduled_at
     @schedule_time = schedule_time
-    mail :to => @usr.email, :from => "rapbhantest@gmail.com", :subject => "Interview cancelled"
+    mail :to => @usr.email, :from => current_user.email, :subject => "Interview cancelled"
   end
 
   def interview_feedback_mail(comment)

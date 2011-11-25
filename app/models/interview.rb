@@ -1,4 +1,5 @@
 class Interview < ActiveRecord::Base
+  include CalendarInvite
   belongs_to :candidate
   belongs_to :user
   has_many :comments
@@ -18,7 +19,9 @@ class Interview < ActiveRecord::Base
   end
 
   after_create do |interview|
-    Notifier.delay.interview_schedule_mail(interview)
+    make_ical(interview)
+#    Notifier.delay.interview_schedule_mail(interview)
+    Notifier.interview_schedule_mail(interview).deliver
   end
 
   after_update do |interview|
@@ -45,5 +48,9 @@ class Interview < ActiveRecord::Base
 
   def formated_scheduled_at
     self.scheduled_at.strftime("%d-%m-%Y %I:%M %p") unless self.scheduled_at.nil?
+  end
+
+  def formated_schedule_endtime
+    self.endtime.strftime("%d-%m-%Y %I:%M %p") unless self.endtime.nil?
   end
 end

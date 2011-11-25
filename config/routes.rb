@@ -40,6 +40,7 @@ Resume::Application.routes.draw do
   match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'
   match 'mark_archive_for_selected_candidates' => 'candidates#mark_archive_for_selected_candidates', :as => 'mark_archive_for_selected_candidates'
   match "candidates/tag/:name" => "candidates#tag", :as => :tag_candidates
+  match "interviews/make_ical/:int_id" => "interviews#make_ical", :as => :make_ical
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
