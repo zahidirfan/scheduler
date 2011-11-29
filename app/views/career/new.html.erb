@@ -1,0 +1,50 @@
+<html>
+  <%= content_tag :head do -%>
+    <title>Career Form</title>
+    <%= stylesheet_link_tag "niceforms-css/niceforms-default", "jbar" %>
+    <%= javascript_include_tag "niceforms-js/niceforms.js", "jquery", "jquery.bar" %>
+    <%= flash_notifications %>
+  <% end %>
+  <%= content_tag :body do -%>
+    <a id="notification_bar"></a>
+    <div id ="header"></div>
+    <%= form_for @message, :url => career_path do |form| %>
+      <fieldset class="fieldset">
+         <legend>Career form</legend>
+          <dl>
+            <dt><%= form.label :name %>:</dt>
+            <dd><%= form.text_field :name %></dd>
+        </dl>
+        <div class="field">
+          <dl>
+            <dt><%= form.label :email %>:<br /></dt>
+          <dd><%= form.text_field :email %></dd>
+        </dl>
+        </div>
+        <div class="field">
+          <dl>
+            <dt><%= form.label :subject %>:<br /></dt>
+          <dd><%= form.text_field :subject %></dd>
+        </dl>
+        </div>
+        <div class="field">
+          <dl>
+            <dt><%= form.label :resume %>:<br /></dt>
+            <dd><%= form.file_field :resume %></dd>
+        </dl>
+        </div>
+        <div class="field">
+          <dl>
+            <dt><%= form.label :description %>:<br /></dt>
+          <dd><%= form.text_area :description %></dd>
+        </dl>
+        </div>
+        <div class="field">
+          <dl>
+            <dd><%= form.submit "Send", :width => "100px" %></dd>
+        </dl>
+        </div>
+      </fieldset>
+    <% end %>
+  <% end %>
+</html>

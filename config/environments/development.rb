@@ -26,6 +26,8 @@ Resume::Application.configure do
 
   # Do not compress assets
   config.assets.compress = false
+  config.assets.precompile += ['niceforms.js', 'niceforms-default.css']
+
 
   # Expands the lines which load the assets
   config.assets.debug = true

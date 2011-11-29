@@ -14,6 +14,7 @@ end
 
 class Notifier < ActionMailer::Base
   include UserInfo
+
   def interview_schedule_mail(interview)
     @user = User.find_by_id(interview.user_id)
     @candidate = Candidate.find_by_id(interview.candidate_id)
@@ -46,5 +47,11 @@ class Notifier < ActionMailer::Base
     @interview = Interview.find_by_id(comment.interview_id)
     @comment = comment
     mail :to => "priya.t@imaginea.com", :from => @user.email, :subject => "Interview Feedback"
+  end
+
+  def new_message(message)
+    @message = message
+    attachments[message.resume.original_filename] = message.resume.read
+    mail(:to => CONTACT_TO_EMAIL, :from => message.email, :subject => "[New Candidate] #{message.subject}")
   end
 end

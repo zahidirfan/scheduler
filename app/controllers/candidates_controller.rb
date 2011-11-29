@@ -1,8 +1,9 @@
 class CandidatesController < ApplicationController
   # GET /candidates
   # GET /candidates.json
-  before_filter :authenticate
+  before_filter :authenticate, :except => [:new, :create, :pull_tags]
   load_and_authorize_resource
+  skip_authorize_resource :only => [:new, :create, :pull_tags]
 
   def index
     if params[:search]
@@ -56,6 +57,10 @@ class CandidatesController < ApplicationController
     end
   end
 
+  def new_from_career_form
+    @candidate = Candidate.new
+  end
+
   # GET /candidates/1/edit
   def edit
     @candidate = Candidate.find(params[:id])
@@ -68,8 +73,13 @@ class CandidatesController < ApplicationController
 
     respond_to do |format|
       if @candidate.save
-        format.html { redirect_to @candidate, notice: 'Candidate was successfully created.' }
-        format.json { render json: @candidate, status: :created, location: @candidate }
+        unless current_user.blank?
+          format.html { redirect_to @candidate, notice: 'Candidate was successfully created.' }
+          format.json { render json: @candidate, status: :created, location: @candidate }
+        else
+          format.html { redirect_to add_candidate_path, notice: 'Candidate was successfully created.' }
+          format.json { render json: add_path, status: :created }
+        end
       else
         format.html { render action: "new" }
         format.json { render json: @candidate.errors, status: :unprocessable_entity }

@@ -14,7 +14,7 @@
 <table class="create_edit_form" cellpadding="5" cellspacing="5">
   <tbody>
     <tr>
-      <td class="form_label"><%= f.label :name %></td>
+      <td class="form_label"><%= f.label :name %><sup>*</sup></td>
       <td class="form_input"><%= f.text_field :name %></td>
     </tr>
     <tr>
@@ -34,7 +34,7 @@
       <td class="form_input"><%= f.text_field :subject %></td>
     </tr>
     <tr>
-      <td class="form_label"><%= f.label :resume%></td>
+      <td class="form_label"><%= f.label :resume%><sup>*</sup></td>
       <td class="form_input"><%= f.file_field :resume %><td>
         <%= show_resume(@candidate) unless @candidate.resume.blank?%>
     </tr>
@@ -46,7 +46,7 @@
     </tr>
     <tr class="button">
       <td></td>
-      <td class="form_input"><%= f.submit %></td>
+      <td class="form_input"><%= f.submit "Submit", :class => "small-width" %></td>
     </tr>
   </tbody>
 </table>

@@ -18,3 +18,5 @@ HIRING_STATUS = {
   "Bench" => "Bench"
 }
 
+CONTACT_TO_EMAIL = "gokul.m@imaginea.com"
+

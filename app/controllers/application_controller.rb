@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   include UserInfo
 
   rescue_from CanCan::AccessDenied do |exception|
-    if current_user.type.to_s == "Interviewer"
+    if !current_user.nil? && current_user.type.to_s == "Interviewer"
       redirect_to interviews_url, :notice => exception.message
     else
       redirect_to root_url, :notice => exception.message
