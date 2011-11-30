@@ -6,8 +6,12 @@
     | <%= link_to "Manage Users", users_path, :class => "top_link" %>
   <% end %>
 
-  <% if INTERVIEW_PANEL_USER_TYPES.include?(current_user.type.to_s) %>
+  <% if can? :create, Candidate %>
     | <%= link_to 'Manage Tags', create_custom_tags_path, :class => "top_link" %>
+  <% end %>
+
+
+  <% if INTERVIEW_PANEL_USER_TYPES.include?(current_user.type.to_s) %>
     | <%= link_to "Manage Interviews", interviews_path, :class => "top_link" %>
     <%= link_to "(Calender View)", interviews_path(:view => 'calendar'), :class => "top_link" %>
   <% end %>
