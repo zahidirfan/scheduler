@@ -35,6 +35,7 @@ Resume::Application.routes.draw do
   match 'get_interviews/:interviewer_id' => "interviews#get_interviews" , :as => :get_interviews
   match 'interview/:view' => 'interviews#index'
   match 'interviews/move' => "interviews#move"
+  match 'interviews/resize' => "interviews#resize"
   match 'create_custom_tags' => 'candidates#create_custom_tags'
   match 'pull_tags' => 'candidates#pull_tags'
   match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'

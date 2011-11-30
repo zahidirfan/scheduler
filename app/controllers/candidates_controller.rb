@@ -3,7 +3,7 @@ class CandidatesController < ApplicationController
   # GET /candidates.json
   before_filter :authenticate, :except => [:new, :create, :pull_tags]
   load_and_authorize_resource
-  skip_authorize_resource :only => [:new, :create, :pull_tags]
+  skip_authorize_resource :only => [:new, :create, :pull_tags, :fetch_candidates]
 
   def index
     if params[:search]

@@ -101,14 +101,20 @@ class InterviewsController < ApplicationController
 #      @interview.all_day = params[:all_day]
       @interview.save
     end
+    respond_to do |format|
+      format.js { render :index }
+    end
   end
 
 
   def resize
-    @event = Interview.find(params[:id])
-    if @event
-      @event.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@event.endtime))
-      @event.save
+    @interview = Interview.find(params[:id])
+    if @interview
+      endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.endtime))
+      @interview.update_attribute(:endtime, endtime)
+    end
+    respond_to do |format|
+      format.js { render :index }
     end
   end
 

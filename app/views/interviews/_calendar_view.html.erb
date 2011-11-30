@@ -2,27 +2,11 @@
   $(document).ready(function(){
       // page is now ready, initialize the calendar...
       var calendar = $('#calendar').fullCalendar({
-          editable: true,
           header: {
               left: 'prev,next today',
               center: 'title',
               right: 'month,agendaWeek,agendaDay'
             },
-          selectable: true,
-          selectHelper: true,
-          select: function(start, end, allDay) {
-            $('#interview_scheduled_at').val(my_convertDate(start));
-            $('#new_interview_dialog').dialog({
-            title: "New Interview Schedule",
-            modal: true,
-            width: 500,
-            close: function(event, ui){
-                $('#interview_form')[0].reset();
-                $('.token-input-dropdown-facebook').hide();
-                $('#new_interview_dialog').dialog('destroy')
-              }
-            });
-          },
           defaultView: 'agendaWeek',
           height: 500,
           slotMinutes: 15,
@@ -35,6 +19,23 @@
           events: "/get_interviews/<%= params['interviewer_filter'] %>",
           timeFormat: 'h:mm t{ - h:mm t} ',
           dragOpacity: "0.5",
+          <% if can? :create, Interview %>
+            selectable: true,
+            selectHelper: true,
+            select: function(start, end, allDay) {
+            $('#interview_scheduled_at').val(my_convertDate(start));
+            $('#new_interview_dialog').dialog({
+            title: "New Interview Schedule",
+            modal: true,
+            width: 500,
+            close: function(event, ui){
+                $('#interview_form')[0].reset();
+                $('.token-input-dropdown-facebook').hide();
+                $('#new_interview_dialog').dialog('destroy')
+              }
+            });
+          },
+          editable: true,
           eventDrop: function(event, dayDelta, minuteDelta, allDay, revertFunc){
 //              if (confirm("Are you sure about this change?")) {
                   moveEvent(event, dayDelta, minuteDelta, allDay);
@@ -52,6 +53,7 @@
 //                  revertFunc();
 //              }
           },
+        <% end %>
 
           eventClick: function(event, jsEvent, view){
               showEventDetails(event);

@@ -11,7 +11,8 @@ class Interview < ActiveRecord::Base
 
   def update_schedule
     self.schedule_time = self.scheduled_at.strftime("%I:%M %p")
-    self.endtime = self.scheduled_at.advance(:minutes => 30)
+    default_endtime = self.scheduled_at.advance(:minutes => 30)
+    self.endtime = default_endtime if (self.endtime.nil? || self.endtime < default_endtime)
   end
 
   def update_candidate_status
