@@ -20,11 +20,12 @@ class Interview < ActiveRecord::Base
 
   after_create do |interview|
     make_ical(interview)
-#    Notifier.delay.interview_schedule_mail(interview)
-    Notifier.interview_schedule_mail(interview).deliver
+    Notifier.delay.interview_schedule_mail(interview)
+#    Notifier.interview_schedule_mail(interview).deliver
   end
 
   after_update do |interview|
+    make_ical(interview)
     if interview.user_id != interview.user_id_was
     Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate_id,scheduled_at_was,schedule_time_was)
     Notifier.delay.interview_schedule_mail(interview)

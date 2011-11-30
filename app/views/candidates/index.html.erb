@@ -1,6 +1,6 @@
 <table width="100%">
   <tr>
-    <td width="30%"><h1>List of Candidates</h1></td>
+    <td width="30%"><h4>Listing Candidates <%= @title %></h4></td>
     <td width="33%">
       <form class="searchform" id="searchform">
       <input type="text" name="search" id="tag_autocomplete" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" data-pre="<%= @search_tags.map(&:attributes).to_json unless @search_tags.blank?  %>" />
@@ -18,15 +18,9 @@
 <%= form_tag(mark_archive_for_selected_candidates_path,:id => "modify_status") do%>
 <table id="box-table-a" style="width: 95%">
   <thead>
-    <div class="list_top_bar">
-      <div class="styled-select" style="float:left;">
-        <%= select_tag("change_status", options_from_collection_for_select(HIRING_STATUS, :first, :last), {:prompt => "Mark as"}) %>
-      </div>
-      <div class="pagination">
-        <%= will_paginate(@candidates)%>
-      </div>
-    </div>
-    <br />
+      <!-- <div class="styled-select" style="float:left;">
+        <%#= select_tag("change_status", options_from_collection_for_select(HIRING_STATUS, :first, :last), {:prompt => "Mark as"}) %>
+      </div> -->
     <tr>
       <th scope="col"><%= check_box_tag("select_all")%></th>
       <th scope="col">Name</th>
@@ -45,7 +39,7 @@
       <td><%= candidate.subject%></td>
       <td><%= cta_links(:candidate, candidate) %> </td>
     </tr>
-    <% end %>
+  <% end %>
     <%else%>
     <tr>
       <td colspan="5" class="no_records_found"> No candidates found. </td>
@@ -55,11 +49,15 @@
 </table>
 <%end%>
 <br />
-<% if can? :create, Candidate %>
-<%= link_to 'New Candidate', new_candidate_path %> <%= " | " %>
-<%= link_to 'Manage Custom Tags', create_custom_tags_path %>
-<% end %>
-<br />
+<div class="list_top_bar">
+  <div style="float:left">
+<%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
+  </div>
+      <div class="pagination">
+        <%= will_paginate(@candidates)%>
+      </div>
+    </div>
+    <br />
 <h4>Tag Cloud:</h4>
 <% tag_cloud(@tags, %w(tag_cloud1 tag_cloud2 tag_cloud3 tag_cloud4)) do |tag, css_class| %>
   <%= link_to tag.name, tag_candidates_path(tag.name), :class => css_class %>

@@ -19,4 +19,5 @@ HIRING_STATUS = {
 }
 
 CONTACT_TO_EMAIL = "gokul.m@imaginea.com"
+INTERVIEW_PANEL_USER_TYPES = ["Interviewer", "Bm", "Hr", "Pl", "Administrator"]
 

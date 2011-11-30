@@ -8,7 +8,9 @@ class CandidatesController < ApplicationController
   def index
     if params[:search]
     @candidates = Candidate.tagged_with(params[:search], :any => true).paginate(:page => params[:page], :per_page => "10")
-    @search_tags = ActsAsTaggableOn::Tag.named_like_any(params[:search].split(','))
+    search_params = params[:search].split(',')
+    @search_tags = ActsAsTaggableOn::Tag.named_like_any(search_params)
+    @title = "tagged with #{search_params.join(', ')}"
 
     elsif !params[:status].blank?
     @candidates = Candidate.paginate(:page => params[:page], :per_page => "10").find_all_by_status(params[:status])
@@ -29,6 +31,7 @@ class CandidatesController < ApplicationController
       flash.now.notice = "Tag Name and its associated taggings are sucessfully deleted."
     else
       @candidates = Candidate.tagged_with(params[:name]).paginate(:page => params[:page], :per_page => "10")
+      @title = "tagged with #{params[:name]}"
       @tags = Candidate.tag_counts_on(:tags)
       render :action => 'index'
     end

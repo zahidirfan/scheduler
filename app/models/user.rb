@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   validates :password, :confirmation => true
   validates :password, :length => { :minimum => 6 }
 
-  scope :interview_panel, where(:type => ["Interviewer", "Bm", "Hr"])
+  scope :interview_panel, where(:type => INTERVIEW_PANEL_USER_TYPES)
   scope :current_user, lambda { |user_id| where("id = ?", user_id) }
 
   def admin?

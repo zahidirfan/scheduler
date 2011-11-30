@@ -1,15 +1,16 @@
 <div id="top_left_bar">
-  <% if current_user.type.to_s == "Interviewer" %>
-    <%= link_to "Home", interviews_path, :class => "top_link" %> |
-  <% elsif current_user.type.to_s == "Bm" %>
-    <%= link_to "Home", candidates_path, :class => "top_link" %> |
-    <%= link_to "Manage Candidates", candidates_path, :class => "top_link" %> |
-  <% else %>
-    <%= link_to "Home", candidates_path, :class => "top_link" %> |
-    <%= link_to "Manage Users", users_path, :class => "top_link" %> |
+  <% home_link = current_user.type.to_s == "Interviewer" ? interviews_path : candidates_path %>
+  <%= link_to "Home", home_link, :class => "top_link" %>
+  <%#= link_to "Manage Candidates", candidates_path, :class => "top_link" if current_user.type.to_s == "Bm" %>
+  <% if current_user.type.to_s == "Administrator" %>
+    | <%= link_to "Manage Users", users_path, :class => "top_link" %>
   <% end %>
-    <%= link_to "Manage Interviews", interviews_path, :class => "top_link" %>
+
+  <% if INTERVIEW_PANEL_USER_TYPES.include?(current_user.type.to_s) %>
+    | <%= link_to 'Manage Tags', create_custom_tags_path, :class => "top_link" %>
+    | <%= link_to "Manage Interviews", interviews_path, :class => "top_link" %>
     <%= link_to "(Calender View)", interviews_path(:view => 'calendar'), :class => "top_link" %>
+  <% end %>
 </div>
 <div id="top_right_bar">
   <%= current_user.name %> |
