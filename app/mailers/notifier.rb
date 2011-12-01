@@ -20,7 +20,7 @@ class Notifier < ActionMailer::Base
     @candidate = Candidate.find_by_id(interview.candidate_id)
     @interview = interview
     attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
-    attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("tmp/ics_files/invite_#{interview.candidate.name}_#{interview.user.name}.ics")}
+    attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}.ics")}
     mail :to => @user.email, :from => current_user.email, :subject => "Interview Scheduled"
   end
 
@@ -29,7 +29,7 @@ class Notifier < ActionMailer::Base
     @candidate = Candidate.find_by_id(interview.candidate_id)
     @interview = interview
     attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
-    attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("tmp/ics_files/invite_#{interview.candidate.name}_#{interview.user.name}.ics")}
+    attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}.ics")}
     mail :to => @user.email, :from => current_user.email, :subject => "Interview rescheduled"
   end
 
