@@ -28,33 +28,6 @@ function resizeEvent(event, dayDelta, minuteDelta){
     });
 }
 
-function showEventDetails(event){
-    $('#event_desc').html(event.description);
-    title = event.title;
-    if(event.user_type == "Administrator" || event.user_type == "Bm") {
-    $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+")'>Edit</a>");
-    if (event.recurring) {
-        title = event.title + "(Recurring)";
-        $('#delete_event').html("&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete Only This Occurrence</a>");
-        $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + true + ")'>Delete All In Series</a>")
-        $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", \"future\")'>Delete All Future Events</a>")
-    }
-    else {
-        $('#delete_event').html("<a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete</a>");
-    }
-    }
-    $('#desc_dialog').dialog({
-        title: title,
-        modal: true,
-        width: 500,
-        close: function(event, ui){
-            $('#desc_dialog').dialog('destroy')
-        }
-
-    });
-
-}
-
 $(function() {
 $("#interviewer_filter").change(function() {
 if($("#interviewer_filter").val() == "")
@@ -120,6 +93,63 @@ function deleteEvent(interview_id, candidate_id, delete_all){
     });
     }
 }
+
+function showEventDetails(event){
+    $('#event_desc').html(event.description);
+    title = event.title;
+    if(event.user_type == "Administrator" || event.user_type == "Bm") {
+    $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+")'>Edit</a>&nbsp;|");
+
+    if (event.recurring) {
+        title = event.title + "(Recurring)";
+        $('#delete_event').html("&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete Only This Occurrence</a>");
+        $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + true + ")'>Delete All In Series</a>")
+        $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", \"future\")'>Delete All Future Events</a>")
+    }
+    else {
+        $('#delete_event').html("|&nbsp;<a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete</a>");
+    }
+  }
+    $('#edit_event').append('&nbsp;'+feedback_link(event));
+    $('#desc_dialog').dialog({
+        title: title,
+        modal: true,
+        width: 500,
+        close: function(event, ui){
+            $('#desc_dialog').dialog('destroy')
+            $('#edit_event').html('');
+        }
+
+    });
+
+  }
+
+  function feedback_link(event){
+    if (event.comment_id == 0) {
+      return "<a href = '/candidates/"+event.candidate_id+"/interviews/"+event.id+"/comments/new' target='blank'>Feedback</a>";
+      } else {
+      return "<a href = '/candidates/"+event.candidate_id+"/interviews/"+event.id+"/comments/"+event.comment_id+"/edit' target='blank'>Edit Feedback</a>";
+  }
+  }
+
+  function my_convertDate(date) {
+    date_obj = new Date(date);
+    date_obj_hours = date_obj.getHours();
+    date_obj_mins = date_obj.getMinutes();
+
+    if (date_obj_mins < 10) { date_obj_mins = "0" + date_obj_mins; }
+
+    if (date_obj_hours > 11) {
+        date_obj_hours = date_obj_hours - 12;
+        date_obj_am_pm = " PM";
+    } else {
+        date_obj_am_pm = " AM";
+    }
+
+    date_obj_time = " "+date_obj_hours+":"+date_obj_mins+date_obj_am_pm;
+    return $.datepicker.formatDate("dd-mm-yy", date_obj)+date_obj_time;
+  }
+
 
 function showPeriodAndFrequency(value){
 

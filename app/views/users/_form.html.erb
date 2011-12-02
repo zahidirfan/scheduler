@@ -34,7 +34,7 @@
       <td class="form_input"><%= f.password_field :password_confirmation %></td>
     </tr>
     <tr>
-      <td class="form_label"><%= f.label :type %></td>
+      <td class="form_label"><%= f.label :type, "Role" %></td>
       <td class="form_input"><%= f.select(:type, USER_ROLES, :selected => @user.type) %></td>
     </tr>
     <tr class="button">

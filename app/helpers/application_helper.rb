@@ -1,6 +1,19 @@
 module ApplicationHelper
   include ActsAsTaggableOn::TagsHelper
 
+  def feedback_link(event_id)
+    link_to "Feedback", event_id
+  end
+
+  def feedback_link1(interview)
+    unless interview.comments.exists?
+      link_to "Feedback", new_candidate_interview_comment_path(interview.candidate, interview)
+    else
+      link_to "Edit Feedback", edit_candidate_interview_comment_path(interview.candidate, interview, interview.comments.first)
+    end
+  end
+
+
   def show_candidate_status(c)
     c.status.nil? ? "New" : c.status
   end
