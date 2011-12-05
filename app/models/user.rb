@@ -7,9 +7,10 @@ class User < ActiveRecord::Base
   # attr_accessor :password, :password_confirmation
   attr_accessible :name, :username, :type, :email, :password, :password_confirmation
 
-  validates :name, :email, :password, :password_confirmation, :presence => true
-  validates :password, :confirmation => true
-  validates :password, :length => { :minimum => 6 }
+  validates :name, :email, :presence => true
+  validates :password, :password_confirmation, :presence => true, :on => :create
+  validates :password, :confirmation => true, :on => :create
+  validates :password, :length => { :minimum => 6 }, :allow_blank => true
 
   scope :interview_panel, where(:type => INTERVIEW_PANEL_USER_TYPES)
   scope :current_user, lambda { |user_id| where("id = ?", user_id) }

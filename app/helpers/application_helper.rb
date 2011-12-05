@@ -1,18 +1,13 @@
 module ApplicationHelper
   include ActsAsTaggableOn::TagsHelper
 
-  def feedback_link(event_id)
-    link_to "Feedback", event_id
-  end
-
-  def feedback_link1(interview)
+  def feedback_link(interview)
     unless interview.comments.exists?
       link_to "Feedback", new_candidate_interview_comment_path(interview.candidate, interview)
     else
       link_to "Edit Feedback", edit_candidate_interview_comment_path(interview.candidate, interview, interview.comments.first)
     end
   end
-
 
   def show_candidate_status(c)
     c.status.nil? ? "New" : c.status
@@ -40,7 +35,7 @@ module ApplicationHelper
     cnt = [link_to('Show', obj)]
     if can?(:update, obj)
     cnt << link_to('Edit', self.send("edit_#{res}_path".to_sym, obj))
-    cnt << link_to('Archive', self.send("edit_#{res}_path".to_sym, obj))
+    cnt << link_to('Archive', self.send("#{res}_mark_archive_path".to_sym, obj))
     end
     if can?(:destroy, obj)
     cnt << link_to('Remove', obj, confirm: 'Are you sure?', method: :delete)
