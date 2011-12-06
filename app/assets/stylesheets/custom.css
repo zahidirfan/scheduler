@@ -4,7 +4,7 @@
   font-size: 12px;
 }
 /*General Label Style*/
-input, textarea, select{
+input, textarea {
   border: 1px solid #8496BA;
 }
 a{

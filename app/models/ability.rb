@@ -3,15 +3,16 @@ class Ability
 
   def initialize(user)
     unless user.nil?
-      if ["Hr","Administrator"].include?(user.type.to_s)
+      user_type = user.type.to_s
+      if ["Hr","Administrator"].include?(user_type)
         can :manage, :all
-      elsif user.type.to_s == "Bm"
+      elsif ["Bm", "Pl"].include?(user_type)
         can [:read, :create, :update], Comment, :user_id => user.id
         can [:read], Interview
-        can [:read], Candidate
+        can [:read, :mark_archive], Candidate
         can :password_change, User
         can :update, :user, [:password, :password_confirmation, :commit]
-      elsif user.type.to_s == "Interviewer"
+      elsif user_type == "Interviewer"
         can [:read, :create, :update], Comment, :user_id => user.id
         can [:read], Interview
         can :update, :user, [:password, :password_confirmation, :commit]

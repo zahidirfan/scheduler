@@ -12,6 +12,6 @@ class Candidate < ActiveRecord::Base
   belongs_to :user
   #belongs_to :status
 
-  scope :active, where(:archive => false)
+  scope :active, where("status !=  'Archive'")
 
 end

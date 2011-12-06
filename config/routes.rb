@@ -40,6 +40,8 @@ Resume::Application.routes.draw do
   match 'pull_tags' => 'candidates#pull_tags'
   match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'
   match 'mark_archive_for_selected_candidates' => 'candidates#mark_archive_for_selected_candidates', :as => 'mark_archive_for_selected_candidates'
+#  match 'mark_archive_for_selected_candidates/:candidate_id' => 'candidates#mark_archive_for_selected_candidates', :as => 'mark_archive_for_selected_candidate'
+
   match "candidates/tag/:name" => "candidates#tag", :as => :tag_candidates
   match "interviews/make_ical/:int_id" => "interviews#make_ical", :as => :make_ical
   match "add_candidate" => "candidates#new", :as => :add_candidate, :via => :get

@@ -34,8 +34,9 @@ module ApplicationHelper
   def cta_links(res, obj)
     cnt = [link_to('Show', obj)]
     if can?(:update, obj)
-    cnt << link_to('Edit', self.send("edit_#{res}_path".to_sym, obj))
-    cnt << link_to('Archive', self.send("#{res}_mark_archive_path".to_sym, obj))
+      archive_link = (obj.status == "Archive") ? "Unarchive" : "Archive"
+      cnt << link_to('Edit', self.send("edit_#{res}_path".to_sym, obj))
+      cnt << link_to(archive_link, self.send("#{res}_mark_archive_path".to_sym, obj))
     end
     if can?(:destroy, obj)
     cnt << link_to('Remove', obj, confirm: 'Are you sure?', method: :delete)

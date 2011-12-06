@@ -54,6 +54,21 @@ h1 {
   display: none;
 }
 
+select  {
+  outline: 0;
+  overflow: hidden;
+  height: 30px;
+  background: #B0A089;
+  color:#FFF;
+  border:#2c343c;
+  padding:5px 3px 5px 10px;
+  -moz-border-radius:6px;
+ -webkit-border-radius:6px;
+ border-radius:10px;
+}
+
+select option {border:0px solid #FFF; background:#B0A089;}
+
 #select_filter_by_interviewer {
   margin: 5px 5px 0 0;
 }

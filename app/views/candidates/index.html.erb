@@ -6,11 +6,10 @@
       <input type="text" name="search" id="tag_autocomplete" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" data-pre="<%= @search_tags.map(&:attributes).to_json unless @search_tags.blank?  %>" />
       <input class="searchbutton hide" type="submit" value="Go" />
     </form></td>
-    <td width="25%">
+    <td width="45%">
     <form id ="filter_candidate_by_status">
-      <div class="styled-select">
-        <%= select_tag('status', options_from_collection_for_select(FEEDBACK_STATUS, :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
-      </div>
+        <%= select_tag('status', options_from_collection_for_select(FEEDBACK_STATUS.merge(HIRING_STATUS), :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
+        <%= select_tag("change_status", options_from_collection_for_select(HIRING_STATUS, :first, :last), {:prompt => "Mark as"}) if can? :update, Candidate %>
     </form></td>
   </tr>
 </table>
@@ -18,9 +17,6 @@
 <%= form_tag(mark_archive_for_selected_candidates_path,:id => "modify_status") do%>
 <table id="box-table-a" style="width: 95%">
   <thead>
-      <!-- <div class="styled-select" style="float:left;">
-        <%#= select_tag("change_status", options_from_collection_for_select(HIRING_STATUS, :first, :last), {:prompt => "Mark as"}) %>
-      </div> -->
     <tr>
       <th scope="col"><%= check_box_tag("select_all")%></th>
       <th scope="col">Name</th>
