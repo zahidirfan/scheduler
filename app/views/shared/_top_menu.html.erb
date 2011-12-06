@@ -1,7 +1,6 @@
 <div id="top_left_bar">
   <% home_link = current_user.type.to_s == "Interviewer" ? interviews_path : candidates_path %>
   <%= link_to "Home", home_link, :class => "top_link" %>
-  <%#= link_to "Manage Candidates", candidates_path, :class => "top_link" if current_user.type.to_s == "Bm" %>
   <% if current_user.type.to_s == "Administrator" %>
     | <%= link_to "Manage Users", users_path, :class => "top_link" %>
   <% end %>
@@ -19,5 +18,5 @@
 <div id="top_right_bar">
   <%= current_user.name %> |
   <%= link_to "Change password", password_change_path%> |
-  <%= link_to "Logout",log_out_path, :confirm => "Are you sure?", :class => "top_link"%>
+  <%= link_to "Sign out",log_out_path, :confirm => "Are you sure?", :class => "top_link"%>
 </div>

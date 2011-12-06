@@ -2,6 +2,7 @@ class InterviewsController < ApplicationController
   # GET /interviews
   # GET /interviews.json
   #before_filter :check_interview_schedule, :only => [:new]
+  before_filter :authenticate
   load_and_authorize_resource
   before_filter :load_candidate, :except => [:index, :get_interviews, :export_interview, :move, :resize]
 
