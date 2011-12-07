@@ -7,10 +7,11 @@
       <input class="searchbutton hide" type="submit" value="Go" />
     </form></td>
     <td width="45%">
-    <form id ="filter_candidate_by_status">
+      <form id="filter_candidate_by_status">
         <%= select_tag('status', options_from_collection_for_select(FEEDBACK_STATUS.merge(HIRING_STATUS), :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
         <%= select_tag("change_status", options_from_collection_for_select(HIRING_STATUS, :first, :last), {:prompt => "Mark as"}) if can? :update, Candidate %>
-    </form></td>
+      </form>
+    </td>
   </tr>
 </table>
 <br />
@@ -36,6 +37,7 @@
       <td><%= cta_links(:candidate, candidate) %> </td>
     </tr>
   <% end %>
+    <input type="hidden" id="changed_status" name="changed_status" />
     <%else%>
     <tr>
       <td colspan="5" class="no_records_found"> No candidates found. </td>
@@ -82,7 +84,8 @@
         alert("Please select atleast one candidate.");
       } else if($("#change_status").val() == "") {
         alert("Please select a valid status.");
-      } else {
+        } else {
+        $("#changed_status").val($("#change_status").val());
         $("form#modify_status").submit();
       }
     });

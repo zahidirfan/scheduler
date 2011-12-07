@@ -137,10 +137,10 @@ class CandidatesController < ApplicationController
   end
 
   def mark_archive_for_selected_candidates
-    candidates = Candidate.find_all_by_id(params[:select].values) unless params[:select].blank?
+    candidates = Candidate.find_all_by_id(params[:select].values) unless params[:select].blank? && params[:changed_staus].blank?
     unless candidates.blank?
       candidates.each do |candidate|
-        candidate.update_attribute(:status, params[:change_status])
+        candidate.update_attribute(:status, params[:changed_status])
       end
     redirect_to candidates_url, :notice => 'Status was successfully updated.'
     else
