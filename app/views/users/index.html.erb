@@ -23,5 +23,10 @@
 </table>
 
 <br />
-
+<div class="list_top_bar">
 <%= link_to 'New User', new_user_path %>
+<div class="pagination">
+  <%= will_paginate(@users)%>
+</div>
+</div>
+

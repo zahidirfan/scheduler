@@ -104,7 +104,7 @@ a.top_link:link, a.top_link:active, a.top_link:visited {
   font-size: 12px;
   /*    margin: 20px;*/
   text-align: left;
-  width: 700px;
+  width: 95%;
 }
 #box-table-a th {
   background: none repeat scroll 0 0 #ccc;
