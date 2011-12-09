@@ -5,12 +5,14 @@
   </tr>
 </table>
 <%= render '/interviews/candidate_info' %>
-<%= render :partial => '/interviews/feed_back_info', :object => @candidate.interviews %>
+<%= render :partial => '/interviews/feed_back_info', :object => @candidate.interviews.uncancelled %>
 <%= render :partial => '/interviews/upcoming', :object => @candidate.interviews.upcoming %>
+<%= render '/interviews/previous_schedules' %>
+
 
 <% if can?(:update, Candidate) %>
-<%= link_to 'Edit', edit_candidate_path(@candidate)  %> | 
-<%= link_to 'Add a Interview Schedule', new_candidate_interview_path(@candidate) %> |
+<%= link_to 'Edit', edit_candidate_path(@candidate)  %> |
+<%= link_to 'Add an Interview Schedule', new_candidate_interview_path(@candidate) %> |
 <% end %>
 <%= link_to('Back', root_path) %>
 <br /><br />

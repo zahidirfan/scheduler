@@ -94,12 +94,26 @@ function deleteEvent(interview_id, candidate_id, delete_all){
     }
 }
 
+function cancelEvent(interview_id, candidate_id){
+  var answer = confirm("Are you sure to cancel this interview schedule?")
+    if(answer) {
+    jQuery.ajax({
+        data: 'cancel=true',
+        dataType: 'script',
+        type: 'delete',
+        url: "/candidates/"+candidate_id+"/interviews/"+interview_id
+    });
+    }
+}
+
+
 function showEventDetails(event){
     $('#event_desc').html(event.description);
     title = event.title;
     if(event.user_type == "Administrator" || event.user_type == "Bm") {
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+")'>Edit</a>&nbsp;|");
-
+    if (event.comment_id == 0) {
+    $('#edit_event').append("&nbsp;<a href = 'javascript:void(0);' onclick ='cancelEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Cancel</a>&nbsp;|");
     if (event.recurring) {
         title = event.title + "(Recurring)";
         $('#delete_event').html("&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete Only This Occurrence</a>");
@@ -126,11 +140,12 @@ function showEventDetails(event){
 
   function feedback_link(event){
     if (event.comment_id == 0) {
-      return "<a href = '/candidates/"+event.candidate_id+"/interviews/"+event.id+"/comments/new' target='blank'>Feedback</a>";
+      return " <a href = 'javascript:void(0);' onclick ='cancelEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Cancel</a> | <a href = '/candidates/"+event.candidate_id+"/interviews/"+event.id+"/comments/new' target='blank'>Feedback</a>";
       } else {
       return "<a href = '/candidates/"+event.candidate_id+"/interviews/"+event.id+"/comments/"+event.comment_id+"/edit' target='blank'>Edit Feedback</a>";
+    }
   }
-  }
+
 
   function my_convertDate(date) {
     date_obj = new Date(date);

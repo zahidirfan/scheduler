@@ -6,7 +6,7 @@ class Comment < ActiveRecord::Base
 
   attr_accessor :status_value
   after_save do |comment|
-    comment.candidate.update_attribute(:status, comment.status_value)
+    comment.candidate.update_attribute(:status, comment.status_value) unless comment.status_value.blank?
     Notifier.delay.interview_feedback_mail(comment)
   end
 

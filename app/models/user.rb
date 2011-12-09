@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   authenticates
-  has_many :candidates
-  has_many :interviews
+  has_many :candidates, :dependent => :destroy
+  has_many :interviews, :dependent => :destroy
   has_many :comments
 
   # attr_accessor :password, :password_confirmation
@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   validates :name, :email, :presence => true
   validates :password, :password_confirmation, :presence => true, :on => :create
-  validates :password, :confirmation => true, :on => :create
+  validates :password, :confirmation => true
   validates :password, :length => { :minimum => 6 }, :allow_blank => true
 
   scope :interview_panel, where(:type => INTERVIEW_PANEL_USER_TYPES)

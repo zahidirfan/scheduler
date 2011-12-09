@@ -7,10 +7,11 @@
   <th>Status</th>
 </tr>
 <% upcoming.each do |interview| %>
-<%  unless interview.comments.exists? %>
+  <%  unless interview.comments.exists? %>
+    <% interviewer = User.find(interview.user_id) %>
 <tr>
-  <td><%= interview.scheduled_at.to_s(:simple)%> at <%= interview.schedule_time%> | <%= link_to "Change", edit_candidate_interview_path(@candidate, interview)%> | <%= link_to "Cancel", candidate_interview_path(@candidate, interview), :method => :delete, :confirm => "Are you sure?"%></td>
-  <td><%= User.find(interview.user_id).name %></td>
+  <td><%= interview.formated_scheduled_at%> | <%= link_to "Change", edit_candidate_interview_path(@candidate, interview, :interviewer_filter => interviewer.id) if can? :update, interview %> | <%= link_to "Cancel", candidate_interview_path(@candidate, interview, :cancel=>true), :method => :delete, :confirm => "Are you sure?" if can?(:destroy, interview) %></td>
+  <td><%= interviewer.name %></td>
   <td><%= show_comment_status(interview.comments.try(:first).try(:status)) %></td>
   </tr>
 <% end %>

@@ -1,17 +1,17 @@
-<h3>This week Interview Schedule</h3>
+<h3>This week Interview Schedules</h3>
 <% unless this_week_interview_schedule.blank?%>
 <table id="box-table-a">
 <tr>
-  <th>Name</th>
-  <th>Scheduled at</th>
-  <th>Interviewer</th>
-  <th>Actions</th>
+  <th width="20%">Name</th>
+  <th width="30%">Scheduled at</th>
+  <th width="20%">Interviewer</th>
+  <th width="30%">Actions</th>
 </tr>
 <% this_week_interview_schedule.each do |interview| %>
 <tr>
   <td><%= interview.candidate.name %></td>
-  <td><%= interview.scheduled_at.to_s(:simple)%> at <%= interview.schedule_time%></td>
-  <td><%= User.find(interview.user_id).name %></td>
+  <td><%= interview.formated_scheduled_at %></td>
+  <td><%= interview.user.name %></td>
   <td><%= feedback_link(interview)%></td>
 </tr>
 <% end %>

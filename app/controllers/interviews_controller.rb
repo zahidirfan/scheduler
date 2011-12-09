@@ -67,7 +67,7 @@ class InterviewsController < ApplicationController
   # PUT /interviews/1
   # PUT /interviews/1.json
   def update
-    @interview = Interview.find(params[:id])
+    @interview = @candidate.interviews.find(params[:id])
     respond_to do |format|
       if @interview.update_attributes(params[:interview])
        format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully updated.' }
@@ -85,7 +85,7 @@ class InterviewsController < ApplicationController
     if params[:interviewer_id]
       meth = Interview.by_user_id(params[:interviewer_id])
     else
-      meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+      meth = current_user.type.to_s == "Interviewer" ? current_user.interviews.uncancelled : Interview.uncancelled
     end
     interviews = meth.fetch_interviews(params['start'], params['end'])
     desc_interviews = interviews.collect do |interview|
@@ -123,7 +123,16 @@ class InterviewsController < ApplicationController
   # DELETE /interviews/1.json
   def destroy
     @interview = @candidate.interviews.find(params[:id])
-    @interview.destroy
+    if params["cancel"]
+      if @interview.comments.length
+        @interview.comments.first.update_attributes(:candidate_id => @candidate.id, :user_id => current_user.id, :status => 'Cancelled')
+      else
+        @interview.comments.create!(:candidate_id => @candidate.id, :user_id => current_user.id, :description => "Due to some reasons, interview is cancelled.", :status => 'Cancelled')
+      end
+    else
+      @interview.destroy
+    end
+    @candidate.update_attributes(:status => nil)
 
     respond_to do |format|
       format.html { redirect_to candidate_path(@candidate) }

@@ -2,7 +2,7 @@ class Interview < ActiveRecord::Base
   include CalendarInvite
   belongs_to :candidate
   belongs_to :user
-  has_many :comments
+  has_many :comments, :dependent => :destroy
 
   before_save :update_schedule
   after_save :update_candidate_status
@@ -40,13 +40,15 @@ class Interview < ActiveRecord::Base
   end
 
   scope :dummy, where("1 = 1")
-  scope :today, where(:scheduled_at => Date.today).order("schedule_time")
-  scope :upcoming, where("scheduled_at  >= ? ", Date.today).order("scheduled_at, schedule_time")
-  scope :this_week, where("scheduled_at > ? and scheduled_at <= ?", Date.today, Date.today.end_of_week).order("scheduled_at,schedule_time")
-  scope :this_month, where("scheduled_at > ? and scheduled_at <= ?", Date.today.end_of_week, Date.today.end_of_month).order("scheduled_at,schedule_time")
-  scope :fetch_interviews, lambda { |start, endtime| where("scheduled_at between ? and ? ", Time.at(start.to_i).to_formatted_s(:db), Time.at(endtime.to_i).to_formatted_s(:db))
+  scope :uncancelled, joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("status is null or status != 'Cancelled'")
+  scope :today, where(:scheduled_at => Date.today).uncancelled.order("schedule_time")
+  scope :upcoming, where("scheduled_at  >= ? ", Date.today).uncancelled.order("scheduled_at, schedule_time")
+  scope :this_week, where("scheduled_at > ? and scheduled_at <= ?", Date.today, Date.today.end_of_week).uncancelled.order("scheduled_at,schedule_time")
+  scope :this_month, where("scheduled_at > ? and scheduled_at <= ?", Date.today.end_of_week, Date.today.end_of_month).uncancelled.order("scheduled_at,schedule_time")
+  scope :fetch_interviews, lambda { |start, endtime| where("scheduled_at between ? and ? ", Time.at(start.to_i).to_formatted_s(:db), Time.at(endtime.to_i).to_formatted_s(:db)).uncancelled
  }
-  scope :by_user_id, lambda { |user_id| where("user_id = ?", user_id) }
+  scope :by_user_id, lambda { |user_id| where("interviews.user_id = ?", user_id).uncancelled }
+
 
   def formated_scheduled_at
     self.scheduled_at.strftime("%d-%m-%Y %I:%M %p") unless self.scheduled_at.nil?

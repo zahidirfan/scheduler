@@ -27,7 +27,7 @@ module ApplicationHelper
   end
 
   def show_comment_status(i)
-    val = FEEDBACK_STATUS.key(i.to_s)
+    val = (i == "Cancelled") ? i : FEEDBACK_STATUS.key(i.to_s)
     "<span class='comment_status_#{i}'>#{val}</span>".html_safe
   end
 

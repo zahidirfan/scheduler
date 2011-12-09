@@ -8,8 +8,8 @@
 
 <table width="90%" cellpadding="5" cellspacing="5" border="0" style="border: 1px solid #ccc">
   <tr>
-    <td width="50%"><strong>Schedule at: </strong><%= @interview.scheduled_at.to_s(:simple)%> @ <%= @interview.schedule_time %></td>
-    <td width="50%"><strong>Reviewer: </strong><%= User.find(@interview.user_id).name %></td>
+    <td width="50%"><strong>Schedule at: </strong><%= @interview.formated_scheduled_at %></td>
+    <td width="50%"><strong>Reviewer: </strong><%= @interview.user.name %></td>
   </tr>
 </table>
 <p>&nbsp;</p>
