@@ -114,6 +114,7 @@ function showEventDetails(event){
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+")'>Edit</a>&nbsp;|");
     if (event.comment_id == 0) {
     $('#edit_event').append("&nbsp;<a href = 'javascript:void(0);' onclick ='cancelEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Cancel</a>&nbsp;|");
+    }
     if (event.recurring) {
         title = event.title + "(Recurring)";
         $('#delete_event').html("&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete Only This Occurrence</a>");
@@ -140,9 +141,9 @@ function showEventDetails(event){
 
   function feedback_link(event){
     if (event.comment_id == 0) {
-      return " <a href = 'javascript:void(0);' onclick ='cancelEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Cancel</a> | <a href = '/candidates/"+event.candidate_id+"/interviews/"+event.id+"/comments/new' target='blank'>Feedback</a>";
+      return "<a href = '/candidates/"+event.candidate_id+"/interviews/"+event.id+"/comments/new'>Feedback</a>";
       } else {
-      return "<a href = '/candidates/"+event.candidate_id+"/interviews/"+event.id+"/comments/"+event.comment_id+"/edit' target='blank'>Edit Feedback</a>";
+      return "<a href = '/candidates/"+event.candidate_id+"/interviews/"+event.id+"/comments/"+event.comment_id+"/edit'>Edit Feedback</a>";
     }
   }
 
@@ -190,7 +191,3 @@ function showPeriodAndFrequency(value){
             $('#frequency').hide();
     }
 }
-
-
-
-

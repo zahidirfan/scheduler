@@ -19,7 +19,11 @@
 <br />
 <div class="field">
   <%= f.label :status %>:
-  <%= f.select(:status, FEEDBACK_STATUS, :selected => @comment.status) %>
+  <% if @comment.status == 'Cancelled' %>
+    <%='Cancelled' %>
+  <% else %>
+    <%= f.select(:status, FEEDBACK_STATUS, :selected => @comment.status) %>
+  <% end %>
 </div>
 <br />
 <div class="actions">
