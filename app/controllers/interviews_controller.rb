@@ -89,7 +89,7 @@ class InterviewsController < ApplicationController
     end
     interviews = meth.fetch_interviews(params['start'], params['end'])
     desc_interviews = interviews.collect do |interview|
-      {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{current_user.type}", :comment_id => "#{interview.comments.filter_by_user(current_user).exists? ? interview.comments.filter_by_user(current_user).first.id : 0 }", :allDay => false, :recurring => false }
+      {:id => interview.id, :candidate_id => interview.candidate_id, :interviewer_id => interview.user_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{current_user.type}", :comment_id => "#{interview.comments.filter_by_user(current_user).exists? ? interview.comments.filter_by_user(current_user).first.id : 0 }", :allDay => false, :recurring => false }
     end
     render :text => desc_interviews.to_json
   end
@@ -124,7 +124,7 @@ class InterviewsController < ApplicationController
   def destroy
     @interview = @candidate.interviews.find(params[:id])
     if params["cancel"]
-      if @interview.comments.length
+      if @interview.comments.length > 0
         @interview.comments.first.update_attributes(:candidate_id => @candidate.id, :user_id => current_user.id, :status => 'Cancelled')
       else
         @interview.comments.create!(:candidate_id => @candidate.id, :user_id => current_user.id, :description => "Due to some reasons, interview is cancelled.", :status => 'Cancelled')

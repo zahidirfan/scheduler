@@ -73,9 +73,9 @@ $('#token-input-tag_autocomplete').focus(function() {
 
 });
 
-function editEvent(interview_id, candidate_id){
+function editEvent(interview_id, candidate_id, interviewer_id){
     jQuery.ajax({
-        data: 'id=' + interview_id,
+        data: 'interviewer_filter='+ interviewer_id,
         dataType: 'script',
         type: 'get',
         url: "/candidates/"+candidate_id+"/interviews/"+interview_id+"/edit"
@@ -111,7 +111,7 @@ function showEventDetails(event){
     $('#event_desc').html(event.description);
     title = event.title;
     if(event.user_type == "Administrator" || event.user_type == "Bm") {
-    $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+")'>Edit</a>&nbsp;|");
+    $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+", " + event.interviewer_id +")'>Edit</a>&nbsp;|");
     if (event.comment_id == 0) {
     $('#edit_event').append("&nbsp;<a href = 'javascript:void(0);' onclick ='cancelEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Cancel</a>&nbsp;|");
     }
@@ -121,9 +121,9 @@ function showEventDetails(event){
         $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + true + ")'>Delete All In Series</a>")
         $('#delete_event').append("&nbsp;&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", \"future\")'>Delete All Future Events</a>")
     }
-    else {
-        $('#delete_event').html("|&nbsp;<a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete</a>");
-    }
+/*    else {
+       $('#delete_event').html("|&nbsp;<a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete</a>");
+    } */
   }
     $('#edit_event').append('&nbsp;'+feedback_link(event));
     $('#desc_dialog').dialog({

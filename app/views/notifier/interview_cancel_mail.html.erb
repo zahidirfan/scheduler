@@ -5,10 +5,10 @@
   </head>
   <body>
     <p>
-      Dear <%= @usr.name %>,
+      Dear <%= @user.name %>,
     </p>
     <p>
-      Your scheduled interview with the candidate <b><%= @candidate_obj.name%></b> on <b><%= @scheduled_at.strftime("%d %b %Y")%></b> at <b><%= @schedule_time%></b> is cancelled due to some reason.
+      Your scheduled interview with the candidate <b><%= @candidate_obj.name%></b> on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b> is cancelled due to some reason.
     </p>
     <p>
       Thanks for cooperating.

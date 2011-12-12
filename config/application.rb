@@ -9,6 +9,13 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+DEFAULT_HOST = {
+"production" => "chennai.pramati.com:8383",
+"development" => "localhost:3000"
+}
+
+WillPaginate.per_page = 10
+
 module Resume
   class Application < Rails::Application
     # Settings in config/environments/* take precedence over those specified here.
@@ -46,6 +53,8 @@ module Resume
     config.assets.version = '1.0'
 
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
+
+    config.action_mailer.default_url_options = { :host => DEFAULT_HOST[Rails.env] }
+
   end
 end
-WillPaginate.per_page = 10

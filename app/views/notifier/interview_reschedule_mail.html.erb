@@ -8,7 +8,7 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-      Your scheduled interview with the candidate <b><%= @candidate.name%></b> is rescheduled to <b><%= @interview.scheduled_at.strftime("%d %b %Y")%></b> at <b><%= @interview.schedule_time%></b>.
+      Your scheduled interview with the candidate <b><%= @candidate.name%></b> is rescheduled to <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>.
     </p>
     <p>
       Thanks for cooperating.

@@ -28,7 +28,7 @@ class Interview < ActiveRecord::Base
   after_update do |interview|
     make_ical(interview)
     if interview.user_id != interview.user_id_was
-    Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate_id,scheduled_at_was,schedule_time_was)
+    Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate_id,scheduled_at_was)
     Notifier.delay.interview_schedule_mail(interview)
     else
     Notifier.delay.interview_reschedule_mail(interview)
@@ -36,7 +36,7 @@ class Interview < ActiveRecord::Base
   end
 
   after_destroy do |interview|
-    Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,scheduled_at,schedule_time)
+    Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,scheduled_at)
   end
 
   scope :dummy, where("1 = 1")
@@ -50,11 +50,13 @@ class Interview < ActiveRecord::Base
   scope :by_user_id, lambda { |user_id| where("interviews.user_id = ?", user_id).uncancelled }
 
 
-  def formated_scheduled_at
-    self.scheduled_at.strftime("%d-%m-%Y %I:%M %p") unless self.scheduled_at.nil?
+  def formated_scheduled_at(date_time=nil)
+    date_time ||= self.scheduled_at
+    date_time.strftime("%d-%m-%Y %I:%M %p") unless date_time.nil?
   end
 
-  def formated_schedule_endtime
-    self.endtime.strftime("%d-%m-%Y %I:%M %p") unless self.endtime.nil?
+  def formated_schedule_endtime(date_time=nil)
+    date_time ||= self.endtime
+    date_time.strftime("%d-%m-%Y %I:%M %p") unless date_time.nil?
   end
 end
