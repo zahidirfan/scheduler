@@ -4,7 +4,7 @@ en:
       sign_in:
         before: 'Please sign in first.'
         after: 'You have successfully signed in.'
-        failed: 'Sorry, we did not recognise you.'
+        failed: 'Invalid Username or Password.'
         blocked: 'Sorry, your account is blocked.'
 
       sign_out: 'You have successfully signed out.'

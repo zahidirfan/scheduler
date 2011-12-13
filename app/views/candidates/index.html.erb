@@ -8,7 +8,7 @@
     </form></td>
     <td width="45%">
       <form id="filter_candidate_by_status">
-        <%= select_tag('status', options_from_collection_for_select(FEEDBACK_STATUS.merge(HIRING_STATUS), :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
+        <%= select_tag('status', options_from_collection_for_select({"All" => "All"}.merge(FEEDBACK_STATUS).merge(HIRING_STATUS), :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
         <%= select_tag("change_status", options_from_collection_for_select(HIRING_STATUS, :first, :last), {:prompt => "Mark as"}) if can? :update, Candidate %>
       </form>
     </td>

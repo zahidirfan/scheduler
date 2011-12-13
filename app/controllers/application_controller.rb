@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   #check_authorization
-  include UserInfo
 
   rescue_from CanCan::AccessDenied do |exception|
     if !current_user.nil? && current_user.type.to_s == "Interviewer"

@@ -11,7 +11,7 @@ class CandidatesController < ApplicationController
       search_params = params[:search].split(',')
       @search_tags = ActsAsTaggableOn::Tag.named_like_any(search_params)
       @title = "tagged with #{search_params.join(', ')}"
-    elsif !params[:status].blank?
+    elsif !params[:status].blank? && params[:status] != 'All'
       @candidates = Candidate.page(params[:page]).find_all_by_status(params[:status])
       @title = " on #{params[:status]} Status"
     else
