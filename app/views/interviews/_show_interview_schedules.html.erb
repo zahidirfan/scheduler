@@ -1,0 +1,16 @@
+<table id="box-table-a">
+<tr>
+  <th width="20%">Name</th>
+  <th width="30%">Scheduled at</th>
+  <th width="20%">Interviewer</th>
+  <th width="30%">Actions</th>
+</tr>
+<% interview_schedules.each do |interview| %>
+<tr>
+  <td><%= interview.candidate.name %></td>
+  <td><%= interview.formated_scheduled_at %></td>
+  <td><%= interview.user.name %></td>
+  <td><%= link_to "Change", edit_candidate_interview_path(interview.candidate, interview, :interviewer_filter => interview.user_id) if can? :update, interview %> | <%= link_to "Cancel", candidate_interview_path(interview.candidate, interview, :cancel=>true), :method => :delete, :confirm => "Are you sure to cancel this interview schedule?" if can?(:destroy, interview) %> | <%= feedback_link(interview)%></td>
+</tr>
+<% end %>
+</table>
