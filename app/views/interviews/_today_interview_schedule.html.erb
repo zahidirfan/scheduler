@@ -1,6 +1,6 @@
 <h3>Today Interview Schedule</h3>
 <% unless today_interview_schedule.blank?%>
-<%= render :partial => "show_interview_schedules", :locals => { :interview_schedules => this_month_interview_schedule } %>
+<%= render :partial => "show_interview_schedules", :locals => { :interview_schedules => today_interview_schedule } %>
 <%else%>
 <p class="no_interview_schedule">No Interview Schedule for Today</p>
 <%end%>

@@ -7,7 +7,7 @@
       <% if params[:view]=="calendar" %>
         <input type="hidden" value="calendar" name="view" />
       <% end %>
-      <div>
+      <div class="margin-right">
       <%= select_tag('interviewer_filter', options_from_collection_for_select(User.interview_panel.collect{|u| [ u.id, u.name ] }, :first, :last, params[:interviewer_filter]), {:prompt => "Filter Interviews By"} ) %>
       </div>
     </form>

@@ -47,6 +47,9 @@ h1 {
 .margin-left {
   margin-left: 5px;
 }
+.margin-right {
+  margin-right: 48px;
+}
 .small-width {
   width: 100px;
 }
