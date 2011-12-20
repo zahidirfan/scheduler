@@ -4,7 +4,8 @@
 
   <% if check_admin_or_hr(current_user.type) %>
     | <%= link_to "Manage Users", users_path, :class => "top_link" %>
-    | <%= link_to 'Manage Tags', create_custom_tags_path, :class => "top_link" %>
+    | <%= link_to "Manage Tags", create_custom_tags_path, :class => "top_link" %>
+    | <%= link_to "Followings", followings_users_path, :class => "top_link" %>
   <% end %>
 
 

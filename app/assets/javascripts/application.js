@@ -36,6 +36,21 @@ else
 $('#filter_by_interviewer').submit();
 });
 
+$('.follow_link').bind('click', function(e) {
+  var candidate_id = $(this).attr('data-candidate-id');
+  e.preventDefault();
+    jQuery.ajax({
+        type: 'get',
+        url: "/candidates/"+candidate_id+"/toggle_follow",
+        error: function (xhr, status) {
+            alert(status);
+        },
+        success: function(data){
+          $("#follow_link_"+candidate_id).text(''+data);
+        }
+    });
+});
+
 $('#tag_autocomplete').tokenInput("/pull_tags",
 {
   theme: "facebook",

@@ -10,19 +10,23 @@ Resume::Application.routes.draw do
 
   resources :projects
 
-  resources :users
+  resources :users do
+    collection do
+      get :followings
+    end
+  end
 
   resources :candidates do
     collection do
       get :tag
     end
+    get 'toggle_follow'
     resources :interviews do
       resources :comments
     end
     get 'mark_archive'
   end
 
-  resources :users
   resources :hr, :bm, :administrator, :pl, :interviewer, :controller => "users"
   resources :sessions
 
@@ -41,6 +45,7 @@ Resume::Application.routes.draw do
   match 'pull_tags' => 'candidates#pull_tags'
   match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'
   match 'mark_archive_for_selected_candidates' => 'candidates#mark_archive_for_selected_candidates', :as => 'mark_archive_for_selected_candidates'
+#  match "candidates/followings" => "candidates#followings"
   match "candidates/tag/:name" => "candidates#tag", :as => :tag_candidates, :constraints => { :name => /.+(?=\.(html|xml|js))|.+/ }
   match "add_candidate" => "candidates#new", :as => :add_candidate, :via => :get
   match "forgotten" => "sessions#forgotten", :as => :forgotten

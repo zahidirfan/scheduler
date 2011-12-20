@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   authenticates
   has_many :candidates, :dependent => :destroy
   has_many :interviews, :dependent => :destroy
-  has_many :comments
+  has_many :comments, :dependent => :destroy
 
   # attr_accessor :password, :password_confirmation
   attr_accessible :name, :username, :type, :email, :password, :password_confirmation
@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
 
   scope :interview_panel, where(:type => INTERVIEW_PANEL_USER_TYPES)
   scope :current_user, lambda { |user_id| where("id = ?", user_id) }
+
+  acts_as_follower
 
   def admin?
     false

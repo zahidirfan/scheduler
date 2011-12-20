@@ -15,7 +15,7 @@ class CandidatesController < ApplicationController
       @candidates = Candidate.page(params[:page]).find_all_by_status(params[:status])
       @title = " on #{params[:status]} Status"
     else
-    @candidates = Candidate.active.order("name").page(params[:page])
+      @candidates = Candidate.active.order("name").page(params[:page])
     end
     @tags = Candidate.tag_counts_on(:tags)
     respond_to do |format|
@@ -117,6 +117,18 @@ class CandidatesController < ApplicationController
       format.json { head :ok }
     end
   end
+
+  def toggle_follow
+    candidate = Candidate.find(params[:candidate_id])
+    if current_user.following?(candidate)
+      current_user.stop_following(candidate)
+      render text: "Follow"
+    else
+      current_user.follow(candidate)
+      render text: "Unfollow"
+    end
+  end
+
 
   def mark_archive
     @candidate = Candidate.find(params[:candidate_id])

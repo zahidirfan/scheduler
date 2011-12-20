@@ -35,8 +35,10 @@ module ApplicationHelper
     cnt = [link_to('Show', obj)]
     if can?(:update, obj)
       archive_link = (obj.status == "Archive") ? "Unarchive" : "Archive"
+      follow_link = current_user.following?(obj) ? "UnFollow" : "Follow"
       cnt << link_to('Edit', self.send("edit_#{res}_path".to_sym, obj))
       cnt << link_to(archive_link, self.send("#{res}_mark_archive_path".to_sym, obj))
+      cnt << link_to(follow_link, '#', :class => "follow_link", :id => "follow_link_#{obj.id}", :data => {:candidate_id => obj.id})
     end
     if can?(:destroy, obj)
     cnt << link_to('Remove', obj, confirm: 'Are you sure?', method: :delete)
