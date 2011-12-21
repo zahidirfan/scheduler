@@ -55,6 +55,6 @@ module Resume
     config.action_view.field_error_proc = Proc.new { |html_tag, instance| "#{html_tag}".html_safe }
 
     config.action_mailer.default_url_options = { :host => DEFAULT_HOST[Rails.env] }
-
+    #config.active_record.observers = :audit_observer
   end
 end

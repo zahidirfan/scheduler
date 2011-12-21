@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+      Dear <%= @user.name %>,
+    </p>
+    <p>
+    The candidate <b><%= "#{@candidate.name}'s" %></b> profile has updated by <strong><%= @current_user.name %></strong>. Changes are as follows:
+    </p>
+    <% @candidate_changes.each do |attribute, value| %>
+      <% if attribute == "resume_file_name" %>
+        <br />Resume has been updated.
+      <% elsif not (attribute =~ /resume/ || attribute == 'update') %>
+        <br /><%= "#{attribute} : '#{value[0]}' to '#{value[1]}' "  %>
+      <% end %>
+    <% end %>
+    <p>
+      Thanks!
+    </p>
+    <p>
+      Pramati Technologies Pvt Ltd.
+    </p>
+  </body>
+</html>

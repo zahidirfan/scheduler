@@ -19,10 +19,22 @@ class Interview < ActiveRecord::Base
     self.candidate.update_attribute("status", "Scheduled")
   end
 
+  def send_notification_to_followers(mail)
+    followers = self.candidate.user_followers
+    followers.each do |user|
+      Notifier.delay.mail(self)
+    end
+  end
+
   after_create do |interview|
+#    interview.send_notification_to_followers(interview_schedule_mail)
     make_ical(interview)
     Notifier.delay.interview_schedule_mail(interview)
 #    Notifier.interview_schedule_mail(interview).deliver
+    followers = interview.candidate.user_followers
+    followers.each do |user|
+      Notifier.delay.interview_schedule_mail(interview, false)
+    end
   end
 
   after_update do |interview|
@@ -33,10 +45,18 @@ class Interview < ActiveRecord::Base
     else
     Notifier.delay.interview_reschedule_mail(interview)
     end
+    followers = interview.candidate.user_followers
+    followers.each do |user|
+      Notifier.delay.interview_reschedule_mail(interview, false)
+    end
   end
 
   after_destroy do |interview|
     Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,scheduled_at)
+    followers = interview.candidate.user_followers
+    followers.each do |user|
+      Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,scheduled_at)
+    end
   end
 
   scope :dummy, where("1 = 1")

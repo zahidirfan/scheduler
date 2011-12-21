@@ -15,21 +15,35 @@ end
 class Notifier < ActionMailer::Base
   include UserInfo
 
-  def interview_schedule_mail(interview)
+  def candidate_profile_update_mail(candidate, user)
+    @user = user
+    @current_user = current_user
+    @candidate = candidate
+    changes = candidate.changes
+    changes.delete("updated_at")
+    @candidate_changes = changes
+    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Profile updated for #{@candidate.name}" if changes.length > 0
+  end
+
+  def interview_schedule_mail(interview, attachment=true)
     @user = interview.user
     @candidate = interview.candidate
     @interview = interview
-    attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
-    attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics")}
+    if attachment
+      attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
+      attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics")}
+    end
     mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Interview Scheduled for #{@candidate.name}"
   end
 
-  def interview_reschedule_mail(interview)
+  def interview_reschedule_mail(interview, attachment=true)
     @user = interview.user
     @candidate = interview.candidate
     @interview = interview
-    attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
-    attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics")}
+    if attachment
+      attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
+      attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics")}
+    end
     mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Interview Rescheduled for #{@candidate.name}"
   end
 
