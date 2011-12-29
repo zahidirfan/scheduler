@@ -53,6 +53,7 @@ class CandidatesController < ApplicationController
   # GET /candidates/new.json
   def new
     @candidate = Candidate.new
+    @tags = Candidate.tag_counts_on(:tags)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -73,6 +74,7 @@ class CandidatesController < ApplicationController
   # POST /candidates.json
   def create
     @candidate = Candidate.new(params[:candidate])
+    @tags = Candidate.tag_counts_on(:tags)
 
     respond_to do |format|
       if @candidate.save
@@ -122,10 +124,10 @@ class CandidatesController < ApplicationController
     candidate = Candidate.find(params[:candidate_id])
     if current_user.following?(candidate)
       current_user.stop_following(candidate)
-      render text: "Follow"
+      render text: "Track"
     else
       current_user.follow(candidate)
-      render text: "Unfollow"
+      render text: "Untrack"
     end
   end
 

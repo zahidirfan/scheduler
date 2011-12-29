@@ -34,7 +34,7 @@ body.el-rte-structure a.elrte-anchor {
   background: url('/assets/elrte-toolbar.png') -564px -8px no-repeat;
 }
 img {
-  cursor: default;
+/*  cursor: default; */
 }
 img.elrte-webkit-hl {
   outline: 1px dashed #777;

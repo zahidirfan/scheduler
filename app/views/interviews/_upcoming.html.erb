@@ -1,20 +1,16 @@
 <% unless upcoming.blank? %>
-<h3>Upcoming Schedule</h3>
-<table id="box-table-a" style="width: 95%">
-<tr>
-  <th>Scheduled On</th>
-  <th>Interviewer</th>
-  <th>Status</th>
-</tr>
+  <h3>Upcoming Schedules</h3>
+  <div id="rows">
+  <ul class="no_border">
 <% upcoming.each do |interview| %>
-    <% interviewer = interview.user %>
-<tr>
-  <td><%= interview.formated_scheduled_at%> <%= (link_to "Change", edit_candidate_interview_path(@candidate, interview, :interviewer_filter => interviewer.id)) + " | " if can? :update, interview %> <%= (link_to "Cancel", candidate_interview_path(@candidate, interview, :cancel=>true), :method => :delete, :confirm => "Are you sure to cancel this interview schedule?") if can?(:destroy, interview) %></td>
-  <td><%= interviewer.name %></td>
-  <td><%= show_comment_status(interview.comments.try(:first).try(:status)) %></td>
-  </tr>
+  <li>
+  <span><%= interview.formated_scheduled_at + " to " + interview.user.name %>
+    <%= (link_to "Change", edit_candidate_interview_path(@candidate, interview, :interviewer_filter => interviewer.id)) + " | " if can? :update, interview %> <%= (link_to "Cancel", candidate_interview_path(@candidate, interview, :cancel=>true), :method => :delete, :confirm => "Are you sure to cancel this interview schedule?") if can?(:destroy, interview) %>
+  <%= " | " + show_comment_status(interview.comments.try(:first).try(:status)) unless interview.comments.blank? %>
+  </span>
+  </li>
 <% end %>
-
-</table>
 <br />
+</ul>
+</div>
 <% end %>

@@ -1,8 +1,14 @@
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
-<tr>
-  <td width="70%"><h1><%= show_interview_title %></h1></td>
-  <td width="30%" align="right">
-    <% if check_admin_or_hr(current_user.type) %>
+<div>
+  <div style="float:left">
+    <h1>Interviews
+      <% if params[:view]!="calendar" %>
+        <% interviews = check_admin_or_hr(current_user.type) ? Interview : current_user.interviews %>
+        <span style="display: inline; font-size: 11px; font-family: Arial;"><%= link_to "Today (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'today') %> <%= link_to "Tomorrow (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'tomorrow') %> <%= link_to "This week (#{interviews.this_week.count})", interviews_path(:view => 'week') %> <%= link_to "Later (#{interviews.upcoming.count - interviews.this_week.count})", interviews_path(:view => 'later') %> <%= link_to "In Total (#{interviews.upcoming.count})", interviews_path(:view => 'total') %></span>
+      <% end %>
+  </h1>
+</div>
+<% if check_admin_or_hr(current_user.type) %>
+  <div id="float_right">
     <form id ="filter_by_interviewer">
       <% if params[:view]=="calendar" %>
         <input type="hidden" value="calendar" name="view" />
@@ -11,10 +17,8 @@
       <%= select_tag('interviewer_filter', options_from_collection_for_select(User.interview_panel.collect{|u| [ u.id, u.name ] }, :first, :last, params[:interviewer_filter]), {:prompt => "Filter Interviews By"} ) %>
       </div>
     </form>
-    <% end %>
-</td>
-</tr>
-</table>
+  </div>
+<% end %>
 <div style="clear:both"></div>
 <br>
 <% if check_admin_or_hr(current_user.type) %>
@@ -23,10 +27,20 @@
   </div>
 </div>
 <% end %>
-<% if params['view'] != "calendar" %>
-  <%= render :partial => "today_interview_schedule", :object => @interviews.today %>
-  <%= render :partial => "this_week_interview_schedule", :object => @interviews.this_week %>
-  <%= render :partial => "this_month_interview_schedule", :object => @interviews.this_month %>
-<% else %>
+<% case params[:view] %>
+<% when "calendar" %>
   <%= render :partial => "calendar_view" %>
+<% when "today", "tomorrow", "week", "later", "total" %>
+  <h2><%= get_interview_title(params[:view]) %></h2>
+  <div id="rows">
+<% unless @interviews.blank?%>
+<%= render :partial => "show_interview_schedules", :locals => { :interview_schedules => @interviews } %>
+<%else%>
+<p class="no_interview_schedule">No Interview Schedules.</p>
+<%end%>
+<% else %>
+  <%= render :partial => "today_interview_schedule", :object => @interviews.by_date(Date.today) %>
+  <%= render :partial => "this_week_interview_schedule", :object => @interviews.this_week %>
+  <%= render :partial => "this_month_interview_schedule", :object => @interviews.upcoming - @interviews.this_week %>
 <% end %>
+</div>

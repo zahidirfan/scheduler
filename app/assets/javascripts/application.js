@@ -46,7 +46,12 @@ $('.follow_link').bind('click', function(e) {
             alert(status);
         },
         success: function(data){
-          $("#follow_link_"+candidate_id).text(''+data);
+                    var src = (data == "Track")
+                    ? "/assets/trackit.png"
+                    : "/assets/un-trackit.png";
+          $("#follow_link_"+candidate_id).attr("src", src);
+          $("#follow_link_"+candidate_id).attr("title", data);
+          $("#follow_link_"+candidate_id).attr("alt", data);
         }
     });
 });

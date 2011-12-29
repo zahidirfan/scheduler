@@ -9,9 +9,21 @@ class InterviewsController < ApplicationController
   def index
     if (params[:view] != 'calendar')
       if(params[:interviewer_filter])
-        @interviews = Interview.by_user_id(params[:interviewer_filter])
+        interviews = Interview.by_user_id(params[:interviewer_filter])
       else
-        @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+        interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+      end
+      @interviews = case params[:view]
+        when 'today', 'tomorrow'
+          interviews.by_date(Date.today)
+        when 'week'
+          interviews.this_week
+        when 'later'
+          interviews.upcoming - interviews.this_week
+        when 'total'
+          interviews.upcoming
+        else
+          interviews
       end
     end
     @interview = Interview.new

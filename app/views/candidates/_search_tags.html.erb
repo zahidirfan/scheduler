@@ -1,0 +1,22 @@
+<table>
+  <tr>
+    <td>
+      <form class="searchform" id="searchform">
+      <input type="text" name="search" id="tag_autocomplete" class="searchfield" value="<%= params[:search] %>" title="Search by Tags" data-pre="<%= @search_tags.map(&:attributes).to_json unless @search_tags.blank?  %>" />
+      <input class="searchbutton hide" type="submit" value="Go" />
+    </form></td>
+    <!--
+    <td width="45%">
+      <form id="filter_candidate_by_status">
+        <%#= select_tag('status', options_from_collection_for_select({"All" => "All"}.merge(FEEDBACK_STATUS).merge(HIRING_STATUS), :first, :last, params[:status]), {:prompt => "Filter Candidate By"}) %>
+        <%#= select_tag("change_status", options_from_collection_for_select(HIRING_STATUS, :first, :last), {:prompt => "Mark as"}) if can? :update, Candidate %>
+      </form>
+    </td>
+    -->
+  </tr>
+</table>
+<div class="tagClound">
+<% tag_cloud(@tags, %w(tag_cloud1 tag_cloud2 tag_cloud3 tag_cloud4)) do |tag, css_class| %>
+  <%= link_to tag.name, tag_candidates_path(tag.name), :class => css_class %>
+<% end %>
+</div>

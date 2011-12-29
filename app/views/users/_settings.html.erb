@@ -1,0 +1,12 @@
+<% case params[:action]
+    when 'password_change' %>
+      <%= link_to( image_tag('manageusers.png'), users_path, :class=>"top_link top_bar_elements") %>
+      <%= link_to( image_tag('managetags.png'), create_custom_tags_path, :class=>"top_link top_bar_elements") %>
+    <%  when 'create_custom_tags' %>
+      <%= link_to( image_tag('manageusers.png'), users_path, :class=>"top_link top_bar_elements") %>
+      <%= link_to( image_tag('settings.png'), password_change_path, :class=>"top_link top_bar_elements") %>
+    <% else %>
+      <%= link_to( image_tag('managetags.png'), create_custom_tags_path, :class=>"top_link top_bar_elements") %>
+      <%= link_to( image_tag('settings.png'), password_change_path, :class=>"top_link top_bar_elements") %>
+<% end %>
+

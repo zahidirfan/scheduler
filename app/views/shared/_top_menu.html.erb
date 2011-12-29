@@ -1,21 +1,11 @@
-<div id="top_left_bar">
-  <% home_link = current_user.type.to_s == "Interviewer" ? interviews_path : candidates_path %>
-  <%= link_to "Home", home_link, :class => "top_link" %>
-
-  <% if check_admin_or_hr(current_user.type) %>
-    | <%= link_to "Manage Users", users_path, :class => "top_link" %>
-    | <%= link_to "Manage Tags", create_custom_tags_path, :class => "top_link" %>
-    | <%= link_to "Followings", followings_users_path, :class => "top_link" %>
-  <% end %>
-
-
-  <% if INTERVIEW_PANEL_USER_TYPES.include?(current_user.type.to_s) %>
-    | <%= link_to "Manage Interviews", interviews_path, :class => "top_link" %>
-    <%= link_to "(Calender View)", interviews_path(:view => 'calendar'), :class => "top_link" %>
-  <% end %>
-</div>
 <div id="top_right_bar">
-  <%= current_user.name %> |
-  <%= link_to "Change password", password_change_path%> |
-  <%= link_to "Sign out",log_out_path, :confirm => "Are you sure?", :class => "top_link"%>
+  <% home_link = current_user.type.to_s == "Interviewer" ? interviews_path : candidates_path %>
+  <%= link_to image_tag('home.png'), home_link, :class => "top_link top_bar_elements" %>
+  <% if INTERVIEW_PANEL_USER_TYPES.include?(current_user.type.to_s) %>
+    <%= link_to( image_tag('interviews.png'), interviews_path, :class=>"top_link top_bar_elements") %>
+    <%= link_to( image_tag('calendar.png'), interviews_path(:view => 'calendar'), :class=>"top_link top_bar_elements") %>
+  <% end %>
+  <%= link_to( image_tag('settings.png'), password_change_path, :class=>"top_link top_bar_elements") %>
+  <%= link_to( image_tag('onoff.png'), log_out_path, :confirm => "Are you sure?", :class=>"top_link top_bar_elements") %>
+  <%#= current_user.name %>
 </div>
