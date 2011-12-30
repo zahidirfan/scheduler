@@ -76,9 +76,9 @@ namespace :deploy do
 end
 
 
-# after "deploy", "deploy:after_update_code"
-# #after "deploy:after_update_code", "deploy:bundle_install"
-# #after "deploy:bundle_install", "deploy:cleanup"
-# after "deploy:cleanup", "deploy:migrate"
-# after "deploy:migrate", "deploy:precompile_assets"
-# after "deploy:precompile_assets", "deploy:restart"
+after "deploy", "deploy:after_update_code"
+#after "deploy:after_update_code", "deploy:bundle_install"
+after "deploy:after_update_code", "deploy:cleanup"
+after "deploy:cleanup", "deploy:migrate"
+after "deploy:migrate", "deploy:precompile_assets"
+after "deploy:precompile_assets", "deploy:restart"

@@ -16,7 +16,6 @@ gem 'cancan'
 gem 'will_paginate'
 gem 'icalendar'
 gem "acts_as_follower"
-gem "haml"
 
 # Gems used only for assets and not required
 # in production environments by default.
