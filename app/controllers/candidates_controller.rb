@@ -3,19 +3,19 @@ class CandidatesController < ApplicationController
   # GET /candidates.json
   before_filter :authenticate, :except => [:new, :create, :pull_tags]
   load_and_authorize_resource
-  skip_authorize_resource :only => [:new, :create, :pull_tags, :fetch_candidates]
+  skip_authorize_resource :only => [:new, :create, :pull_tags, :tag, :fetch_candidates]
 
   def index
-    if params[:search]
-    @candidates = Candidate.tagged_with(params[:search], :any => true).paginate(:page => params[:page], :per_page => "10")
-    search_params = params[:search].split(',')
-    @search_tags = ActsAsTaggableOn::Tag.named_like_any(search_params)
-    @title = "tagged with #{search_params.join(', ')}"
-
-    elsif !params[:status].blank?
-    @candidates = Candidate.paginate(:page => params[:page], :per_page => "10").find_all_by_status(params[:status])
+    if !params[:search].blank?
+      @candidates = Candidate.tagged_with(params[:search], :any => true).page(params[:page])
+      search_params = params[:search].split(',')
+      @search_tags = ActsAsTaggableOn::Tag.named_like_any(search_params)
+      @title = "tagged with #{search_params.join(', ')}"
+    elsif !params[:status].blank? && params[:status] != 'All'
+      @candidates = Candidate.page(params[:page]).find_all_by_status(params[:status])
+      @title = " on #{params[:status]} Status"
     else
-    @candidates = Candidate.active.order("name").paginate(:page => params[:page], :per_page => "10")
+      @candidates = Candidate.active.order("name").page(params[:page])
     end
     @tags = Candidate.tag_counts_on(:tags)
     respond_to do |format|
@@ -30,7 +30,7 @@ class CandidatesController < ApplicationController
       ActsAsTaggableOn::Tag.delete(params[:id])
       flash.now.notice = "Tag Name and its associated taggings are sucessfully deleted."
     else
-      @candidates = Candidate.tagged_with(params[:name]).paginate(:page => params[:page], :per_page => "10")
+      @candidates = Candidate.tagged_with(params[:name]).page(params[:page])
       @title = "tagged with #{params[:name]}"
       @tags = Candidate.tag_counts_on(:tags)
       render :action => 'index'
@@ -53,6 +53,7 @@ class CandidatesController < ApplicationController
   # GET /candidates/new.json
   def new
     @candidate = Candidate.new
+    @tags = Candidate.tag_counts_on(:tags)
 
     respond_to do |format|
       format.html # new.html.erb
@@ -73,6 +74,7 @@ class CandidatesController < ApplicationController
   # POST /candidates.json
   def create
     @candidate = Candidate.new(params[:candidate])
+    @tags = Candidate.tag_counts_on(:tags)
 
     respond_to do |format|
       if @candidate.save
@@ -118,9 +120,22 @@ class CandidatesController < ApplicationController
     end
   end
 
+  def toggle_follow
+    candidate = Candidate.find(params[:candidate_id])
+    if current_user.following?(candidate)
+      current_user.stop_following(candidate)
+      render text: "Track"
+    else
+      current_user.follow(candidate)
+      render text: "Untrack"
+    end
+  end
+
+
   def mark_archive
     @candidate = Candidate.find(params[:candidate_id])
-    @candidate.update_attribute(:archive, true)
+    str_archive = (@candidate.status == "Archive") ? nil : "Archive"
+    @candidate.update_attribute(:status, str_archive)
     redirect_to candidates_url
   end
 
@@ -136,10 +151,10 @@ class CandidatesController < ApplicationController
   end
 
   def mark_archive_for_selected_candidates
-    candidates = Candidate.find_all_by_id(params[:select].values) unless params[:select].blank?
+    candidates = Candidate.find_all_by_id(params[:select].values) unless params[:select].blank? && params[:changed_staus].blank?
     unless candidates.blank?
       candidates.each do |candidate|
-        candidate.update_attribute(:status, params[:change_status])
+        candidate.update_attribute(:status, params[:changed_status])
       end
     redirect_to candidates_url, :notice => 'Status was successfully updated.'
     else

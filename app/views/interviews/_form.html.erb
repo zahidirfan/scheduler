@@ -1,3 +1,4 @@
+<h3>Choose Schedule Details</h3>
 <% obj = @candidate.nil? ? @interview : [@candidate,@interview] %>
 <%= form_for obj, :html => {:id => "interview_form", :remote => params[:view] == "calendar" ? true : false} do |f| %>
 <% if @interview.errors.any? %>

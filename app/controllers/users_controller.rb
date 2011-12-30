@@ -6,8 +6,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
-
+    @users = User.page(params[:page])
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @users }
@@ -85,8 +84,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def followings
+    follows = current_user.follows_by_type('Candidate')
+    @candidates = Candidate.where("id in (#{follows.map(&:followable_id).join(',')})").page(params[:page])
+    @tags = Candidate.tag_counts_on(:tags)
+  end
+
   def password_change
     @user = current_user
-    redirect_to :root, :notice => 'Password changed successfully.' if not params[:user].blank?  and @user.update_attributes(params[:user])
+    if @user.update_attributes(params[:user]) && request.put? && (not params[:user][:password].blank?)
+      redirect_to :root, :notice => 'Password changed successfully.'
+    elsif request.put? && (params[:user][:password].blank?)
+      redirect_to password_change_path, :notice => 'Password should not be blank.'
+    end
   end
 end

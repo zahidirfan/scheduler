@@ -1,17 +1,16 @@
-<% feed_back_info.each do |i| %>
-  <% unless i.comments.blank? %>
-    <h3>Feedback</h3>
-    <table width="90%" cellpadding="5" cellspacing="5" border="0" style="border: 1px solid #ccc">
-      <tr>
-        <td width="40%"><strong>Schedule at: </strong><%= i.scheduled_at.to_s(:simple)%> @ <%= i.schedule_time %></td>
-        <td width="40%"><strong>Reviewer: </strong><%= User.find(i.user_id).name %></td>
-        <td width="20%"><%= show_comment_status(i.comments.try(:first).try(:status)) %></td>
-      </tr>
-      <tr>
-        <td colspan="3" %>
-          <%=i.comments.try(:first).try(:description).try(:html_safe) %>
-        </td>
-    </table>
-    <p>&nbsp;</p>
-  <% end %>
+<% unless feed_back_info.empty? or (feed_back_info.length > 0) %>
+  <h3>Feedback</h3>
+  <div id="rows">
+  <% feed_back_info.each do |interview| %>
+  <ul class="no_border">
+  <li>
+  <span><%= interview.formated_scheduled_at + " to " %> <strong><%= link_to interview.user.name, user_path(interview.user) %></strong>
+  <%= " | " + show_comment_status(interview.comments.try(:first).try(:status)) unless interview.comments.blank? %></span>
+  <em><%=i.comments.try(:first).try(:description).try(:html_safe) %></em>
+    </li>
+    </ul>
+<% end %>
+<br />
+</ul>
+</div>
 <% end %>

@@ -8,6 +8,7 @@
               right: 'month,agendaWeek,agendaDay'
             },
           defaultView: 'agendaWeek',
+          firstHour: 9,
           height: 500,
           slotMinutes: 15,
           loading: function(bool){
@@ -58,26 +59,10 @@
           eventClick: function(event, jsEvent, view){
               showEventDetails(event);
           },
-      });
+        });
+
+
     });
-
-    function my_convertDate(date) {
-    date_obj = new Date(date);
-    date_obj_hours = date_obj.getHours();
-    date_obj_mins = date_obj.getMinutes();
-
-    if (date_obj_mins < 10) { date_obj_mins = "0" + date_obj_mins; }
-
-    if (date_obj_hours > 11) {
-        date_obj_hours = date_obj_hours - 12;
-        date_obj_am_pm = " PM";
-    } else {
-        date_obj_am_pm = " AM";
-    }
-
-    date_obj_time = " "+date_obj_hours+":"+date_obj_mins+date_obj_am_pm;
-    return $.datepicker.formatDate("dd-mm-yy", date_obj)+date_obj_time;
-  }
 
 </script>
 <div>

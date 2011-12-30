@@ -1,21 +1,8 @@
-<h3>Today Interview Schedule</h3>
+<h2>Today</h2>
+  <div id="rows">
+
 <% unless today_interview_schedule.blank?%>
-<table id="box-table-a">
-<tr>
-  <th scope="col">Name</th>
-  <th scope="col">Scheduled at</th>
-  <th>Interviewer</th>
-  <th scope="col">Actions</th>
-</tr>
-<% today_interview_schedule.each do |interview| %>
-<tr>
-  <td><%= interview.candidate.name %></td>
-  <td><%= interview.scheduled_at.to_s(:simple)%> at <%= interview.schedule_time%></td>
-  <td><%= User.find(interview.user_id).name %></td>
-  <td><%= feedback_link(interview)%></td>
-</tr>
-<% end %>
-</table>
+<%= render :partial => "show_interview_schedules", :locals => { :interview_schedules => today_interview_schedule } %>
 <%else%>
 <p class="no_interview_schedule">No Interview Schedule for Today</p>
 <%end%>

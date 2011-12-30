@@ -19,6 +19,6 @@ module CalendarInvite
     event.location = "Telephonic"
     calendar.add event
     calendar.publish
-    file = File.open("tmp/ics_files/invite_#{interview.candidate.name}_#{interview.user.name}.ics", "w+") { |f| f.write(calendar.to_ical); f.close }
+    file = File.open("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics", "w+") { |f| f.write(calendar.to_ical); f.close }
   end
 end

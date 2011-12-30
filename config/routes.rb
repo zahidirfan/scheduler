@@ -10,19 +10,23 @@ Resume::Application.routes.draw do
 
   resources :projects
 
-  resources :users
+  resources :users do
+    collection do
+      get :followings
+    end
+  end
 
   resources :candidates do
     collection do
       get :tag
     end
+    get 'toggle_follow'
     resources :interviews do
       resources :comments
     end
     get 'mark_archive'
   end
 
-  resources :users
   resources :hr, :bm, :administrator, :pl, :interviewer, :controller => "users"
   resources :sessions
 
@@ -36,13 +40,15 @@ Resume::Application.routes.draw do
   match 'interview/:view' => 'interviews#index'
   match 'interviews/move' => "interviews#move"
   match 'interviews/resize' => "interviews#resize"
+  match "interviews/make_ical/:int_id" => "interviews#make_ical", :as => :make_ical
   match 'create_custom_tags' => 'candidates#create_custom_tags'
   match 'pull_tags' => 'candidates#pull_tags'
   match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'
   match 'mark_archive_for_selected_candidates' => 'candidates#mark_archive_for_selected_candidates', :as => 'mark_archive_for_selected_candidates'
-  match "candidates/tag/:name" => "candidates#tag", :as => :tag_candidates
-  match "interviews/make_ical/:int_id" => "interviews#make_ical", :as => :make_ical
+#  match "candidates/followings" => "candidates#followings"
+  match "candidates/tag/:name" => "candidates#tag", :as => :tag_candidates, :constraints => { :name => /.+(?=\.(html|xml|js))|.+/ }
   match "add_candidate" => "candidates#new", :as => :add_candidate, :via => :get
+  match "forgotten" => "sessions#forgotten", :as => :forgotten
   match "career" => "career#new", :as => :career, :via => :get
   match "career" => "career#create", :as => :career, :via => :post
   # The priority is based upon order of creation:

@@ -18,6 +18,6 @@ HIRING_STATUS = {
   "Bench" => "Bench"
 }
 
-CONTACT_TO_EMAIL = "gokul.m@imaginea.com"
+CAREER_FORM_EMAIL = "gokul.m@imaginea.com"
+NO_REPLY_EMAIL = "no-reply@imaginea.com"
 INTERVIEW_PANEL_USER_TYPES = ["Interviewer", "Bm", "Hr", "Pl", "Administrator"]
-

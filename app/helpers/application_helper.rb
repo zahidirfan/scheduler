@@ -1,13 +1,21 @@
 module ApplicationHelper
   include ActsAsTaggableOn::TagsHelper
 
+  def feedback_link(interview)
+    unless interview.comments.exists?
+      link_to image_tag("feedback.jpg", :title => "Feedback", :alt => "Feedback"), new_candidate_interview_comment_path(interview.candidate, interview)
+    else
+      link_to image_tag("feedback.jpg", :title => "Edit Feedback", :alt => "Edit Feedback"), edit_candidate_interview_comment_path(interview.candidate, interview, interview.comments.first)
+    end
+  end
+
   def show_candidate_status(c)
-    c.status.nil? ? "New" : c.status
+    c.status.nil? ? "Not Scheduled" : c.status
   end
 
   def show_tags(c)
     return if c.tags.empty?
-    c.tag_list
+    c.tags.collect { |tag| link_to tag.name, tag_candidates_path(tag.name) }
   end
 
   def flash_notifications
@@ -19,20 +27,25 @@ module ApplicationHelper
   end
 
   def show_comment_status(i)
-    val = FEEDBACK_STATUS.key(i.to_s)
-    "<span class='comment_status_#{i}'>#{val}</span>".html_safe
+    val = (i == "Cancelled") ? i : FEEDBACK_STATUS.key(i.to_s)
+    raw("<span class='comment_status'>#{val}</span>")
   end
 
-  def cta_links(res, obj)
-    cnt = [link_to('Show', obj)]
+  def cta_links(res, obj, interview=nil)
+    cnt = []
     if can?(:update, obj)
-    cnt << link_to('Edit', self.send("edit_#{res}_path".to_sym, obj))
-    cnt << link_to('Archive', self.send("edit_#{res}_path".to_sym, obj))
+      #archive_link = (obj.status == "Archive") ? "Unarchive" : "Archive"
+      schedule_link = interview.nil? ? self.send("#{res}_path".to_sym, obj) : self.send("edit_#{res}_interview_path".to_sym, obj, interview)
+      follow_link = current_user.following?(obj) ? image_tag('un-trackit.png', :alt => 'Untrack', :title => 'Untrack', :id => "follow_link_#{obj.id}") : image_tag('trackit.png', :alt => 'Track', :title => 'Track', :id => "follow_link_#{obj.id}")
+      delete_link = interview.nil? ? obj : interview
+      cnt << link_to(image_tag('calendar16.png', :alt => 'Schedule an interview', :title => 'Schedule an interview'), schedule_link)
+#      cnt << link_to(archive_link, self.send("#{res}_mark_archive_path".to_sym, obj))
+      cnt << link_to(follow_link, '#', :class => "follow_link", :data => {:candidate_id => obj.id})
     end
     if can?(:destroy, obj)
-    cnt << link_to('Remove', obj, confirm: 'Are you sure?', method: :delete)
+    cnt << link_to(image_tag('delete.png', :alt => 'Delete', :title => 'Delete'), delete_link, confirm: 'Are you sure?', method: :delete)
     end
-    cnt.join(" | ").html_safe
+    cnt.join(" - ").html_safe
   end
 
   def download_resume(c)
@@ -49,7 +62,12 @@ module ApplicationHelper
 
   def show_interview_title
     u = ""; u = "for " + User.find(params[:interviewer_filter]).name if params[:interviewer_filter]
-    "Interview Schedule #{u}  ~ Overview"
+    "Interviews #{u}"
+  end
+
+  def get_interview_title(cat_name)
+    categories = {"today" => "Today", "tomorrow" => "Tomorrow", "week" => "This Week", "later" => "Later", "total" => "Total"}
+    categories[cat_name]
   end
 
 end

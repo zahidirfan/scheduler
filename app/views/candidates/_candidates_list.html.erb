@@ -1,0 +1,61 @@
+<%= render 'search_tags' %>
+<div>
+  <h1>Candidates</h1>
+    <div id="rows">
+  <%#= form_tag(mark_archive_for_selected_candidates_path,:id => "modify_status") do%>
+    <% unless @candidates.blank? %>
+    <% @candidates.each do |candidate| %>
+      <ul><li><%= link_to candidate.name, candidate_path(candidate), :class => "title" %>
+      <em><%= candidate.subject%></em>
+      <span>Posted on <%= candidate.created_at.strftime("%b %d, %Y") %> | <%= show_candidate_status(candidate)%></span>
+      <span class="tags"><%= show_tags(candidate).join(" ").html_safe unless candidate.tags.empty? %></span>
+      <div class="options"><%= cta_links(:candidate, candidate) %></div>
+      </li></ul>
+  <% end %>
+    <input type="hidden" id="changed_status" name="changed_status" />
+  <%else%>
+    <ul><li class="no_records_found">No candidates found.</li></ul>
+  <%end%>
+  <%#end%>
+  </div>
+<br />
+<div class="list_top_bar">
+  <div style="float:left">
+<%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
+  </div>
+      <div id="pagination">
+        <%= will_paginate(@candidates)%>
+      </div>
+    </div>
+    <br />
+<script type="text/javascript">
+  $(document).ready(function() {
+    //Script for filtering the candidates by status
+    $("#status").change(function() {
+      if($("#status").val() == "")
+        alert("Please select a valid filter.")
+      else
+        $('#filter_candidate_by_status').submit();
+    });
+    //Script for select all
+    $("#select_all").click(function() {
+      if($('#select_all').is(':checked')) {
+        $(".select_candidate").prop('checked', true);
+      } else {
+        $(".select_candidate").prop('checked', false);
+      }
+    });
+    //Script for changing the status of the selected candidates
+    $("#change_status").change(function() {
+      if($(".select_candidate:checked").length == 0) {
+        alert("Please select atleast one candidate.");
+      } else if($("#change_status").val() == "") {
+        alert("Please select a valid status.");
+        } else {
+        $("#changed_status").val($("#change_status").val());
+        $("form#modify_status").submit();
+      }
+    });
+  });
+
+</script>

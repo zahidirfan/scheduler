@@ -25,6 +25,7 @@
       <td class="form_label"><%= f.label :email %></td>
       <td class="form_input"><%= f.text_field :email %></td>
     </tr>
+    <%# if (current_user == @user || params[:action] == 'new') %>
     <tr>
       <td class="form_label"><%= f.label :password %></td>
       <td class="form_input"><%= f.password_field :password %></td>
@@ -33,10 +34,13 @@
       <td class="form_label"><%= f.label :password_confirmation %></td>
       <td class="form_input"><%= f.password_field :password_confirmation %></td>
     </tr>
+    <%# end %>
+    <% if check_admin_or_hr(current_user.type) %>
     <tr>
-      <td class="form_label"><%= f.label :type %></td>
+      <td class="form_label"><%= f.label :type, "Role" %></td>
       <td class="form_input"><%= f.select(:type, USER_ROLES, :selected => @user.type) %></td>
     </tr>
+    <% end %>
     <tr class="button">
       <td></td>
       <td class="form_input"><%= f.submit %> </td>

@@ -2,15 +2,28 @@ class InterviewsController < ApplicationController
   # GET /interviews
   # GET /interviews.json
   #before_filter :check_interview_schedule, :only => [:new]
+  before_filter :authenticate
   load_and_authorize_resource
   before_filter :load_candidate, :except => [:index, :get_interviews, :export_interview, :move, :resize]
 
   def index
     if (params[:view] != 'calendar')
       if(params[:interviewer_filter])
-        @interviews = Interview.by_user_id(params[:interviewer_filter])
+        interviews = Interview.by_user_id(params[:interviewer_filter])
       else
-        @interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+        interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+      end
+      @interviews = case params[:view]
+        when 'today', 'tomorrow'
+          interviews.by_date(Date.today)
+        when 'week'
+          interviews.this_week
+        when 'later'
+          interviews.upcoming - interviews.this_week
+        when 'total'
+          interviews.upcoming
+        else
+          interviews
       end
     end
     @interview = Interview.new
@@ -66,7 +79,7 @@ class InterviewsController < ApplicationController
   # PUT /interviews/1
   # PUT /interviews/1.json
   def update
-    @interview = Interview.find(params[:id])
+    @interview = @candidate.interviews.find(params[:id])
     respond_to do |format|
       if @interview.update_attributes(params[:interview])
        format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully updated.' }
@@ -84,11 +97,11 @@ class InterviewsController < ApplicationController
     if params[:interviewer_id]
       meth = Interview.by_user_id(params[:interviewer_id])
     else
-      meth = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+      meth = current_user.type.to_s == "Interviewer" ? current_user.interviews.uncancelled : Interview.uncancelled
     end
     interviews = meth.fetch_interviews(params['start'], params['end'])
     desc_interviews = interviews.collect do |interview|
-      {:id => interview.id, :candidate_id => interview.candidate_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{current_user.type}", :allDay => false, :recurring => false }
+      {:id => interview.id, :candidate_id => interview.candidate_id, :interviewer_id => interview.user_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{current_user.type}", :comment_id => "#{interview.comments.filter_by_user(current_user).exists? ? interview.comments.filter_by_user(current_user).first.id : 0 }", :allDay => false, :recurring => false }
     end
     render :text => desc_interviews.to_json
   end
@@ -122,7 +135,16 @@ class InterviewsController < ApplicationController
   # DELETE /interviews/1.json
   def destroy
     @interview = @candidate.interviews.find(params[:id])
-    @interview.destroy
+    if params["cancel"]
+      if @interview.comments.length > 0
+        @interview.comments.first.update_attributes(:candidate_id => @candidate.id, :user_id => current_user.id, :status => 'Cancelled')
+      else
+        @interview.comments.create!(:candidate_id => @candidate.id, :user_id => current_user.id, :description => "Due to some reasons, interview is cancelled.", :status => 'Cancelled')
+      end
+    else
+      @interview.destroy
+    end
+    @candidate.update_attributes(:status => nil)
 
     respond_to do |format|
       format.html { redirect_to candidate_path(@candidate) }
