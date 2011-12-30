@@ -62,7 +62,7 @@ namespace :deploy do
   end
   
   task :bundle_install do
-    run("cd #{deploy_to}/current; bundle install;")
+    run("cd #{deploy_to}/current && export USE_BUNDLER= && bundle install")
   end
   
   task :precompile_assets do
@@ -75,8 +75,8 @@ end
 
 
 after "deploy", "deploy:after_update_code"
-after "deploy:after_update_code", "deploy:cleanup"
-after "deploy:cleanup", "deploy:bundle_install"
-after "deploy:bundle_install", "deploy:migrate"
+after "deploy:after_update_code", "deploy:bundle_install"
+after "deploy:bundle_install", "deploy:cleanup"
+after "deploy:cleanup", "deploy:migrate"
 after "deploy:migrate", "deploy:precompile_assets"
 after "deploy:precompile_assets", "deploy:restart"
