@@ -1,3 +1,5 @@
+require "bundler/capistrano"
+
 #############################################################
 #	Application
 #############################################################
@@ -61,9 +63,9 @@ namespace :deploy do
     task t, :roles => :app do ; end
   end
   
-  task :bundle_install do
-    run("cd #{deploy_to}/current && bundle unlock && bundle install")
-  end
+  # task :bundle_install do
+  #   run("cd #{deploy_to}/current && bundle update && bundle install")
+  # end
   
   task :precompile_assets do
     raise "Rails environment not set" unless rails_env
@@ -74,9 +76,9 @@ namespace :deploy do
 end
 
 
-after "deploy", "deploy:after_update_code"
-after "deploy:after_update_code", "deploy:bundle_install"
-after "deploy:bundle_install", "deploy:cleanup"
-after "deploy:cleanup", "deploy:migrate"
-after "deploy:migrate", "deploy:precompile_assets"
-after "deploy:precompile_assets", "deploy:restart"
+# after "deploy", "deploy:after_update_code"
+# #after "deploy:after_update_code", "deploy:bundle_install"
+# #after "deploy:bundle_install", "deploy:cleanup"
+# after "deploy:cleanup", "deploy:migrate"
+# after "deploy:migrate", "deploy:precompile_assets"
+# after "deploy:precompile_assets", "deploy:restart"
