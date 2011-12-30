@@ -62,7 +62,7 @@ namespace :deploy do
   end
   
   task :bundle_install do
-    run("cd #{deploy_to}/current && export USE_BUNDLER= && bundle install")
+    run("cd #{deploy_to}/current && bundle unlock && bundle install")
   end
   
   task :precompile_assets do

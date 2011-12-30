@@ -2,7 +2,6 @@
 db/*.sqlite3
 log/
 tmp/
-Gemfile.lock
 .sass-cache/
 config/database.yml
 public/system/*
