@@ -3,7 +3,7 @@ class CandidatesController < ApplicationController
   # GET /candidates.json
   before_filter :authenticate, :except => [:new, :create, :pull_tags]
   load_and_authorize_resource
-  skip_authorize_resource :only => [:new, :create, :pull_tags, :tag, :fetch_candidates]
+  skip_authorize_resource :only => [:new, :create, :pull_tags, :tag, :fetch_candidates, :trackings]
 
   def index
     if !params[:search].blank?
@@ -122,6 +122,7 @@ class CandidatesController < ApplicationController
     end
   end
 
+  # toggle_follow should rename as toggle_track
   def toggle_follow
     candidate = Candidate.find(params[:candidate_id])
     if current_user.following?(candidate)
@@ -133,6 +134,11 @@ class CandidatesController < ApplicationController
     end
   end
 
+  def my_trackings
+    follows = current_user.follows_by_type('Candidate')
+    @candidates = Candidate.where("id in (#{follows.map(&:followable_id).join(',')})").page(params[:page])
+    @tags = Candidate.tag_counts_on(:tags)
+  end
 
   def mark_archive
     @candidate = Candidate.find(params[:candidate_id])

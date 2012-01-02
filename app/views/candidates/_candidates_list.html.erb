@@ -1,6 +1,10 @@
-<%= render 'search_tags' %>
 <div>
+<% unless params[:action] == 'my_trackings' %>
+  <%= render 'search_tags' %>
   <h1>Candidates</h1>
+<% else %>
+  <h1>My Tracking Candidates</h1>
+<% end %>
     <div id="rows">
   <%#= form_tag(mark_archive_for_selected_candidates_path,:id => "modify_status") do%>
     <% unless @candidates.blank? %>
