@@ -81,6 +81,12 @@ if($('li.token-input-token-facebook').length == 0) {
 $('#token-input-tag_autocomplete').focus(function() {
   $(this).val('');
 })
+.keypress(function(e){
+  if(e.which == 13){
+   e.preventDefault();
+   $('#searchform').submit();
+   }
+})
 .blur(function() {
    if($('li.token-input-token-facebook').length == 0) {
     $(this).val('Search by Tags');

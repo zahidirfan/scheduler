@@ -25,6 +25,16 @@ class Notifier < ActionMailer::Base
     mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Profile updated for #{@candidate.name}" if changes.length > 0
   end
 
+  def candidate_deleted_mail(candidate, user)
+    @user = user
+    @current_user = current_user
+    @candidate = candidate
+    changes = candidate.changes
+    changes.delete("updated_at")
+    @candidate_changes = changes
+    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "#{@candidate.name} Profile has been deleted" if changes.length > 0
+  end
+
   def interview_schedule_mail(interview, attachment=true)
     @user = interview.user
     @candidate = interview.candidate

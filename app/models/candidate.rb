@@ -20,8 +20,8 @@ class Candidate < ActiveRecord::Base
     end
   end
 
-  after_destroy do |interview|
-    Notifier.delay.candidate_deleted_mail(candidate, user, current_user)
+  after_destroy do |candidate|
+    Notifier.delay.candidate_deleted_mail(candidate, user)
   end
 
 

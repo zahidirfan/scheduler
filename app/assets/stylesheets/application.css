@@ -160,7 +160,6 @@ padding-bottom: 30px;
 /* search form
  -------------------------------------- */
 .searchform input {
-  font: normal 11px  /100% Arial, Helvetica, sans-serif;
   width: 100%;
 }
 a.download:link, a.download:active, a.download:visited {
