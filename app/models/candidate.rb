@@ -21,7 +21,11 @@ class Candidate < ActiveRecord::Base
   end
 
   after_destroy do |candidate|
-    Notifier.delay.candidate_deleted_mail(candidate, user)
+    followers = candidate.user_followers
+    followers.each do |user|
+      Notifier.delay.candidate_deleted_mail(candidate, user)
+      user.stop_following(candidate)
+    end
   end
 
 

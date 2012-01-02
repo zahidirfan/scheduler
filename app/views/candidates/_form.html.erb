@@ -35,7 +35,7 @@
     </tr>
     <tr>
       <td class="form_label"><%= f.label :resume%><sup>*</sup></td>
-      <td class="form_input"><%= f.file_field :resume %><td>
+      <td class="form_input"><%= f.file_field :resume, :class => "no_border" %><td>
         <%= show_resume(@candidate) unless @candidate.resume.blank?%>
     </tr>
     <tr>

@@ -20,7 +20,7 @@ set :keep_releases, 2
 set :branch, "master"
 set :user, "root"
 set :use_sudo, false
-default_run_options[:pty] = true 
+default_run_options[:pty] = true
 
 #############################################################
 #	Servers
@@ -51,28 +51,31 @@ namespace :deploy do
   task :after_update_code do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/log/production.log #{release_path}/config/production.log"
-  end  
-  
+  end
+
   desc "Restarting mod_rails with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{current_path}/tmp/restart.txt"
+    run "cd #{current_path}/tmp; rm -rf pids"
+    run "cd #{current_path}; RAILS_ENV=#{rails_env} script/delayed_job stop"
+    run "cd #{current_path}; RAILS_ENV=#{rails_env} script/delayed_job start"
   end
 
   [:start, :stop].each do |t|
     desc "#{t} task is a no-op with mod_rails"
     task t, :roles => :app do ; end
   end
-  
+
   # task :bundle_install do
   #   run("cd #{deploy_to}/current && bundle update && bundle install")
   # end
-  
+
   task :precompile_assets do
     raise "Rails environment not set" unless rails_env
     task = "assets:precompile"
     run "cd #{release_path} && bundle exec rake #{task} RAILS_ENV=#{rails_env}"
   end
-  
+
 end
 
 

@@ -3,7 +3,7 @@
     <li>
     <div class="title"><%= link_to @candidate.name, candidate_path(@candidate) %></div>
     <em><%= @candidate.subject %></em>
-    <span><%= @candidate.email + " | " + @candidate.mobile + " | " + @candidate.phone %></span>
+    <span><%= [@candidate.email, @candidate.mobile, @candidate.phone].compact.collect(&:strip).reject(&:blank?).join(' | ') %></span>
     <span class="tags"><%= show_tags(@candidate).join(" ").html_safe unless @candidate.tags.empty? %></span><br />
     <%= download_resume(@candidate)%>
     </li>
