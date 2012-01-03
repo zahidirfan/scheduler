@@ -2,7 +2,7 @@
    prev_schedule = interview_schedules[n-1] unless n == 0
 %>
   	<ul>
-          <li><%= link_to interview.candidate.name, candidate_interview_path(interview, interview.candidate), :class => "title" %>
+          <li><%= link_to interview.candidate.name, candidate_path(interview.candidate), :class => "title" %>
           <span ><%= link_to interview.user.name, user_path(interview.user) %> | <%= interview.formated_scheduled_at %> <%= ("| Previously " + (link_to prev_schedule.candidate.name, candidate_interview_path(prev_schedule, prev_schedule.candidate)) + " on #{prev_schedule.formated_scheduled_at}").html_safe unless prev_schedule.nil? %></span>
       <span class="tags"><%= show_tags(interview.candidate).join(" ").html_safe unless interview.candidate.tags.empty? %></span>
       <div class="options">

@@ -136,7 +136,7 @@ class CandidatesController < ApplicationController
 
   def my_trackings
     follows = current_user.follows_by_type('Candidate')
-    @candidates = Candidate.where("id in (#{follows.map(&:followable_id).join(',')})").page(params[:page])
+    @candidates = follows.blank? ? [] : Candidate.where("id in (#{follows.map(&:followable_id).join(',')})").page(params[:page])
     @tags = Candidate.tag_counts_on(:tags)
   end
 

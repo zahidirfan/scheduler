@@ -27,8 +27,8 @@
   <div style="float:left">
 <%= link_to 'New Candidate', new_candidate_path if can? :create, Candidate %>
   </div>
-      <div id="pagination">
-        <%= will_paginate(@candidates)%>
+  <div id="pagination">
+        <%= will_paginate(@candidates) unless @candidates.blank? %>
       </div>
     </div>
     <br />

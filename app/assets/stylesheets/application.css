@@ -17,10 +17,12 @@ body {
 a:link, a:visited, a:active {
   text-decoration: none;
   color: #444444;
+  border: 0px;
 }
 a:hover {
   text-decoration: none;
   color: #66cccc;
+  border: 0px;
 }
 
 #loading {
@@ -87,7 +89,6 @@ margin-left: 10px;
   padding: 10px;
   float: right;
   margin-top: 20px;
-  margin-left: 190px;
  }
 #top_right_bar a {
   color: #FFFFFF;
@@ -110,7 +111,6 @@ a.top_link:link, a.top_link:active, a.top_link:visited {
 .hide {
   display: none;
 }
-
 select  {
   outline: 0;
   overflow: hidden;

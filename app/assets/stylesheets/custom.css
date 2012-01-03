@@ -205,7 +205,11 @@ margin: 0px auto;
 .no_border {
   border: 0px !important;
 }
-
+.back_link {
+  border: 1px solid #8496BA !important;
+  padding: 0px 5px;
+  font: 13px Georgia;
+}
 .comment_status {
   display: inline !important;
 }
