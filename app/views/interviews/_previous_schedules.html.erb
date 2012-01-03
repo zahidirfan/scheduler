@@ -6,7 +6,7 @@
 <% prev_interviews.each do |interview| %>
   <li>
   <span><%= "#{interview.formated_scheduled_at} to" %> <strong><%= link_to interview.user.name, user_path(interview.user) %></strong>
-    <%= " | #{show_comment_status(interview.comments.try(:first).try(:status))}".html_safe if interview.comments.length > 0 %></span>
+    <%= (" | #{show_comment_status(interview.comments.first.try(:status))}  <span class='feedback'>#{interview.comments.first.try(:description)}</span>").html_safe unless interview.comments.blank? %>
   </li>
 <% end %>
 <br />

@@ -28,7 +28,6 @@ module ApplicationHelper
 
   def show_comment_status(i)
     val = (i == "Cancelled") ? i : FEEDBACK_STATUS.key(i.to_s)
-    raw("<span class='comment_status'>#{val}</span>")
   end
 
   def cta_links(res, obj, interview=nil)

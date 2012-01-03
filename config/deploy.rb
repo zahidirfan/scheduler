@@ -1,4 +1,5 @@
 require "bundler/capistrano"
+require "delayed/recipes"
 
 #############################################################
 #	Application
@@ -56,9 +57,6 @@ namespace :deploy do
   desc "Restarting mod_rails with restart.txt"
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "touch #{current_path}/tmp/restart.txt"
-    run "cd #{current_path}/tmp; rm -rf pids"
-    run "cd #{current_path}; RAILS_ENV=#{rails_env} script/delayed_job stop"
-    run "cd #{current_path}; RAILS_ENV=#{rails_env} script/delayed_job start"
   end
 
   [:start, :stop].each do |t|
@@ -78,9 +76,13 @@ namespace :deploy do
 
 end
 
+# Delayed Job - Hooks
+before "deploy:restart", "delayed_job:stop"
+after  "deploy:restart", "delayed_job:start"
+after "deploy:stop",  "delayed_job:stop"
+after "deploy:start", "delayed_job:start"
 
 after "deploy", "deploy:after_update_code"
-#after "deploy:after_update_code", "deploy:bundle_install"
 after "deploy:after_update_code", "deploy:cleanup"
 after "deploy:cleanup", "deploy:migrate"
 after "deploy:migrate", "deploy:precompile_assets"

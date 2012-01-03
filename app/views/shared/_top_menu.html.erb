@@ -6,5 +6,5 @@
     <%= link_to( image_tag('calendar.png', :title => 'Manage Interview by Calendar View'), interviews_path(:view => 'calendar'), :class=>"top_link top_bar_elements") %>
   <% end %>
   <%= link_to( image_tag('settings.png', :title => 'Settings'), password_change_path, :class=>"top_link top_bar_elements") %>
-  <div style="float:right"><%= link_to( image_tag('onoff.png', :title => 'Logout'), log_out_path, :confirm => "Are you sure?", :class=>"top_link top_bar_elements") %></div><div style="clear:both; float:right"><%= current_user.name.capitalize %></div>
+  <div style="float:right"><%= link_to( image_tag('onoff.png', :title => 'Logout'), log_out_path, :confirm => "Are you sure to logout?", :class=>"top_link top_bar_elements") %></div><div style="clear:both; float:right"><%= current_user.name.capitalize %></div>
 </div>

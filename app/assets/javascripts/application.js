@@ -97,6 +97,8 @@ $('#token-input-tag_autocomplete').focus(function() {
    }
  });
 
+$('.feedback').truncate({max_length: 25});
+
 });
 
 function editEvent(interview_id, candidate_id, interviewer_id){

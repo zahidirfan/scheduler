@@ -10,7 +10,7 @@ class Candidate < ActiveRecord::Base
   validates :name, :presence => true
 
   has_many :interviews, :dependent => :destroy
-  belongs_to :user
+  has_many :users, :through => :interviews
   #belongs_to :status
 
   after_update do |candidate|

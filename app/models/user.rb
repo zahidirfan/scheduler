@@ -1,8 +1,9 @@
 class User < ActiveRecord::Base
   authenticates
-  has_many :candidates
+#  has_many :candidates
   has_many :interviews, :dependent => :destroy
   has_many :comments, :dependent => :destroy
+  has_many :candidates, :through => :interviews
 
   # attr_accessor :password, :password_confirmation
   attr_accessible :name, :username, :type, :email, :password, :password_confirmation

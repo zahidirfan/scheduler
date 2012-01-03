@@ -32,7 +32,7 @@ class CandidatesController < ApplicationController
       flash.notice = "Tag and its associated taggings are sucessfully deleted."
       redirect_to create_custom_tags_path
     else
-      @candidates = Candidate.tagged_with(params[:name]).page(params[:page])
+      @candidates = check_admin_or_hr(current_user.type.to_s) ? Candidate.tagged_with(params[:name]).page(params[:page]) : current_user.candidates.select("distinct(candidates.id), candidates.*").tagged_with(params[:name]).page(params[:page])
       @title = "tagged with #{params[:name]}"
       @tags = Candidate.tag_counts_on(:tags)
       render :action => 'index'
