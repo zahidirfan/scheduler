@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   authenticates
-  has_many :candidates, :dependent => :destroy
+  has_many :candidates
   has_many :interviews, :dependent => :destroy
   has_many :comments, :dependent => :destroy
 

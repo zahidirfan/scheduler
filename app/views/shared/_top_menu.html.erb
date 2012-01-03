@@ -1,11 +1,10 @@
 <div id="top_right_bar">
   <% home_link = current_user.type.to_s == "Interviewer" ? interviews_path : candidates_path %>
-  <%= link_to image_tag('home.png'), home_link, :class => "top_link top_bar_elements" %>
+  <%= link_to image_tag('home.png', :title => 'Home'), home_link, :class => "top_link top_bar_elements" %>
   <% if INTERVIEW_PANEL_USER_TYPES.include?(current_user.type.to_s) %>
-    <%= link_to( image_tag('interviews.png'), interviews_path, :class=>"top_link top_bar_elements") %>
-    <%= link_to( image_tag('calendar.png'), interviews_path(:view => 'calendar'), :class=>"top_link top_bar_elements") %>
+    <%= link_to( image_tag('interviews.png', :title => 'Manage Interviews'), interviews_path, :class=>"top_link top_bar_elements") %>
+    <%= link_to( image_tag('calendar.png', :title => 'Manage Interview by Calendar View'), interviews_path(:view => 'calendar'), :class=>"top_link top_bar_elements") %>
   <% end %>
-  <%= link_to( image_tag('settings.png'), password_change_path, :class=>"top_link top_bar_elements") %>
-  <%= link_to( image_tag('onoff.png'), log_out_path, :confirm => "Are you sure?", :class=>"top_link top_bar_elements") %>
-  <%#= current_user.name %>
+  <%= link_to( image_tag('settings.png', :title => 'Settings'), password_change_path, :class=>"top_link top_bar_elements") %>
+  <div style="float:right"><%= link_to( image_tag('onoff.png', :title => 'Logout'), log_out_path, :confirm => "Are you sure?", :class=>"top_link top_bar_elements") %></div><div style="clear:both; float:right"><%= current_user.name.capitalize %></div>
 </div>
