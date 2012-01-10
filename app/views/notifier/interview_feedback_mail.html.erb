@@ -1,3 +1,7 @@
+<% debugger %>
+<% if @comment.status == 'Cancelled' %>
+  <%= render :partial => 'cancel_interview_mail' %>
+<% else %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -25,7 +29,8 @@
       Hi,
     </p>
     <p>
-      The interview feedback for the candidate <%= @candidate.name%> is as follows.
+    <%= @follower ? "Interview scheduled " : "Your scheduled an interview "  %>
+      The interview feedback for the candidate <%= @candidate.name %> is as follows.
     </p>
     <table class="mail_block" border="1">
       <tr>
@@ -49,3 +54,4 @@
     </p>
   </body>
 </html>
+<% end %>

@@ -85,11 +85,13 @@ class UsersController < ApplicationController
   end
 
   def password_change
-    @user = current_user
-    if @user.update_attributes(params[:user]) && request.put? && (not params[:user][:password].blank?)
-      redirect_to :root, :notice => 'Password changed successfully.'
-    elsif request.put? && (params[:user][:password].blank?)
-      redirect_to password_change_path, :notice => 'Password should not be blank.'
+    if request.put?
+      @user = current_user
+      if @user.update_attributes(params[:user]) && (not params[:user][:password].blank?)
+        redirect_to :root, :notice => 'Password changed successfully.'
+      elsif params[:user][:password].blank?
+        redirect_to password_change_path, :notice => 'Password should not be blank.'
+      end
     end
   end
 end

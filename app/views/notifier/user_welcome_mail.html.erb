@@ -7,12 +7,10 @@
     <p>
       Dear <%= @user.name %>,
     </p>
+    <p>You have been added into Pramati Scheduler. Your Credentials are as follows:</p>
     <p>
-    <%= @follower ? "Interview scheduled " : "You are scheduled an interview "  %>
-       with the candidate <b><%= @candidate.name%></b> on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>
-    </p>
-    <p>
-      Thanks for cooperating.
+    <b>Username :</b> <%= @user.username%><br />
+    <b>Password :</b> <%= @password %>
     </p>
     <p>
       Thanks!

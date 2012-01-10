@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   attr_accessible :name, :username, :type, :email, :password, :password_confirmation
 
   validates :name, :email, :presence => true
+  validates :email, :username, :uniqueness => true
   validates :password, :password_confirmation, :presence => true, :on => :create
   validates :password, :confirmation => true
   validates :password, :length => { :minimum => 6 }, :allow_blank => true
@@ -17,6 +18,10 @@ class User < ActiveRecord::Base
   scope :current_user, lambda { |user_id| where("id = ?", user_id) }
 
   acts_as_follower
+
+  after_create do |user|
+    Notifier.delay.user_welcome_mail(user, user.password)
+  end
 
   def admin?
     false

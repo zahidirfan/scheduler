@@ -7,7 +7,7 @@
       <% end %>
   </h1>
 </div>
-<% if check_admin_or_hr(current_user.type) %>
+<% unless current_user.type.to_s == 'Interviewer' %>
   <div id="float_right">
     <form id ="filter_by_interviewer">
       <% if params[:view]=="calendar" %>

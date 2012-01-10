@@ -8,13 +8,13 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-    The candidate <b><%= "#{@candidate.name}'s" %></b> profile has updated by <strong><%= @current_user.name %></strong>. Changes are as follows:
+    The candidate <b><%= "#{@candidate_name}'s" %></b> profile has updated by <strong><%= @current_user.name %></strong>. Changes are as follows:
     </p>
     <% @candidate_changes.each do |attribute, value| %>
       <% if attribute == "resume_file_name" %>
         <br />Resume has been updated.
       <% elsif not (attribute =~ /resume/ || attribute == 'update') %>
-        <br /><%= "#{attribute} : '#{value[0]}' to '#{value[1]}' "  %>
+        <br /><%= "<strong>#{attribute} :</strong> '#{value[0]}' to '#{value[1]}' ".html_safe  %>
       <% end %>
     <% end %>
     <p>

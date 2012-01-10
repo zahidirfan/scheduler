@@ -8,12 +8,7 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-    <%= @follower ? "Interview scheduled " : "You are scheduled an interview "  %>
-       with the candidate <b><%= @candidate.name%></b> on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>
-    </p>
-    <p>
-      Thanks for cooperating.
-    </p>
+    The candidate <b><%= "#{@candidate_name}'s" %></b> profile has deleted by <strong><%= @current_user.name %></strong>.</p>
     <p>
       Thanks!
     </p>

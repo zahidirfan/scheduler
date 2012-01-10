@@ -8,7 +8,8 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-      Your scheduled interview with the candidate <b><%= @candidate.name%></b> is rescheduled to <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>.
+    <%= @follower ? "Interview scheduled " : "You are scheduled an interview "  %>
+     with the candidate <b><%= @candidate.name%></b> is rescheduled to <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>.
     </p>
     <p>
       Thanks for cooperating.

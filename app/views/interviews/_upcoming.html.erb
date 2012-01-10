@@ -4,7 +4,7 @@
   <ul class="no_border">
 <% upcoming.each do |interview| %>
   <li>
-  <span><%= interview.formated_scheduled_at + " to " + interview.user.name %>
+  <span><%= interview.formated_scheduled_at + " to " %> <%= link_to interview.user.name, interview.user %>
     <%= (link_to "Change", edit_candidate_interview_path(@candidate, interview, :interviewer_filter => interview.user.id)) + " | " if can? :update, interview %> <%= (link_to "Cancel", candidate_interview_path(@candidate, interview, :cancel=>true), :method => :delete, :confirm => "Are you sure to cancel this interview schedule?") if can?(:destroy, interview) %>
     <%= (" | #{show_comment_status(interview.comments.first.try(:status))}  <span class='feedback'>#{interview.comments.first.try(:description)}</span>").html_safe unless interview.comments.blank? %>
   </span>

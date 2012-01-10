@@ -3,17 +3,15 @@
     when 'password_change' %>
     <%= link_to( image_tag('manageusers.png', :title => 'Manage Users'), users_path, :class=>"top_link top_bar_elements") %>
       <%= link_to( image_tag('managetags.png', :title => 'Manage Tags'), create_custom_tags_path, :class=>"top_link top_bar_elements") %>
-      <%= link_to( image_tag('interviews.png', :title => 'My Trackings'), my_trackings_path, :class=>"top_link top_bar_elements") %>
     <%  when 'my_trackings' %>
       <%= link_to( image_tag('manageusers.png', :title => 'Manage Users'), users_path, :class=>"top_link top_bar_elements") %>
       <%= link_to( image_tag('managetags.png', :title => 'Manage Tags' ), create_custom_tags_path, :class=>"top_link top_bar_elements") %>
     <%  when 'create_custom_tags' %>
       <%= link_to( image_tag('manageusers.png', :title => 'Manage Users'), users_path, :class=>"top_link top_bar_elements") %>
-      <%= link_to( image_tag('interviews.png', :title => 'My Trackings'), my_trackings_path, :class=>"top_link top_bar_elements") %>
     <% else %>
       <%= link_to( image_tag('managetags.png', :title => 'Manage Tags'), create_custom_tags_path, :class=>"top_link top_bar_elements") %>
+<% end %>
+<% end %>
       <%= link_to( image_tag('interviews.png', :title => 'My Trackings'), my_trackings_path, :class=>"top_link top_bar_elements") %>
-<% end %>
-<% end %>
-      <%= link_to( image_tag('settings.png', :title => 'My Trackings'), password_change_path, :class=>"top_link top_bar_elements") unless params[:action] == 'password_change' %>
+      <%= link_to( image_tag('settings.png', :title => 'Change Password'), password_change_path, :class=>"top_link top_bar_elements") unless params[:action] == 'password_change' %>
 

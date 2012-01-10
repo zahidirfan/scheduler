@@ -33,29 +33,29 @@ class Interview < ActiveRecord::Base
 #    Notifier.interview_schedule_mail(interview).deliver
     followers = interview.candidate.user_followers
     followers.each do |user|
-      Notifier.delay.interview_schedule_mail(interview, false)
+      Notifier.delay.interview_schedule_mail(interview, user, false)
     end
   end
 
   after_update do |interview|
     make_ical(interview)
     if interview.user_id != interview.user_id_was
-    Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate_id,scheduled_at_was)
+    Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate_id,interview.formated_scheduled_at(scheduled_at_was))
     Notifier.delay.interview_schedule_mail(interview)
     else
     Notifier.delay.interview_reschedule_mail(interview)
     end
     followers = interview.candidate.user_followers
     followers.each do |user|
-      Notifier.delay.interview_reschedule_mail(interview, false)
+      Notifier.delay.interview_reschedule_mail(interview, user, false)
     end
   end
 
   after_destroy do |interview|
-    Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,scheduled_at)
+    Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,interview.formated_scheduled_at)
     followers = interview.candidate.user_followers
     followers.each do |user|
-      Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,scheduled_at)
+      Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,interview.formated_scheduled_at, user)
     end
   end
 

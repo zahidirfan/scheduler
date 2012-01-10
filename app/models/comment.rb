@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
     Notifier.delay.interview_feedback_mail(comment)
     followers = comment.candidate.user_followers
     followers.each do |user|
-      Notifier.delay.interview_feedback_mail(comment)
+      Notifier.delay.interview_feedback_mail(comment, user)
     end
   end
 

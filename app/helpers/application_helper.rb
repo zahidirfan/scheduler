@@ -32,17 +32,22 @@ module ApplicationHelper
 
   def cta_links(res, obj, interview=nil)
     cnt = []
-    if can?(:update, obj)
-      #archive_link = (obj.status == "Archive") ? "Unarchive" : "Archive"
+
+    if can?(:create, Interview)
       schedule_link = interview.nil? ? self.send("#{res}_path".to_sym, obj) : self.send("edit_#{res}_interview_path".to_sym, obj, interview)
-      follow_link = current_user.following?(obj) ? image_tag('un-trackit.png', :alt => 'Untrack', :title => 'Untrack', :id => "follow_link_#{obj.id}") : image_tag('trackit.png', :alt => 'Track', :title => 'Track', :id => "follow_link_#{obj.id}")
-      delete_link = interview.nil? ? obj : candidate_interview_path(obj, interview, :cancel=>true)
       cnt << link_to(image_tag('calendar16.png', :alt => 'Schedule an interview', :title => 'Schedule an interview'), schedule_link)
-#      cnt << link_to(archive_link, self.send("#{res}_mark_archive_path".to_sym, obj))
-      cnt << link_to(follow_link, '#', :class => "follow_link", :data => {:candidate_id => obj.id})
     end
+
+   follow_link = current_user.following?(obj) ? image_tag('un-trackit.png', :alt => 'Untrack', :title => 'Untrack', :id => "follow_link_#{obj.id}") : image_tag('trackit.png', :alt => 'Track', :title => 'Track', :id => "follow_link_#{obj.id}")
+    cnt << link_to(follow_link, '#', :class => "follow_link", :data => {:candidate_id => obj.id})
+
+    if can?(:update, obj)
+#      cnt << link_to(archive_link, self.send("#{res}_mark_archive_path".to_sym, obj))
+      #archive_link = (obj.status == "Archive") ? "Unarchive" : "Archive"
+    end
+    delete_link = interview.nil? ? obj : candidate_interview_path(obj, interview, :cancel=>true)
     if can?(:destroy, delete_link)
-    cnt << link_to(image_tag('delete.png', :alt => 'Delete', :title => 'Delete'), delete_link, confirm: 'Are you sure?', method: :delete)
+      cnt << link_to(image_tag('delete.png', :alt => 'Delete', :title => 'Delete'), delete_link, confirm: 'Are you sure?', method: :delete)
     end
     cnt.join(" - ").html_safe
   end

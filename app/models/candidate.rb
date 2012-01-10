@@ -1,4 +1,5 @@
 class Candidate < ActiveRecord::Base
+  include UserInfo
 
   acts_as_taggable_on :tags
   acts_as_followable
@@ -15,15 +16,18 @@ class Candidate < ActiveRecord::Base
 
   after_update do |candidate|
     followers = candidate.user_followers
-    followers.each do |user|
-      Notifier.delay.candidate_profile_update_mail(candidate, user)
+    changes = candidate.changes.delete_if {|key, value| ["status", "updated_at"].include?(key)}
+    if changes.length > 0
+      followers.each do |user|
+        Notifier.delay.candidate_profile_update_mail(candidate, user, current_user, changes)
+      end
     end
   end
 
   after_destroy do |candidate|
     followers = candidate.user_followers
     followers.each do |user|
-      Notifier.delay.candidate_deleted_mail(candidate, user)
+      Notifier.delay.candidate_deleted_mail(candidate, user, current_user)
       user.stop_following(candidate)
     end
   end
