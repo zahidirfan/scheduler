@@ -15,15 +15,21 @@
   <% end %>
 
 <%= form_tag do %>
-<%= text_field_tag "name", nil %>
+  <%= text_field_tag "name", nil, :id=>"tag_name", :onkeypress => "return alpha(event)" %>
 <%= submit_tag "Create Tag" %>
 <% end %>
 </div>
 <div>
   <h2> List of Technologies as Tag </h2>
-  <%= @tag_list.map { |tag| "<span class='del'>" + (link_to tag.name, tag_candidates_path(tag.name)) + (link_to "[X]", nil, :class => "del hide", :id => tag.id, :name => tag.name, :confirm => "Are you sure?") + "</span>" }.join(", ").html_safe %>
+  <%= @tag_list.map { |tag| "<span class='del'>" + (link_to tag.name, tag_candidates_path(tag.name)) + (link_to "[X]", nil, :class => "del hide", :id => tag.id, :name => tag.name, :confirm => "Are you sure to delete the tag?") + "</span>" }.join(", ").html_safe %>
 </div>
 <script>
+function alpha(e) {
+    var k;
+    document.all ? k = e.keyCode : k = e.which;
+    return ((k > 64 && k < 91) || (k > 96 && k < 123) || k == 8 || k == 32 || k == 45 || k == 46 || (k >= 48 && k <= 57) || k == 95);
+}
+
   $(function() {
     $('a.del')
       .click(function() {

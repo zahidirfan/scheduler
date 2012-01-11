@@ -40,7 +40,7 @@ class Interview < ActiveRecord::Base
   after_update do |interview|
     make_ical(interview)
     if interview.user_id != interview.user_id_was
-    Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate_id,interview.formated_scheduled_at(scheduled_at_was))
+    Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate.name,interview.formated_scheduled_at(scheduled_at_was))
     Notifier.delay.interview_schedule_mail(interview)
     else
     Notifier.delay.interview_reschedule_mail(interview)
@@ -51,18 +51,18 @@ class Interview < ActiveRecord::Base
     end
   end
 
-  after_destroy do |interview|
-    Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,interview.formated_scheduled_at)
-    followers = interview.candidate.user_followers
-    followers.each do |user|
-      Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate_id,interview.formated_scheduled_at, user)
-    end
-  end
+#  after_destroy do |interview|
+#    Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate.name,interview.formated_scheduled_at)
+#    followers = interview.candidate.user_followers
+#    followers.each do |user|
+#      Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate.name,interview.formated_scheduled_at, user)
+#    end
+#  end
 
   scope :dummy, where("1 = 1")
   scope :uncancelled, joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("status is null or status != 'Cancelled'")
   scope :by_date, lambda { |date| where("scheduled_at like '#{date}%'").uncancelled.order("schedule_time") }
-  scope :upcoming, where("scheduled_at  >= ? ", Date.today).uncancelled.order("scheduled_at, schedule_time")
+  scope :upcoming, where("scheduled_at  >= ? ", Time.now).uncancelled.order("scheduled_at, schedule_time")
   scope :this_week, where("scheduled_at > ? and scheduled_at <= ?", Date.today, Date.today.end_of_week).uncancelled.order("scheduled_at,schedule_time")
   scope :this_month, where("scheduled_at > ? and scheduled_at <= ?", Date.today.end_of_week, Date.today.end_of_month).uncancelled.order("scheduled_at,schedule_time")
   scope :fetch_interviews, lambda { |start, endtime| where("scheduled_at between ? and ? ", Time.at(start.to_i).to_formatted_s(:db), Time.at(endtime.to_i).to_formatted_s(:db)).uncancelled

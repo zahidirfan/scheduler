@@ -8,8 +8,12 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-    <%= @follower ? "Interview scheduled " : "You are scheduled an interview "  %>
-     with the candidate <b><%= @candidate.name%></b> is rescheduled to <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>.
+    <% if @follower %>
+      <%= "Interview with the candidate <strong>#{@candidate.name}</strong> is rescheduled to <strong>#{@interviewer.name}</strong>".html_safe %>
+    <% else %>
+      <%= "You are scheduled with an interview with the candidate <strong>#{@candidate.name}</strong> ".html_safe %>
+    <% end %>
+    on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>.
     </p>
     <p>
       Thanks for cooperating.

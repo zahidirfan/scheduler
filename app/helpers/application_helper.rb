@@ -34,8 +34,8 @@ module ApplicationHelper
     cnt = []
 
     if can?(:create, Interview)
-      schedule_link = interview.nil? ? self.send("#{res}_path".to_sym, obj) : self.send("edit_#{res}_interview_path".to_sym, obj, interview)
-      cnt << link_to(image_tag('calendar16.png', :alt => 'Schedule an interview', :title => 'Schedule an interview'), schedule_link)
+      schedule_link, title = interview.nil? ? self.send("#{res}_path".to_sym, obj) : [self.send("edit_#{res}_interview_path".to_sym, obj, interview), "Re"]
+      cnt << link_to(image_tag('calendar16.png', :alt => "#{title}schedule an interview".capitalize, :title => "#{title}schedule an interview".capitalize), schedule_link)
     end
 
    follow_link = current_user.following?(obj) ? image_tag('un-trackit.png', :alt => 'Untrack', :title => 'Untrack', :id => "follow_link_#{obj.id}") : image_tag('trackit.png', :alt => 'Track', :title => 'Track', :id => "follow_link_#{obj.id}")
@@ -45,9 +45,9 @@ module ApplicationHelper
 #      cnt << link_to(archive_link, self.send("#{res}_mark_archive_path".to_sym, obj))
       #archive_link = (obj.status == "Archive") ? "Unarchive" : "Archive"
     end
-    delete_link = interview.nil? ? obj : candidate_interview_path(obj, interview, :cancel=>true)
+    delete_link, title = interview.nil? ? [obj, "Delete this candidate"] : [candidate_interview_path(obj, interview, :cancel=>true), "Cancel this interview"]
     if can?(:destroy, delete_link)
-      cnt << link_to(image_tag('delete.png', :alt => 'Delete', :title => 'Delete'), delete_link, confirm: 'Are you sure?', method: :delete)
+      cnt << link_to(image_tag('delete.png', :alt => title, :title => title), delete_link, confirm: "Are you sure to #{title}?".capitalize, method: :delete)
     end
     cnt.join(" - ").html_safe
   end

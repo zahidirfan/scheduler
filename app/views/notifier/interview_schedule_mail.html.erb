@@ -8,8 +8,8 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-    <%= @follower ? "Interview scheduled " : "You are scheduled an interview "  %>
-       with the candidate <b><%= @candidate.name%></b> on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>
+    <%= @follower ? ("Interview is scheduled to <strong>#{@interviewer.name}</strong> ".html_safe) : "You are scheduled with an interview "  %>
+      with the candidate <b><%= @candidate.name%></b> on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>
     </p>
     <p>
       Thanks for cooperating.
