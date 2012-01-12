@@ -8,10 +8,10 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-    <% if @follower %>
-      The candidate <b><%= "#{@candidate_name}'s" %></b> profile has been deleted by <strong><%= @current_user.name %></strong>.</p>
+    <% if @interview_scheduled_at.nil? %>
+      The candidate <strong><%= "#{@candidate_name}'s" %></strong> profile has been deleted by <strong><%= @current_user.name %></strong>.</p>
     <% else %>
-      Your scheduled interview with the candidate <strong><%= @candidate_name %></strong> has been cancelled since the candidate profile has been deleted by <strong><%= @current_user.name %></strong>.</p>
+      Your scheduled interview with the candidate <strong><%= @candidate_name %></strong> at <strong><%= @interview_scheduled_at %></strong> has been cancelled since the candidate profile has been deleted by <strong><%= @current_user.name %></strong>.</p>
     <% end %>
     <p>
       Thanks!

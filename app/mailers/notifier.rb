@@ -29,12 +29,13 @@ class Notifier < ActionMailer::Base
     mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Profile updated for #{@candidate_name}"
   end
 
-  def candidate_delete_mail(candidate, user, current_user, follower=false)
+  def candidate_profile_delete_mail(candidate, user, current_user, scheduled_at)
     @user = user
     @current_user = current_user
     @candidate_name = candidate
-    @follower = follower
-    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "#{@candidate_name} Profile has been deleted"
+    @interview_scheduled_at = scheduled_at
+    subject = @interview_scheduled_at.nil? ? "#{@candidate_name} Profile has been deleted" : "Interview Cancelled for #{@candidate_name} scheduled on #{@interview_scheduled_at}"
+    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => subject
   end
 
   def interview_schedule_mail(interview, user=nil, attachment=true)

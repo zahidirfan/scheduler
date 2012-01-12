@@ -2,12 +2,12 @@ class Candidate < ActiveRecord::Base
   include UserInfo
 
   before_destroy do |candidate|
-    candidate.upcoming_interviewers.each do |user|
-      Notifier.delay.candidate_delete_mail(candidate.name, user, current_user)
+    candidate.interviews.upcoming.each do |interview|
+      Notifier.delay.candidate_profile_delete_mail(candidate.name, interview.user, current_user, interview.formated_scheduled_at)
     end
     followers = candidate.user_followers
     followers.each do |user|
-      Notifier.delay.candidate_delete_mail(candidate.name, user, current_user, true)
+      Notifier.delay.candidate_profile_delete_mail(candidate.name, user, current_user, nil)
       user.stop_following(candidate)
     end
   end
@@ -36,9 +36,5 @@ class Candidate < ActiveRecord::Base
   #belongs_to :status
 
   scope :active, where("status !=  'Archive' or status is null")
-
-  def upcoming_interviewers
-    self.interviews.upcoming.collect { |i| i.user }
-  end
 
 end
