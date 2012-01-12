@@ -29,12 +29,12 @@ class Notifier < ActionMailer::Base
     mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Profile updated for #{@candidate_name}"
   end
 
-  def candidate_deleted_mail(candidate, user, current_user, follower=false)
+  def candidate_delete_mail(candidate, user, current_user, follower=false)
     @user = user
     @current_user = current_user
-    @candidate = candidate
+    @candidate_name = candidate
     @follower = follower
-    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "#{@candidate.name} Profile has been deleted"
+    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "#{@candidate_name} Profile has been deleted"
   end
 
   def interview_schedule_mail(interview, user=nil, attachment=true)
@@ -72,12 +72,12 @@ class Notifier < ActionMailer::Base
 
   def interview_feedback_mail(comment, user=nil)
     @user, @follower = user.nil? ? [comment.interview.user, false] : [user, true]
-    @candidate = comment.candidate
+    @candidate_name = comment.candidate.name
     @interview = comment.interview
     @comment = comment
     @interviewer = comment.interview.user
     @scheduled_at = comment.interview.formated_scheduled_at
-    subject = comment.status == 'Cancelled' ? "Interview Cancelled for #{@candidate.name} scheduled on #{@scheduled_at}" : "Interview Feedback for #{@candidate.name}"
+    subject = comment.status == 'Cancelled' ? "Interview Cancelled for #{@candidate_name} scheduled on #{@scheduled_at}" : "Interview Feedback for #{@candidate_name}"
     mail :to => @user.email, :from => @comment.user.email, :subject => subject
   end
 

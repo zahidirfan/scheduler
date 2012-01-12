@@ -3,11 +3,11 @@ class Candidate < ActiveRecord::Base
 
   before_destroy do |candidate|
     candidate.upcoming_interviewers.each do |user|
-      Notifier.delay.candidate_deleted_mail(candidate.name, user, current_user)
+      Notifier.delay.candidate_delete_mail(candidate.name, user, current_user)
     end
     followers = candidate.user_followers
     followers.each do |user|
-      Notifier.delay.candidate_deleted_mail(candidate.name, user, current_user, true)
+      Notifier.delay.candidate_delete_mail(candidate.name, user, current_user, true)
       user.stop_following(candidate)
     end
   end
