@@ -27,9 +27,7 @@
     <p>
       Hi,
     </p>
-    <p>
-    <%= @follower ? "Interview scheduled " : "Your scheduled an interview "  %>
-      The interview feedback for the candidate <%= @candidate_name %> is as follows.
+    <p>The Interview feedback for candidate <%= @candidate_name %> is as follows.
     </p>
     <table class="mail_block" border="1">
       <tr>
@@ -41,8 +39,8 @@
         <td class="value"> <%= @interview.schedule_time %> </td>
       </tr>
       <tr>
-        <td class="label"> Feedback </td>
-        <td class="value"> <%= simple_format(@comment.description) %> </td>
+        <td class="label" valign="top"> Feedback </td>
+        <td class="value" valign="top"> <%= simple_format(@comment.description) %> </td>
       </tr>
     </table>
     <p>
