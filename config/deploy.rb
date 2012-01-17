@@ -1,4 +1,5 @@
 require "bundler/capistrano"
+require "delayed/recipes"
 
 #############################################################
 #	Application
@@ -75,9 +76,14 @@ namespace :deploy do
   
 end
 
+# Delayed Job Hook
+before "deploy:restart", "delayed_job:stop"
+after  "deploy:restart", "delayed_job:start"
+
+after "deploy:stop",  "delayed_job:stop"
+after "deploy:start", "delayed_job:start"
 
 after "deploy", "deploy:after_update_code"
-#after "deploy:after_update_code", "deploy:bundle_install"
 after "deploy:after_update_code", "deploy:cleanup"
 after "deploy:cleanup", "deploy:migrate"
 after "deploy:migrate", "deploy:precompile_assets"
