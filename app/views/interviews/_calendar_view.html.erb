@@ -7,8 +7,12 @@
               center: 'title',
               right: 'month,agendaWeek,agendaDay'
             },
-          defaultView: 'agendaWeek',
+         // defaultView: 'agendaWeek',
+		  defaultView: '<%= params[:calendar_view].to_s == "" ? 'agendaWeek' : 'agendaDay' %>',
+		  allDaySlot: false,
           firstHour: 9,
+		  minTime: 8,
+		  maxTime: 21,
           height: 500,
           slotMinutes: 15,
           loading: function(bool){
