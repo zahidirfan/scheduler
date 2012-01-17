@@ -1,0 +1,8 @@
+<h2>Tomorrow</h2>
+  <div id="rows">
+
+<% unless tomorrow_interview_schedule.blank?%>
+<%= render :partial => "show_interview_schedules", :locals => { :interview_schedules => tomorrow_interview_schedule } %>
+<%else%>
+<p class="no_interview_schedule">No Interview Schedule for Tomorrow</p>
+<%end%>

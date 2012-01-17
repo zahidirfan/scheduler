@@ -7,8 +7,8 @@
 #   Mayor.create(:name => 'Emanuel', :city => cities.first)
 
 #User.create([{:name => "Paddy", :username => "paddy", :email => "paddy@paddyonline.in"}])
-Hr.create([{:name => "Rupa", :username => "rupa", :email => "rupa.b@pramati.com", :password => "password"}])
-Bm.create([{:name => "Chandru", :username => "chandru", :email => "chandru@imaginea.com", :password => "password"}])
-Interviewer.create([{:name => "Paddy", :username => "paddy", :email => "padmanabhan.r@imaginea.com", :password => "password"}])
+Hr.create!(:name => "Rupa", :username => "rupa", :email => "rupa.b@pramati.com", :password => "password", :password_confirmation => "password")
+Bm.create!(:name => "Chandru", :username => "chandru", :email => "chandru@imaginea.com", :password => "password", :password_confirmation => "password")
+Interviewer.create!(:name => "Paddy", :username => "paddy", :email => "padmanabhan.r@imaginea.com", :password => "password", :password_confirmation => "password")
 #Pl.create([{:name => "Paddy", :username => "pl", :email => "paddy@paddyonline.in", :password => "paddy123"}])
-Administrator.create([{:name => "Admin", :username => "admin", :email => "paddy@paddyonline.in", :password => "password"}])
+Administrator.create!(:name => "Admin", :username => "admin", :email => "paddy@paddyonline.in", :password => "password", :password_confirmation => "password")

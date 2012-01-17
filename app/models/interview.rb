@@ -62,8 +62,9 @@ class Interview < ActiveRecord::Base
   scope :dummy, where("1 = 1")
   scope :uncancelled, joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("status is null or status != 'Cancelled'")
   scope :by_date, lambda { |date| where("scheduled_at like '#{date}%'").uncancelled.order("schedule_time") }
-  scope :upcoming, where("scheduled_at  >= ? ", Time.now).uncancelled.order("scheduled_at, schedule_time")
-  scope :this_week, where("scheduled_at > ? and scheduled_at <= ?", Date.today, Date.today.end_of_week).uncancelled.order("scheduled_at,schedule_time")
+  scope :upcoming, where("scheduled_at > ? and scheduled_at <= ?", Date.today.next_week, Date.today.end_of_month).uncancelled.order("scheduled_at,schedule_time")
+  #scope :upcoming, where("scheduled_at  >= ? ", Time.now).uncancelled.order("scheduled_at, schedule_time")
+  scope :this_week, where("scheduled_at > ? and scheduled_at <= ?", Date.tomorrow+1, Date.today.end_of_week).uncancelled.order("scheduled_at,schedule_time")
   scope :this_month, where("scheduled_at > ? and scheduled_at <= ?", Date.today.end_of_week, Date.today.end_of_month).uncancelled.order("scheduled_at,schedule_time")
   scope :fetch_interviews, lambda { |start, endtime| where("scheduled_at between ? and ? ", Time.at(start.to_i).to_formatted_s(:db), Time.at(endtime.to_i).to_formatted_s(:db)).uncancelled
  }
@@ -71,11 +72,11 @@ class Interview < ActiveRecord::Base
 
   def formated_scheduled_at(date_time=nil)
     date_time ||= self.scheduled_at
-    date_time.strftime("%b %d, %Y %I:%M %P") unless date_time.nil?
+    date_time.strftime("%a, %b %d, %Y %I:%M %P") unless date_time.nil?
   end
 
   def formated_schedule_endtime(date_time=nil)
     date_time ||= self.endtime
-    date_time.strftime("%b %d, %Y %I:%M %P") unless date_time.nil?
+    date_time.strftime("%a, %b %d, %Y %I:%M %P") unless date_time.nil?
   end
 end

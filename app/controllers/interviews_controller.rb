@@ -14,12 +14,14 @@ class InterviewsController < ApplicationController
         interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
       end
       @interviews = case params[:view]
-        when 'today', 'tomorrow'
+        when 'today'
           interviews.by_date(Date.today)
+        when 'tomorrow'
+          interviews.by_date(Date.tomorrow)
         when 'week'
           interviews.this_week
         when 'later'
-          interviews.upcoming - interviews.this_week
+          interviews.upcoming # - interviews.this_week
         when 'total'
           interviews.upcoming
         else

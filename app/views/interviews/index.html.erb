@@ -3,7 +3,7 @@
     <h1>Interviews
       <% if params[:view]!="calendar" %>
         <% interviews = params[:interviewer_filter].nil? ? (check_admin_or_hr(current_user.type) ? Interview : current_user.interviews) : Interview.by_user_id(params[:interviewer_filter]) %>
-        <span style="display: inline; font-size: 11px; font-family: Arial;"><%= link_to "Today (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'today', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "Tomorrow (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'tomorrow', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "This week (#{interviews.this_week.count})", interviews_path(:view => 'week', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "Later (#{interviews.upcoming.count - interviews.this_week.count})", interviews_path(:view => 'later', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "In Total (#{interviews.upcoming.count})", interviews_path(:view => 'total', :interviewer_filter => params[:interviewer_filter]) %></span>
+        <span style="display: inline; font-size: 11px; font-family: Arial;"><%= link_to "Today (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'today', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "Tomorrow (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'tomorrow', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "This week (#{interviews.this_week.count})", interviews_path(:view => 'week', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "Later (#{interviews.upcoming.count})", interviews_path(:view => 'later', :interviewer_filter => params[:interviewer_filter]) %> <%#= link_to "In Total (#{interviews.upcoming.count})", interviews_path(:view => 'total', :interviewer_filter => params[:interviewer_filter]) %></span>
       <% end %>
   </h1>
 </div>
@@ -40,6 +40,7 @@
 <%end%>
 <% else %>
   <%= render :partial => "today_interview_schedule", :object => @interviews.by_date(Date.today) %>
+  <%= render :partial => "tomorrow_interview_schedule", :object => @interviews.by_date(Date.tomorrow) %>
   <%= render :partial => "this_week_interview_schedule", :object => @interviews.this_week %>
   <%= render :partial => "this_month_interview_schedule", :object => @interviews.upcoming - @interviews.this_week %>
 <% end %>
