@@ -3,14 +3,15 @@ class CandidatesController < ApplicationController
   # GET /candidates.json
   before_filter :authenticate, :except => [:new, :create, :pull_tags]
   load_and_authorize_resource
-  skip_authorize_resource :only => [:new, :create, :pull_tags, :tag, :fetch_candidates]
+  skip_authorize_resource :only => [:new, :create, :pull_tags, :tag, :fetch_candidates, :toggle_follow, :my_trackings]
 
   def index
     if !params[:search].blank?
       @candidates = Candidate.tagged_with(params[:search], :any => true).page(params[:page])
-      search_params = params[:search].split(',')
-      @search_tags = ActsAsTaggableOn::Tag.named_like_any(search_params)
-      @title = "tagged with #{search_params.join(', ')}"
+      search_params = params[:search].index(',').nil? ? params[:search] : params[:search].split(',')
+      @search_tags = ActsAsTaggableOn::Tag.named(search_params)
+      search_params = search_params.join(', ') if search_params.kind_of?(Array)
+      @title = "tagged with #{search_params}"
     elsif !params[:status].blank? && params[:status] != 'All'
       @candidates = Candidate.page(params[:page]).find_all_by_status(params[:status])
       @title = " on #{params[:status]} Status"
@@ -27,10 +28,11 @@ class CandidatesController < ApplicationController
   def tag
     if request.delete?
       Candidate.tagged_with(params[:name]).each { |c| c.tag_list.remove(params[:name]) }
-      ActsAsTaggableOn::Tag.delete(params[:id])
-      flash.now.notice = "Tag Name and its associated taggings are sucessfully deleted."
+      ActsAsTaggableOn::Tag.delete(params[:tag_id])
+      flash.notice = "Tag and its associated taggings are sucessfully deleted."
+      redirect_to create_custom_tags_path
     else
-      @candidates = Candidate.tagged_with(params[:name]).page(params[:page])
+      @candidates = check_admin_or_hr(current_user.type.to_s) ? Candidate.tagged_with(params[:name]).page(params[:page]) : current_user.candidates.select("distinct(candidates.id), candidates.*").tagged_with(params[:name]).page(params[:page])
       @title = "tagged with #{params[:name]}"
       @tags = Candidate.tag_counts_on(:tags)
       render :action => 'index'
@@ -120,6 +122,7 @@ class CandidatesController < ApplicationController
     end
   end
 
+  # toggle_follow should rename as toggle_track
   def toggle_follow
     candidate = Candidate.find(params[:candidate_id])
     if current_user.following?(candidate)
@@ -131,6 +134,11 @@ class CandidatesController < ApplicationController
     end
   end
 
+  def my_trackings
+    follows = current_user.follows_by_type('Candidate')
+    @candidates = follows.blank? ? [] : Candidate.where("id in (#{follows.map(&:followable_id).join(',')})").page(params[:page])
+    @tags = Candidate.tag_counts_on(:tags)
+  end
 
   def mark_archive
     @candidate = Candidate.find(params[:candidate_id])

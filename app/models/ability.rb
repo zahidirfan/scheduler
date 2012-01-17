@@ -10,6 +10,7 @@ class Ability
       elsif ["Bm", "Pl"].include?(user_type)
         can [:read, :create, :update], Comment, :user_id => user.id
         can [:read], Interview
+        can :get_interviews, Interview
         can [:read, :mark_archive], Candidate
         can :password_change, User
         cannot :assign_role, User
@@ -17,6 +18,7 @@ class Ability
       elsif user_type == "Interviewer"
         can [:read, :create, :update], Comment, :user_id => user.id
         can [:read], Interview
+        can [:read], Candidate
         can :update, :user, [:password, :password_confirmation, :commit]
         cannot :assign_role, User
         can :password_change, User

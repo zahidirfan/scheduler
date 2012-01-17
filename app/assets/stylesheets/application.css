@@ -17,10 +17,12 @@ body {
 a:link, a:visited, a:active {
   text-decoration: none;
   color: #444444;
+  border: 0px;
 }
 a:hover {
   text-decoration: none;
   color: #66cccc;
+  border: 0px;
 }
 
 #loading {
@@ -82,12 +84,11 @@ margin-left: 10px;
 
 #top_right_bar {
   height: 60px;
-  color: #FFFFFF;
+  color: #000;
   font-size: 11px;
   padding: 10px;
   float: right;
   margin-top: 20px;
-  margin-left: 190px;
  }
 #top_right_bar a {
   color: #FFFFFF;
@@ -110,7 +111,6 @@ a.top_link:link, a.top_link:active, a.top_link:visited {
 .hide {
   display: none;
 }
-
 select  {
   outline: 0;
   overflow: hidden;
@@ -160,7 +160,6 @@ padding-bottom: 30px;
 /* search form
  -------------------------------------- */
 .searchform input {
-  font: normal 11px  /100% Arial, Helvetica, sans-serif;
   width: 100%;
 }
 a.download:link, a.download:active, a.download:visited {

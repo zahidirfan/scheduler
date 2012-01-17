@@ -57,7 +57,6 @@ span.comment_status_3 {
 .button input{
   border: 1px solid #8496BA !important;
 }
-
 .tag, .button input{
   background-color: #EFF2F7;
   border: 1px solid #CCD5E4;
@@ -197,7 +196,9 @@ margin: 0px auto;
 #rows ul.no_border span a {
   font-size: 12px;
 }
-
+.inline {
+  display: inline !important;
+}
 .title {
   font: 18px Georgia !important;
 }
@@ -205,7 +206,11 @@ margin: 0px auto;
 .no_border {
   border: 0px !important;
 }
-
+.back_link {
+  border: 1px solid #8496BA !important;
+  padding: 0px 5px;
+  font: 13px Georgia;
+}
 .comment_status {
   display: inline !important;
 }

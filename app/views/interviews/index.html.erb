@@ -2,19 +2,19 @@
   <div style="float:left">
     <h1>Interviews
       <% if params[:view]!="calendar" %>
-        <% interviews = check_admin_or_hr(current_user.type) ? Interview : current_user.interviews %>
-        <span style="display: inline; font-size: 11px; font-family: Arial;"><%= link_to "Today (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'today') %> <%= link_to "Tomorrow (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'tomorrow') %> <%= link_to "This week (#{interviews.this_week.count})", interviews_path(:view => 'week') %> <%= link_to "Later (#{interviews.upcoming.count - interviews.this_week.count})", interviews_path(:view => 'later') %> <%= link_to "In Total (#{interviews.upcoming.count})", interviews_path(:view => 'total') %></span>
+        <% interviews = params[:interviewer_filter].nil? ? (check_admin_or_hr(current_user.type) ? Interview : current_user.interviews) : Interview.by_user_id(params[:interviewer_filter]) %>
+        <span style="display: inline; font-size: 11px; font-family: Arial;"><%= link_to "Today (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'today', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "Tomorrow (#{interviews.by_date(Date.today).count})", interviews_path(:view => 'tomorrow', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "This week (#{interviews.this_week.count})", interviews_path(:view => 'week', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "Later (#{interviews.upcoming.count - interviews.this_week.count})", interviews_path(:view => 'later', :interviewer_filter => params[:interviewer_filter]) %> <%= link_to "In Total (#{interviews.upcoming.count})", interviews_path(:view => 'total', :interviewer_filter => params[:interviewer_filter]) %></span>
       <% end %>
   </h1>
 </div>
-<% if check_admin_or_hr(current_user.type) %>
+<% unless current_user.type.to_s == 'Interviewer' %>
   <div id="float_right">
     <form id ="filter_by_interviewer">
       <% if params[:view]=="calendar" %>
         <input type="hidden" value="calendar" name="view" />
       <% end %>
       <div class="margin-right">
-      <%= select_tag('interviewer_filter', options_from_collection_for_select(User.interview_panel.collect{|u| [ u.id, u.name ] }, :first, :last, params[:interviewer_filter]), {:prompt => "Filter Interviews By"} ) %>
+      <%= select_tag('interviewer_filter', options_from_collection_for_select([[0, 'All']].concat((User.interview_panel.collect{|u| [ u.id, u.name ] })), :first, :last, params[:interviewer_filter]), {:prompt => "Filter Interviews By"} ) %>
       </div>
     </form>
   </div>
