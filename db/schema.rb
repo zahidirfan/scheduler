@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111220060935) do
+ActiveRecord::Schema.define(:version => 20120117124635) do
 
   create_table "candidates", :force => true do |t|
     t.string   "name"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(:version => 20111220060935) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "endtime"
+    t.integer  "scheduler_id"
   end
 
   create_table "priorities", :force => true do |t|

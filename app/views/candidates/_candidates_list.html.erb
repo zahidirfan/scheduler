@@ -11,7 +11,7 @@
     <% @candidates.each do |candidate| %>
       <ul><li><%= link_to candidate.name, candidate_path(candidate), :class => "title" %>
       <em><%= candidate.subject%></em>
-      <span>Posted on <%= candidate.created_at.strftime("%b %d, %Y") %> | <%= show_candidate_status(candidate)%></span>
+      <span>Posted on <%= candidate.created_at.strftime("%b %d, %Y") %> | <%= show_candidate_status(candidate)%> </span>
       <span class="tags"><%= show_tags(candidate).join(" ").html_safe unless candidate.tags.empty? %></span>
       <div class="options"><%= cta_links(:candidate, candidate) %></div>
       </li></ul>

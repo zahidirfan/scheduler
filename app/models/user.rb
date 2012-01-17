@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   has_many :interviews, :dependent => :destroy
   has_many :comments, :dependent => :destroy
   has_many :candidates, :through => :interviews
+  has_many :schedules, :foreign_key => "scheduler_id", :class_name => "Interview"
 
   # attr_accessor :password, :password_confirmation
   attr_accessible :name, :username, :type, :email, :password, :password_confirmation

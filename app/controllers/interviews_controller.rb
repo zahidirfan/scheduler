@@ -10,8 +10,10 @@ class InterviewsController < ApplicationController
     if (params[:view] != 'calendar')
       if(params[:interviewer_filter].to_i > 0)
         interviews = Interview.by_user_id(params[:interviewer_filter])
+      elsif !params[:interviewer_filter].nil? && params[:interviewer_filter].to_i == 0
+        interviews = Interview.uncancelled
       else
-        interviews = current_user.type.to_s == "Interviewer" ? current_user.interviews : Interview.dummy
+        interviews = current_user.interviews.uncancelled
       end
       @interviews = case params[:view]
         when 'today'
@@ -21,7 +23,7 @@ class InterviewsController < ApplicationController
         when 'week'
           interviews.this_week
         when 'later'
-          interviews.upcoming # - interviews.this_week
+          interviews.later
         when 'total'
           interviews.upcoming
         else
@@ -64,6 +66,7 @@ class InterviewsController < ApplicationController
   # POST /interviews
   # POST /interviews.json
   def create
+    params[:interview][:scheduler_id] = current_user.id
     @interview = @candidate.interviews.new(params[:interview])
     respond_to do |format|
       if @interview.save
@@ -81,6 +84,7 @@ class InterviewsController < ApplicationController
   # PUT /interviews/1
   # PUT /interviews/1.json
   def update
+    params[:interview][:scheduler_id] = current_user.id
     @interview = @candidate.interviews.find(params[:id])
     respond_to do |format|
       if @interview.update_attributes(params[:interview])
@@ -96,10 +100,12 @@ class InterviewsController < ApplicationController
   end
 
   def get_interviews
-    if params[:interviewer_id]
+    if params[:interviewer_id].to_i > 0
       meth = Interview.by_user_id(params[:interviewer_id])
+    elsif(!params[:interviewer_id].nil? && params[:interviewer_id].to_i == 0)
+      meth = Interview.uncancelled
     else
-      meth = current_user.type.to_s == "Interviewer" ? current_user.interviews.uncancelled : Interview.uncancelled
+      meth = current_user.interviews.uncancelled
     end
     interviews = meth.fetch_interviews(params['start'], params['end'])
     desc_interviews = interviews.collect do |interview|
@@ -113,6 +119,7 @@ class InterviewsController < ApplicationController
     if @interview
       @interview.scheduled_at = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.scheduled_at))
       @interview.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.endtime))
+      @interview.scheduler_id = current_user.id
 #      @interview.all_day = params[:all_day]
       @interview.save
     end
