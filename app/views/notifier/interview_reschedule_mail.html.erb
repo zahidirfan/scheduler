@@ -15,6 +15,9 @@
     <% end %>
     on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>.
     </p>
+     <p> Click the below link to know more information about this interview schedule:
+      <%= link_to "#{get_hostname}#{candidate_path(@candidate)}", "#{get_hostname}#{candidate_path(@candidate)}" %>
+      </p>
     <p>
       Thanks for cooperating.
     </p>

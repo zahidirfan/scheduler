@@ -12,8 +12,8 @@ class Interview < ActiveRecord::Base
 
   def update_schedule
     self.schedule_time = self.scheduled_at.strftime("%I:%M %p")
-    default_endtime = self.scheduled_at.advance(:minutes => 30)
-    self.endtime = default_endtime if (self.endtime.nil? || self.endtime < default_endtime)
+    self.endtime = self.scheduled_at.advance(:minutes => 30)
+#    self.endtime = default_endtime if self.endtime.nil? || ((self.endtime - default_endtime > 5400) && (default_endtime - self.endtime < 5400))
   end
 
   def update_candidate_status
@@ -74,6 +74,10 @@ class Interview < ActiveRecord::Base
   def previous(offset = 0)
     self.class.first(:conditions => ['id < ? && candidate_id = ?', self.id, self.candidate_id], :limit => 1, :offset => offset, :order => "id DESC")
   end
+  def previous(offset = 0)
+    self.class.first(:conditions => ['id < ? && candidate_id = ?', self.id, self.candidate_id], :limit => 1, :offset => offset, :order => "id DESC")
+  end
+
 
   def formated_scheduled_at(date_time=nil)
     date_time ||= self.scheduled_at

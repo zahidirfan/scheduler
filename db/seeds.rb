@@ -11,4 +11,4 @@ Hr.create!(:name => "Rupa", :username => "rupa", :email => "rupa.b@pramati.com",
 Bm.create!(:name => "Chandru", :username => "chandru", :email => "chandru@imaginea.com", :password => "password", :password_confirmation => "password")
 Interviewer.create!(:name => "Paddy", :username => "paddy", :email => "padmanabhan.r@imaginea.com", :password => "password", :password_confirmation => "password")
 #Pl.create([{:name => "Paddy", :username => "pl", :email => "paddy@paddyonline.in", :password => "paddy123"}])
-Administrator.create!(:name => "Admin", :username => "admin", :email => "paddy@paddyonline.in", :password => "password", :password_confirmation => "password")
+Administrator.create!(:name => "Admin", :username => "admin", :email => "gokulamtest@gmail.com", :password => "password", :password_confirmation => "password")

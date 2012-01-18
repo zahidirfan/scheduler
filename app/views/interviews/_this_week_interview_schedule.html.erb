@@ -2,5 +2,11 @@
 <% unless this_week_interview_schedule.blank?%>
 <%= render :partial => "show_interview_schedules", :locals => { :interview_schedules => this_week_interview_schedule } %>
 <%else%>
-<p class="no_interview_schedule">No Interview Schedule for this week</p>
+  <div id="rows">
+    <ul>
+      <li>
+      <p class="no_interview_schedule">No Interview Schedule for this week</p>
+      </li>
+    </ul>
+    </div>
 <%end%>

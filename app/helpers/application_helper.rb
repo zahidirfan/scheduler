@@ -13,6 +13,26 @@ module ApplicationHelper
     c.status.nil? ? "Not Scheduled" : c.status
   end
 
+  def show_candidate_interview_details(c)
+    if i = c.interviews.upcoming.try(:first)
+      "Scheduled for #{clickable_user(i)} on #{i.formated_scheduled_at}"
+    elsif i = c.interviews.last
+      ret_str = "Interviewed on #{i.formated_scheduled_at}"
+      ret_str << " | #{show_candidate_status(c)} by #{clickable_user(i)}" unless c.status.nil?
+      p ret_str
+    else
+      "Posted on #{c.created_at.strftime("%b %d, %Y")} | #{show_candidate_status(c)}"
+    end
+  end
+
+  def clickable_user(i)
+    link_to "#{i.user.name.capitalize}", user_path(i.user)
+  end
+
+  def clickable_scheduled_at(i)
+    link_to "#{i.formated_scheduled_at}", interviews_path(:view => 'calendar', :calendar_view => 'agendaDay')
+  end
+
   def show_tags(c)
     return if c.tags.empty?
     c.tags.collect { |tag| link_to tag.name, tag_candidates_path(tag.name) }
@@ -53,8 +73,8 @@ module ApplicationHelper
   end
 
   def download_resume(c)
-    style, target = c.resume_content_type == "application/pdf" ? ["icon_pdf.gif", "blank"] : "icon_word.png"
-    ("<span class='download'>"+ image_tag("#{style}", :align => "absmiddle") + "&nbsp;" + link_to("Download Resume", c.resume.url, :class => "download", :target => target)+"</span>").html_safe
+    style = c.resume_content_type == "application/pdf" ? "icon_pdf.gif" : "icon_word.png"
+    ("<span class='download'>"+ image_tag("#{style}", :align => "absmiddle") + "&nbsp;" + link_to("Download Resume", "http://docs.google.com/gview?url=#{get_hostname}#{c.resume.url}&embedded=true", :class => "download", :target => "blank")+"</span>").html_safe
   end
 
   def show_resume(candidate)
@@ -72,6 +92,10 @@ module ApplicationHelper
   def get_interview_title(cat_name)
     categories = {"today" => "Today", "tomorrow" => "Tomorrow", "week" => "This Week", "later" => "Later", "total" => "Total"}
     categories[cat_name]
+  end
+
+  def get_hostname
+    "http://#{request.env['HTTP_HOST']}"
   end
 
 end

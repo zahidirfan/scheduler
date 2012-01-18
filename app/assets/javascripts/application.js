@@ -140,9 +140,7 @@ function showEventDetails(event){
     title = event.title;
     if(event.user_type == "Administrator" || event.user_type == "Bm") {
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+", " + event.interviewer_id +")'>Edit</a>&nbsp;|");
-    if (event.comment_id == 0) {
     $('#edit_event').append("&nbsp;<a href = 'javascript:void(0);' onclick ='cancelEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Cancel</a>&nbsp;|");
-    }
     if (event.recurring) {
         title = event.title + "(Recurring)";
         $('#delete_event').html("&nbsp; <a href = 'javascript:void(0);' onclick ='deleteEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Delete Only This Occurrence</a>");
