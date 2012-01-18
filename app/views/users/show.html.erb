@@ -1,3 +1,10 @@
+<style>
+table{border:1px solid #ccc}
+tr{border:1px solid #999;}
+th{background-color:#555;color:#FFF}
+td,th{border-right:1px solid #999; padding:10px 0 10px 10px;text-align:left;}
+tbody tr:nth-child(odd) {background-color: #F2F2F2;}
+</style>
 <p>
   <b>Name:</b>
   <%= @user.name %>
@@ -10,5 +17,32 @@
   <b>Role:</b>
   <%= @user.type %>
 </p>
+
+<p><b>Quick Stats:</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Clear:</b> (<%= interview_status_count('Clear') %>) &nbsp;|&nbsp; <b>Hold:</b> (<%= interview_status_count('Hold') %>)&nbsp; | &nbsp; <b>Drop:</b> (<%= interview_status_count('Drop') %>)</p>
+
+<% unless @interviews.empty? %>
+<hr />
+<p><h3>Last 5 Interview Feedback(s)</h3></p>
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
+	<tbody>
+		<tr>
+			<th width="40%">Candidate Name</th>
+			<th>Interview Date</th>
+			<th>Status</th>
+		</tr>
+	<%@interviews.each do |i| %>
+	<tr>
+		<td><%= link_to i.candidate.name, candidate_path(i.candidate) %></td>
+		<td><%= i.interview.formated_scheduled_at %></td>
+		<td><%= i.status%></td>
+	</tr>
+	<% end %>
+	</tbody>
+</table>
+
+<% end %>
+<p>&nbsp;</p>
+<p>
 <%= link_to 'Edit', edit_user_path(@user) %> |
 <%= link_to 'Back', users_path %>
+</p>
