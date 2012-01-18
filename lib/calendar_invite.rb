@@ -16,7 +16,7 @@ module CalendarInvite
     event.custom_property("DTEND;TZID=GMT+5.30", event.end)
     event.custom_property("ORGANIZER;CN=#{current_user.name}:mailto", current_user.email)
     event.attendees = ["mailto:#{interview.user.email}"]
-    event.location = "Telephonic"
+    event.location = interview.interview_type
     calendar.add event
     calendar.publish
     file = File.open("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics", "w+") { |f| f.write(calendar.to_ical); f.close }

@@ -9,9 +9,9 @@
     </p>
     <p>
     <% if @follower %>
-      <%= "Interview with the candidate <strong>#{@candidate.name}</strong> is rescheduled to <strong>#{@interviewer.name}</strong>".html_safe %>
+      <%= "#{@interview.interview_type} Interview with the candidate <strong>#{@candidate.name}</strong> is rescheduled to <strong>#{@interviewer.name}</strong>".html_safe %>
     <% else %>
-      <%= "You are scheduled with an interview with the candidate <strong>#{@candidate.name}</strong> ".html_safe %>
+      <%= "You are scheduled with #{@interview.interview_type} interview with the candidate <strong>#{@candidate.name}</strong> ".html_safe %>
     <% end %>
     on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>.
     </p>
