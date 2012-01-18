@@ -21,6 +21,14 @@
   </tr>
   <tr>
     <td colspan="2">
+          <strong><%= label_tag "Interview Type" %>: </strong>
+         <%=  f.radio_button :interview_type, "Telephonic",:checked=>true %> Telephonic
+         <%=  f.radio_button :interview_type, "Face To Face" %> Face To Face
+    </td>
+  </tr>
+
+  <tr>
+    <td colspan="2">
       <% if @candidate.nil? %>
           <strong><%= label_tag "Candidate Name" %>: </strong>
           <%= text_field_tag :candidate_name, nil, :id => "autocomplete", :size => "20" %>
