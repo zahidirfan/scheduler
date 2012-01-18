@@ -2,5 +2,5 @@
 <% unless this_month_interview_schedule.blank?%>
   <%= render :partial => "show_interview_schedules", :locals => { :interview_schedules => this_month_interview_schedule } %>
 <%else%>
-  <p class="no_interview_schedule">No Interview Schedules later.</p>
+  <p class="no_interview_schedule">No Interview Schedule.</p>
 <%end%>
