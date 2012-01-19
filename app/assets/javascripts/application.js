@@ -138,7 +138,8 @@ function cancelEvent(interview_id, candidate_id){
 function showEventDetails(event){
     $('#event_desc').html(event.description);
     title = event.title;
-    if(event.user_type == "Administrator" || event.user_type == "Bm") {
+    var allowable_types = [ "Administrator", "Hr" ];
+    if($.inArray(event.user_type, allowable_types) > -1) {
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+", " + event.interviewer_id +")'>Edit</a>&nbsp;|");
     $('#edit_event').append("&nbsp;<a href = 'javascript:void(0);' onclick ='cancelEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Cancel</a>&nbsp;|");
     if (event.recurring) {
