@@ -17,7 +17,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
-    @interviews = @user.comments.limit(5)
+    @interviews = @user.comments.order("updated_at DESC").limit(5)
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
