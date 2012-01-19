@@ -86,6 +86,7 @@ class InterviewsController < ApplicationController
   def update
     params[:interview][:scheduler_id] = current_user.id
     @interview = @candidate.interviews.find(params[:id])
+    params[:interview][:scheduled_at] = params[:edit][:date_scheduled_at]
     respond_to do |format|
       if @interview.update_attributes(params[:interview])
        format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully updated.' }
