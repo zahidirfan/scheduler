@@ -36,6 +36,9 @@ GEM
     acts-as-taggable-on (2.1.1)
       rails
     acts_as_follower (0.1.1)
+    airbrake (3.0.4)
+      activesupport
+      builder
     arel (2.2.1)
     bcrypt-ruby (3.0.1)
     builder (3.0.0)
@@ -148,6 +151,7 @@ PLATFORMS
 DEPENDENCIES
   acts-as-taggable-on (~> 2.1.0)
   acts_as_follower
+  airbrake
   cancan
   capistrano
   coffee-rails (~> 3.1.1)

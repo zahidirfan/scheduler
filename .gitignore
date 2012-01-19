@@ -17,3 +17,4 @@ test/
 db/sphinx/
 .sass-cache/
 public/assets/
+config/deploy.rb
