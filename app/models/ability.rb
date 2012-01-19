@@ -12,7 +12,7 @@ class Ability
         can [:read], Interview
         can :get_interviews, Interview
         can [:read, :mark_archive], Candidate
-        can :read, :password_change, User
+        can [:read, :password_change], User
         cannot :assign_role, User
         can :update, :user, [:password, :password_confirmation, :commit]
       elsif user_type == "Interviewer"
@@ -21,7 +21,7 @@ class Ability
         can [:read], Candidate
         can :update, :user, [:password, :password_confirmation, :commit]
         cannot :assign_role, User
-        can :read, :password_change, User
+        can [:read, :password_change], User
         can :get_interviews, Interview
       end
     end
