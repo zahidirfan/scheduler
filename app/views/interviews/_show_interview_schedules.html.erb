@@ -1,14 +1,19 @@
 <%
   interview_schedules.each do |interview|
-  prev_schedule = interview.previous
+  prev_schedule = interview.previous.first
 %>
   	<ul>
           <li><%= link_to interview.candidate.name, candidate_path(interview.candidate), :class => "title" %>
-          <span ><%= "Scheduled for " %> <%= link_to interview.user.name, user_path(interview.user) %> on <%= interview.formated_scheduled_at %> <%= ("| Previously " + (link_to prev_schedule.user.name, user_path(prev_schedule.user)) + " on #{prev_schedule.formated_scheduled_at}").html_safe unless prev_schedule.nil? %></span>
+          <span ><%= "Scheduled for " %> <%= link_to interview.user.name, user_path(interview.user) %> on <%= interview.formated_scheduled_at %> <%= " | #{interview.comments.first.status} by #{clickable_user(interview.comments.first.user)}".html_safe if interview.comments.exists? %>
+            <% unless prev_schedule.nil? %>
+              <br /><%= ("Previously " + (link_to prev_schedule.user.name, user_path(prev_schedule.user)) + " on #{prev_schedule.formated_scheduled_at}").html_safe  %>
+              <%= " | #{prev_schedule.comments.first.status} by #{clickable_user(prev_schedule.comments.first.user)}".html_safe if prev_schedule.comments.exists? %>
+            <% end %>
+            </span>
       <span class="tags"><%= show_tags(interview.candidate).join(" ").html_safe unless interview.candidate.tags.empty? %></span>
       <div class="options">
-       <%= cta_links(:candidate, interview.candidate, interview) %>
-        <%#= (link_to "Change", edit_candidate_interview_path(interview.candidate, interview, :interviewer_filter => interview.user_id)) + " | " if can? :update, interview %> <%#= (link_to "Cancel", candidate_interview_path(interview.candidate, interview, :cancel=>true), :method => :delete, :confirm => "Are you sure to cancel this interview schedule?") + " | "  if can?(:destroy, interview) %> - <%= feedback_link(interview)%></a></div>
+        <%= cta_links(:candidate, interview.candidate, interview) %> - <%= feedback_link(interview)%>
+      </div>
 					</li>
 				</ul>
 <% end %>

@@ -15,18 +15,18 @@ module ApplicationHelper
 
   def show_candidate_interview_details(c)
     if i = c.interviews.upcoming.try(:first)
-      "Scheduled for #{clickable_user(i)} on #{i.formated_scheduled_at}"
+      "Scheduled for #{clickable_user(i.user)} on #{i.formated_scheduled_at}"
     elsif i = c.interviews.last
       ret_str = "Interviewed on #{i.formated_scheduled_at}"
-      ret_str << " | #{show_candidate_status(c)} by #{clickable_user(i)}" unless c.status.nil?
+      ret_str << " | #{show_candidate_status(c)} by #{clickable_user(i.user)}" unless c.status.nil?
       p ret_str
     else
       "Posted on #{c.created_at.strftime("%b %d, %Y")} | #{show_candidate_status(c)}"
     end
   end
 
-  def clickable_user(i)
-    link_to "#{i.user.name.capitalize}", user_path(i.user)
+  def clickable_user(user)
+    link_to "#{user.name.capitalize}", user_path(user)
   end
 
   def clickable_scheduled_at(i)

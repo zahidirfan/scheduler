@@ -72,12 +72,8 @@ class Interview < ActiveRecord::Base
   scope :by_user_id, lambda { |user_id| where("interviews.user_id = ?", user_id).uncancelled }
 
   def previous(offset = 0)
-    self.class.first(:conditions => ['id < ? && candidate_id = ?', self.id, self.candidate_id], :limit => 1, :offset => offset, :order => "id DESC")
+    self.class.joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("(status is null or status != 'Cancelled') && interviews.id < ? && interviews.candidate_id = ? && scheduled_at < ?", self.id, self.candidate_id, self.scheduled_at).limit(1).offset(offset).order("scheduled_at DESC")
   end
-  def previous(offset = 0)
-    self.class.first(:conditions => ['id < ? && candidate_id = ?', self.id, self.candidate_id], :limit => 1, :offset => offset, :order => "id DESC")
-  end
-
 
   def formated_scheduled_at(date_time=nil)
     date_time ||= self.scheduled_at
