@@ -166,7 +166,6 @@ a.download:link, a.download:active, a.download:visited {
   text-decoration: none;
   color: #ff0000;
   font-weight: bold;
-  margin-right: 30px;
 }
 a.download:hover {
   text-decoration: underline;

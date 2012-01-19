@@ -72,9 +72,12 @@ module ApplicationHelper
     cnt.join(" - ").html_safe
   end
 
-  def download_resume(c)
-    style = c.resume_content_type == "application/pdf" ? "icon_pdf.gif" : "icon_word.png"
-    ("<span class='download'>"+ image_tag("#{style}", :align => "absmiddle") + "&nbsp;" + link_to("Download Resume", "http://docs.google.com/gview?url=#{get_hostname}#{c.resume.url}&embedded=true", :class => "download", :target => "blank")+"</span>").html_safe
+  def download_resume(c, only_online=false)
+     online_link = link_to("View Online", "http://docs.google.com/gview?url=#{get_hostname}#{c.resume.url}&embedded=true", :class => "download", :target => "blank")
+     return online_link if only_online
+
+    style, target = c.resume_content_type == "application/pdf" ? ["icon_pdf.gif", "blank"] : "icon_word.png"
+     ("<span class='download'>"+ image_tag("#{style}", :align => "absmiddle") + " Resume " + link_to("Download", c.resume.url, :class => "download", :target => target) + " | #{online_link}</span>").html_safe
   end
 
   def show_resume(candidate)
