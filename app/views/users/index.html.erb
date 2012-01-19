@@ -5,7 +5,7 @@
         <% @users.each do |user| %>
           <ul><li>
           <%= link_to user.name, user_path(user) %>
-          <em><%= user.email %></em>
+          <em><%= user.username %> | <%= user.email %></em>
           <span><%= user.type %></span>
           <div class="options"><%= link_to 'Show', user %> | <%= link_to 'Edit', edit_user_path(user) %> | <%= link_to 'Destroy', user, confirm: 'Are you sure to delete the user?', method: :delete %></div>
           </li></ul>
