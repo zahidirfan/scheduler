@@ -11,11 +11,11 @@ gem 'json'
 gem 'acts-as-taggable-on', '~>2.1.0'
 gem 'quo_vadis'
 gem 'delayed_job'
-#gem 'mongrel', ">= 1.2.0.pre2"
 gem 'cancan'
 gem 'will_paginate'
 gem 'icalendar'
-gem "acts_as_follower"
+gem 'acts_as_follower'
+gem 'rake', '0.9.2'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -30,7 +30,6 @@ gem 'jquery-rails'
 gem 'therubyracer'
 gem 'faker'
 gem 'airbrake'
-#gem 'ruby-debug19', '0.11.6', :require => 'ruby-debug', :groups => [:development, :test]
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -43,5 +42,6 @@ gem 'capistrano'
 gem 'capistrano-ext'
 
 # To use debugger
-# gem 'ruby-debug'
+#gem 'ruby-debug19', '0.11.6', :require => 'ruby-debug', :groups => [:development, :test]
+
 
