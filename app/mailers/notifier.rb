@@ -14,6 +14,7 @@ end
 
 class Notifier < ActionMailer::Base
   include UserInfo
+  helper :application
 
   def user_welcome_mail(user, password)
     @user = user

@@ -33,3 +33,4 @@ Resume::Application.configure do
   config.assets.debug = true
   Delayed::Worker.logger = Rails.logger
 end
+APP_HOST_URL = 'localhost:3000'

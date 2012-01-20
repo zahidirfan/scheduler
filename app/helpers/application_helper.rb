@@ -98,7 +98,7 @@ module ApplicationHelper
   end
 
   def get_hostname
-    "http://#{request.env['HTTP_HOST']}"
+    "http://#{request.nil? ? APP_HOST_URL : request.env['HTTP_HOST']}"
   end
 
 end
