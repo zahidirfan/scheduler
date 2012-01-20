@@ -16,6 +16,7 @@
 </div>
 <%= f.hidden_field :interview_id, :value => params[:interview_id] %>
 <%= f.hidden_field :candidate_id, :value => params[:candidate_id] %>
+<%= f.hidden_field :user_id, :value => current_user.id %>
 <br />
 <div class="field">
   <%= f.label :status %>:

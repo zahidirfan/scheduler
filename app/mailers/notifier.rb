@@ -51,16 +51,17 @@ class Notifier < ActionMailer::Base
     mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Interview Scheduled for #{@candidate.name}"
   end
 
-  def interview_reschedule_mail(interview, user=nil, attachment=true)
+  def interview_reschedule_mail(interview, changes, user=nil, attachment=true)
     @user, @follower = user.nil? ? [interview.user, false] : [user, true]
     @candidate = interview.candidate
     @interview = interview
     @interviewer = interview.user
+    @changes = changes
     if attachment
       attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
       attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics")}
     end
-    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Interview Rescheduled for #{@candidate.name}"
+    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "#{interview.interview_type} Interview Rescheduled for #{@candidate.name}"
   end
 
    def interview_cancel_mail(user_id,candidate_name,scheduled_at, user=nil)

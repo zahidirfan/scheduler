@@ -40,15 +40,16 @@ class Interview < ActiveRecord::Base
 
   after_update do |interview|
     make_ical(interview)
+    changes = {:int_type_was => interview.interview_type_was, :int_schedule_was => interview.formated_scheduled_at(scheduled_at_was)}
     if interview.user_id != interview.user_id_was
     Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate.name,interview.formated_scheduled_at(scheduled_at_was))
     Notifier.delay.interview_schedule_mail(interview)
     else
-    Notifier.delay.interview_reschedule_mail(interview)
+    Notifier.delay.interview_reschedule_mail(interview, changes)
     end
     followers = interview.candidate.user_followers
     followers.each do |user|
-      Notifier.delay.interview_reschedule_mail(interview, user, false)
+      Notifier.delay.interview_reschedule_mail(interview, changes, user, false)
     end
   end
 

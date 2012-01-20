@@ -1,5 +1,6 @@
 body {
 font-size:13px;
+font-family: verdana;
 }
 body.el-rte-rtl, body.el-rte-rtl * {
   direction: rtl;

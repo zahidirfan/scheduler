@@ -9,11 +9,11 @@
     </p>
     <p>
     <% if @follower %>
-      <%= "#{@interview.interview_type} Interview with the candidate <strong>#{@candidate.name}</strong> is rescheduled to <strong>#{@interviewer.name}</strong>".html_safe %>
+      <%= "#{@interview.interview_type} Interview with the candidate <strong>#{@candidate.name}</strong> is rescheduled to <strong>#{@interviewer.name}</strong> ".html_safe %>
     <% else %>
-      <%= "You are scheduled with #{@interview.interview_type} interview with the candidate <strong>#{@candidate.name}</strong> ".html_safe %>
+      <%= "Your scheduled #{@changes[:int_type_was]} interview with the candidate <strong>#{@candidate.name}</strong> has been rescheduled ".html_safe %>
     <% end %>
-    on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>.
+    from <strong><%= "#{@changes[:int_schedule_was]}" %></strong> to <%= "<strong>#{@interview.formated_scheduled_at(@interview.scheduled_at)}</strong> as <strong>#{@interview.interview_type}</strong> interview %> </strong>.
     </p>
     <p>
     <%= "#{@candidate.name}'s resume : #{download_resume(@candidate, true)}".html_safe %>
