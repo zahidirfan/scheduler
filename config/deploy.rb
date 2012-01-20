@@ -1,5 +1,3 @@
-require './config/boot'
-require 'airbrake/capistrano'
 require 'capistrano/ext/multistage'
 #require "bundler/capistrano"
 
@@ -56,6 +54,7 @@ namespace :deploy do
   task :symlink_shared_paths do
     run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
     run "ln -nfs #{shared_path}/log/production.log #{release_path}/config/production.log"
+    run "ln -nfs #{shared_path}/log/staging.log #{release_path}/config/staging.log"
   end
 
   task :restart, :roles => :app, :except => { :no_release => true } do
@@ -69,7 +68,7 @@ namespace :deploy do
 
   desc "Running bundle install"
   task :bundle_install do
-    #run "cd #{deploy_to}/current; bundle install;"
+    run "cd #{deploy_to}/current; bundle install;"
   end
 
   [:start, :stop].each do |t|
@@ -117,3 +116,6 @@ end
 #after "deploy:start", "delayed_job:start"
 #after "deploy:stop", "delayed_job:stop"
 #after "deploy:restart", "delayed_job:restart"
+
+require './config/boot'
+require 'airbrake/capistrano'
