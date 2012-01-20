@@ -4,10 +4,10 @@
 %>
   	<ul>
           <li><%= link_to interview.candidate.name, candidate_path(interview.candidate), :class => "title" %>
-          <span ><%= "Scheduled for " %> <%= link_to interview.user.name, user_path(interview.user) %> on <%= interview.formated_scheduled_at %> <%= " | #{interview.comments.first.status} by #{clickable_user(interview.comments.first.user)}".html_safe if interview.comments.exists? %>
+          <span ><%= "Scheduled for " %> <%= link_to interview.user.name, user_path(interview.user) %> on <%= interview.formated_scheduled_at %> <%= " | #{interview.comments.first.status} by #{clickable_user(interview.comments.first.user)}".html_safe if interview.comments.exists? && interview.comments.first.status != "Scheduled"  %>
             <% unless prev_schedule.nil? %>
               <br /><%= ("Previously " + (link_to prev_schedule.user.name, user_path(prev_schedule.user)) + " on #{prev_schedule.formated_scheduled_at}").html_safe  %>
-              <%= " | #{prev_schedule.comments.first.status} by #{clickable_user(prev_schedule.comments.first.user)}".html_safe if prev_schedule.comments.exists? && prev_schedule.comments.first.status != "Scheduled" %>
+              <%= " | #{prev_schedule.comments.first.status} by #{clickable_user(prev_schedule.comments.first.user)}".html_safe if prev_schedule.comments.exists? %>
             <% end %>
             </span>
       <span class="tags"><%= show_tags(interview.candidate).join(" ").html_safe unless interview.candidate.tags.empty? %></span>

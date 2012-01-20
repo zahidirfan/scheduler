@@ -68,7 +68,7 @@ namespace :deploy do
 
   desc "Running bundle install"
   task :bundle_install do
-    run "cd #{deploy_to}/current; bundle install;"
+    run "cd #{release_path}; bundle install;"
   end
 
   [:start, :stop].each do |t|
