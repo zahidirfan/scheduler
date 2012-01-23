@@ -9,23 +9,17 @@
     </p>
     <p>
     <% if @follower %>
-      <%= "#{@interview.interview_type} Interview with the candidate <strong>#{@candidate.name}</strong> is rescheduled to <strong>#{@interviewer.name}</strong> ".html_safe %>
+      <%= "#{@interview.interview_type} Interview with the candidate <strong>#{@candidate.name}</strong> has bee rescheduled to <strong>#{@interviewer.name}</strong> ".html_safe %>
     <% else %>
-      <%= "Your scheduled #{@changes[:int_type_was]} interview with the candidate <strong>#{@candidate.name}</strong> has been rescheduled ".html_safe %>
+      <%= "Your schedule #{@changes[:int_type_was]} interview with the candidate <strong>#{@candidate.name}</strong> has been rescheduled ".html_safe %>
     <% end %>
-    from <strong><%= "#{@changes[:int_schedule_was]}" %></strong> to <%= "<strong>#{@interview.formated_scheduled_at(@interview.scheduled_at)}</strong> as <strong>#{@interview.interview_type}</strong> interview %> </strong>.
+    from <strong><%= "#{@changes[:int_schedule_was]}" %></strong> to <%="<strong>#{@interview.formated_scheduled_at(@interview.scheduled_at)}</strong> as <strong>#{@interview.interview_type}</strong> interview "%> </strong>.
     </p>
-    <p>
-    <%= "#{@candidate.name}'s resume : #{download_resume(@candidate, true)}".html_safe %>
-    </p>
-     <p> Click the below link to know more information about this interview schedule:
+     <p> Click the below link to know more information about this interview schedule:<br />
       <%= link_to "#{get_hostname}#{candidate_path(@candidate)}", "#{get_hostname}#{candidate_path(@candidate)}" %>
       </p>
     <p>
-      Thanks for cooperating.
-    </p>
-    <p>
-      Thanks!
+      Thank you for your co-operation.
     </p>
     <p>
       Pramati Technologies Pvt Ltd.

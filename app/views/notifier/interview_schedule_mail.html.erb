@@ -8,20 +8,17 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-    <%= @follower ? ("#{@interview.interview_type} Interview is scheduled to <strong>#{@interviewer.name}</strong> ".html_safe) : "You are scheduled with an #{@interview.interview_type} interview "  %>
+    <%= @follower ? ("#{@interview.interview_type} Interview is scheduled to <strong>#{@interviewer.name}</strong> ".html_safe) : "You are scheduled for an #{@interview.interview_type} interview "  %>
     with the candidate <b><%= @candidate.name%></b> on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>
     </p>
     <p>
     <%= "#{@candidate.name}'s resume : #{download_resume(@candidate, true)}".html_safe %>
     </p>
-    <p> Click the below link to know more information about this interview schedule:
+    <p> Click the below link to know more information about this interview schedule:<br/>
     <%= link_to "#{get_hostname}#{candidate_path(@candidate)}", "#{get_hostname}#{candidate_path(@candidate)}" %>
     </p>
   <p>
-    Thanks for cooperating.
-  </p>
-  <p>
-    Thanks!
+    Thank you for your co-operation.
   </p>
   <p>
     Pramati Technologies Pvt Ltd.
