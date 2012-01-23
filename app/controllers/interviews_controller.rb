@@ -110,7 +110,7 @@ class InterviewsController < ApplicationController
     end
     interviews = meth.fetch_interviews(params['start'], params['end'])
     desc_interviews = interviews.collect do |interview|
-      {:id => interview.id, :candidate_id => interview.candidate_id, :interviewer_id => interview.user_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{current_user.type}", :comment_id => "#{interview.comments.filter_by_user(current_user).exists? ? interview.comments.filter_by_user(current_user).first.id : 0 }", :allDay => false, :recurring => false }
+      {:id => interview.id, :candidate_id => interview.candidate_id, :interviewer_id => interview.user_id, :title => "#{interview.candidate.name}", :description => "<label>Assigned To:</label> #{interview.user.name} <br /> <label>Scheduled at:</label> #{interview.formated_scheduled_at}", :start => "#{interview.scheduled_at.iso8601}", :end => "#{interview.endtime.iso8601}", :user_type => "#{current_user.type}", :comment_id => "#{interview.comments.exists? ? interview.comments.first.id : 0 }", :allDay => false, :recurring => false }
     end
     render :text => desc_interviews.to_json
   end

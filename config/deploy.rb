@@ -46,6 +46,7 @@ namespace :deploy do
   desc "Compile asets"
   task :assets do
     if compile_assets
+      run "cd #{release_path}; chmod -R 777 tmp"
       run "cd #{release_path}; bundle exec rake assets:precompile"
     end
   end
