@@ -31,16 +31,26 @@
   <%= f.submit %> <%= link_to "Back", :back, :class => 'back_link' %>
 </div>
 <% end %>
- <script>
-  $(function() {
-    elRTE.prototype.options.panels.customPanel = ['copy', 'cut', 'paste', 'undo', 'redo', 'bold', 'italic', 'underline', 'fontsize', 'fontname', 'horizontalrule', 'insertorderedlist', 'insertunorderedlist', 'forecolor'];
-    elRTE.prototype.options.toolbars.customToolbar = ['customPanel'];
-    $('#comment_description').elrte({
-      height : 170,
-      width : 600,
-      allowSource : false,
-      toolbar : 'customToolbar',
-      cssfiles : ['/assets/elrte-inner.css']
-    });
-  });
+<script type="text/javascript"> 
+new TINY.editor.edit('editor',{
+        id:'comment_description',
+        width:584,
+        height:175,
+        cssclass:'te',
+        controlclass:'tecontrol',
+        rowclass:'teheader',
+        dividerclass:'tedivider',
+        controls:['bold','italic','underline','strikethrough','|','subscript','superscript','|',
+                          'orderedlist','unorderedlist','|','outdent','indent','|','leftalign',
+                          'centeralign','rightalign','blockjustify','|','unformat','|','undo','redo','n',
+                          'font','size','style','|','hr','link','unlink','|','cut','copy','paste','print'],
+        footer:true,
+        fonts:['Verdana','Arial','Georgia','Trebuchet MS'],
+        xhtml:true,
+        cssfile:'/assets/style.css',
+        bodyid:'editor',
+//      footerclass:'tefooter',
+//      toggle:{text:'source',activetext:'wysiwyg',cssclass:'toggle'},
+//      resize:{cssclass:'resize'}
+});
 </script>
