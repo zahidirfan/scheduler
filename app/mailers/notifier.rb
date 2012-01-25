@@ -10,7 +10,7 @@ module QuoVadis
   end
 end
 
-
+require 'open-uri'
 
 class Notifier < ActionMailer::Base
   include UserInfo
@@ -45,8 +45,8 @@ class Notifier < ActionMailer::Base
     @interview = interview
     @interviewer = interview.user
     if attachment
-      attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
-      attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics")}
+      attachments[@candidate.resume_file_name] = open(@candidate.resume.url) { |f| f.read }
+      attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => open("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics") { |f| f.read } }
     end
     mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Interview Scheduled for #{@candidate.name}"
   end
@@ -58,8 +58,8 @@ class Notifier < ActionMailer::Base
     @interviewer = interview.user
     @changes = changes
     if attachment
-      attachments[@candidate.resume_file_name] = File.read(@candidate.resume.path)
-      attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => File.read("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics")}
+      attachments[@candidate.resume_file_name] = open(@candidate.resume.url) { |f| f.read }
+      attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => open("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics") { |f| f.read } }
     end
     mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "#{interview.interview_type} Interview Rescheduled for #{@candidate.name}"
   end
