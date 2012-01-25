@@ -73,7 +73,7 @@ module ApplicationHelper
   end
 
   def download_resume(c, only_online=false)
-     online_link = link_to("View Online", "http://docs.google.com/gview?url=#{get_hostname}#{c.resume.url}&embedded=true", :class => "download", :target => "blank")
+     online_link = link_to("View Online", "http://docs.google.com/gview?url=#{c.resume.url}&embedded=true", :class => "download", :target => "blank")
      return online_link if only_online
 
     style, target = c.resume_content_type == "application/pdf" ? ["icon_pdf.gif", "blank"] : "icon_word.png"

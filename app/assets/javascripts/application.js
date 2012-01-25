@@ -4,7 +4,7 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require jquery
+//= require jquery-1.6.4
 //= require jquery_ujs
 //= require jquery-ui
 //= require_directory .
@@ -138,7 +138,7 @@ function cancelEvent(interview_id, candidate_id){
 function showEventDetails(event){
     $('#event_desc').html(event.description);
     title = event.title;
-    var allowable_types = [ "Administrator", "Hr", "Bm", "Pl" ];
+    var allowable_types = [ "Administrator", "Hr" ];
     if($.inArray(event.user_type, allowable_types) > -1) {
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+", " + event.interviewer_id +")'>Edit</a>&nbsp;|");
     $('#edit_event').append("&nbsp;<a href = 'javascript:void(0);' onclick ='cancelEvent(" + event.id + ", " + event.candidate_id + ", " + false + ")'>Cancel</a>&nbsp;|");

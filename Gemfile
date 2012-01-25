@@ -5,17 +5,20 @@ gem 'rails', '3.1.1'
 # Bundle edge Rails instead:
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
-gem 'mysql2'
-gem 'paperclip'
-gem 'json'
-gem 'acts-as-taggable-on', '~>2.1.0'
-gem 'quo_vadis'
+gem 'mysql2', '0.3.11'
+gem 'paperclip', '2.5.0'
+gem 'json', '1.6.5'
+gem 'acts-as-taggable-on', '2.1.1'
+gem 'quo_vadis', '1.1.1'
 gem 'delayed_job', '2.1.4'
-gem 'cancan'
-gem 'will_paginate'
-gem 'icalendar'
-gem 'acts_as_follower'
+gem 'cancan', '1.6.7'
+gem 'will_paginate', '3.0.2'
+gem 'icalendar', '1.1.6'
+gem 'acts_as_follower', '0.1.1'
 gem 'rake', '0.9.2'
+gem 'aws', '2.5.6'
+gem 'aws-sdk', '1.3.2'
+#gem 'aws-s3', '0.6.2', :require => "aws/s3"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -26,10 +29,10 @@ group :assets do
   gem 'yui-compressor'
 end
 
-gem 'jquery-rails'
-gem 'therubyracer'
-gem 'faker'
-gem 'airbrake'
+gem 'jquery-rails', '1.0.19'
+gem 'therubyracer', '0.9.9'
+gem 'faker', '1.0.1'
+gem 'airbrake', '3.0.9'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -38,8 +41,8 @@ gem 'airbrake'
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
-gem 'capistrano-ext'
+gem 'capistrano', '2.9.0'
+gem 'capistrano-ext', '1.2.1'
 
 # To use debugger
 #gem 'ruby-debug19', '0.11.6', :require => 'ruby-debug', :groups => [:development, :test]

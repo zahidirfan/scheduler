@@ -1,0 +1,10 @@
+development: &common
+  access_key_id: AKIAJXGG7DHKI6QUGBQQ
+  secret_access_key: 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
+  bucket: hr_scheduler_staging
+staging:
+  <<: *common
+production:
+  access_key_id: AKIAJXGG7DHKI6QUGBQQ
+  secret_access_key: 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
+  bucket: hr_scheduler

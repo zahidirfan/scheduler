@@ -47,7 +47,7 @@ namespace :deploy do
   task :assets do
     if compile_assets
       run "cd #{release_path}; chmod -R 777 tmp"
-      run "cd #{release_path}; bundle exec rake assets:precompile"
+      run "cd #{release_path}; bundle exec rake assets:precompile RAILS_ENV=#{rails_env}"
     end
   end
 
@@ -87,7 +87,7 @@ namespace :rake do
   end
 end
 
-before "deploy:symlink", "deploy:assets"
+#before "deploy:symlink", "deploy:assets"
 
 after :deploy, "deploy:symlink_shared_paths"
 after "deploy:symlink_shared_paths", "deploy:cleanup"

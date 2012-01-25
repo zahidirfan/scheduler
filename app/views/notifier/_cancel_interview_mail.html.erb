@@ -9,7 +9,7 @@
     </p>
     <p>
     <%= @follower ? ("The #{@interview.interview_type} interview scheduled to <strong>#{@interviewer.name}</strong>".html_safe) : "Your scheduled #{@interview.interview_type} interview"  %>
-      with the candidate <b><%= @candidate_name%></b> on <b><%= @scheduled_at %></b> has been cancelled.
+      with the candidate <b><%= @candidate_name %></b> on <b><%= @scheduled_at %></b> has been cancelled due to some reason.
     </p>
     <p>
       Thank you for your co-operation.

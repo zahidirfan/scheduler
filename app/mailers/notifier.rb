@@ -74,14 +74,15 @@ class Notifier < ActionMailer::Base
 
 
   def interview_feedback_mail(comment, user=nil)
-    @user, @follower, scheduler_email = user.nil? ? [comment.interview.user, false, comment.interview.scheduler.email ] : [user, true]
+    @user, @follower = user.nil? ? [comment.interview.user, false ] : [user, true]
+    @comment_user = comment.user
     @candidate_name = comment.candidate.name
     @interview = comment.interview
     @comment = comment
     @interviewer = comment.interview.user
     @scheduled_at = comment.interview.formated_scheduled_at
     subject = comment.status == 'Cancelled' ? "Interview Cancelled for #{@candidate_name} scheduled on #{@scheduled_at}" : "Interview Feedback for #{@candidate_name}"
-    mail :to => @user.email, :cc => scheduler_email, :from => @comment.user.email, :subject => subject
+    mail :to => @user.email, :from => @comment.user.email, :subject => subject
   end
 
   def new_message(message)

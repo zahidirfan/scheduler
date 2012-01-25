@@ -8,6 +8,7 @@ class Comment < ActiveRecord::Base
   after_save do |comment|
     comment.candidate.update_attribute(:status, comment.status_value) unless comment.status_value.blank?
     Notifier.delay.interview_feedback_mail(comment)
+    Notifier.delay.interview_feedback_mail(comment, comment.interview.scheduler)
     followers = comment.candidate.user_followers
     followers.each do |user|
       Notifier.delay.interview_feedback_mail(comment, user)
