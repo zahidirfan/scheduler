@@ -30,9 +30,10 @@
 <div class="actions">
   <%= f.submit %> <%= link_to "Back", :back, :class => 'back_link' %>
 </div>
-<% end %>
+<div>
 <script type="text/javascript"> 
-new TINY.editor.edit('editor',{
+$(function() {
+  var my_inst = new TINY.editor.edit('editor',{
         id:'comment_description',
         width:584,
         height:175,
@@ -49,8 +50,15 @@ new TINY.editor.edit('editor',{
         xhtml:true,
         cssfile:'/assets/style.css',
         bodyid:'editor',
-//      footerclass:'tefooter',
+//     footerclass:'tefooter',
 //      toggle:{text:'source',activetext:'wysiwyg',cssclass:'toggle'},
 //      resize:{cssclass:'resize'}
 });
+$('form').submit(function () {
+editor.post();
+});
+
+});
 </script>
+</div>
+<%end%>
