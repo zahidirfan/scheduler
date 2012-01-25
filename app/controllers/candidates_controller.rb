@@ -118,7 +118,7 @@ class CandidatesController < ApplicationController
     @candidate.destroy
 
     respond_to do |format|
-      format.html { redirect_to candidates_url }
+      format.html { redirect_to_back(candidates_url) }
       format.json { head :ok }
     end
   end
@@ -182,6 +182,14 @@ class CandidatesController < ApplicationController
 
   def pull_tags
     render json: ActsAsTaggableOn::Tag.where("name LIKE ?", "%#{params[:q]}%")
+  end
+
+  def redirect_to_back(default = root_url)
+    if !request.env["HTTP_REFERER"].blank? and request.env["HTTP_REFERER"] != request.env["REQUEST_URI"]
+      redirect_to :back
+    else
+      redirect_to default
+    end
   end
 
 end

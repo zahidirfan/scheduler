@@ -80,18 +80,19 @@
     }
   });
   }
-<%if params[:action]=="edit"%>
+<% if params[:action] == "edit" %>
 $('.datetime_picker_edit').removeClass('hasDatepicker').datetimepicker({
       dateFormat : 'dd-mm-yy',
-      ampm: true
+      ampm: true,
+      minDate: 0
     });
-<%else%>
-
+<% else %>
     $('.datetime_picker').datetimepicker({
       dateFormat : 'dd-mm-yy',
-      ampm: true
+      ampm: true,
+      minDate: 0
     });
-<%end%>
+<% end %>
 /*    $("#interview_scheduled_at").datepicker({
       dateFormat : 'dd-mm-yy',
       minDate : 0
