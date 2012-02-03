@@ -15,7 +15,7 @@ module CalendarInvite
     event.custom_property("DTSTART;TZID=GMT+5.30", event.start)
     event.custom_property("DTEND;TZID=GMT+5.30", event.end)
     event.custom_property("ORGANIZER;CN=#{current_user.name}:mailto", current_user.email)
-    event.attendees = ["mailto:#{interview.user.email}"]
+    event.attendees = ["mailto:#{interview.user.email}, #{interview.print_interviewer_emailids}"]
     event.location = interview.interview_type
     calendar.add event
     calendar.publish

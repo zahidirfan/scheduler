@@ -94,4 +94,17 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def fetch_users
+    if params[:q]
+    like_name = "%".concat(params[:q].concat("%"))
+    users = User.where("id != ? and name like ?", params[:assgined_id].to_i, like_name).order("name")
+    else
+    users = User.all.order("name")
+    users.delete_if {|x| x.id == params[:assigned_id]}
+    end
+    list = users.map {|u| Hash[ id: u.id, name: u.name, subject: (u.type ? u.type : "")]}
+    render json: list
+  end
+
 end

@@ -4,6 +4,7 @@ class Interview < ActiveRecord::Base
   belongs_to :user
   belongs_to :scheduler, :class_name => "User"
   has_many :comments, :dependent => :destroy
+  has_many :interviewers, :dependent => :destroy
 
   before_save :update_schedule
   after_save :update_candidate_status
@@ -38,18 +39,20 @@ class Interview < ActiveRecord::Base
     end
   end
 
-  after_update do |interview|
+  before_update do |interview|
     make_ical(interview)
-    changes = {:int_type_was => interview.interview_type_was, :int_schedule_was => interview.formated_scheduled_at(scheduled_at_was)}
+    old_changes = {:int_type => interview.interview_type_was, :int_schedule => interview.formated_scheduled_at(scheduled_at_was)}
+    new_changes = {:int_type => interview.interview_type, :int_schedule => interview.formated_scheduled_at(scheduled_at)}
     if interview.user_id != interview.user_id_was
-    Notifier.delay.interview_cancel_mail(interview.user_id_was,interview.candidate.name,interview.formated_scheduled_at(scheduled_at_was))
-    Notifier.delay.interview_schedule_mail(interview)
+    old_interviewers = Interview.find(interview.id).interviewers
+    Notifier.interview_cancel_mail(interview.user_id_was, interview.candidate.name, old_changes, old_interviewers).deliver
+    Notifier.interview_schedule_mail(interview).deliver
     else
-    Notifier.delay.interview_reschedule_mail(interview, changes)
+    Notifier.interview_reschedule_mail(interview, new_changes, interview.interviewers).deliver
     end
     followers = interview.candidate.user_followers
     followers.each do |user|
-      Notifier.delay.interview_reschedule_mail(interview, changes, user, false)
+      Notifier.delay.interview_reschedule_mail(interview, new_changes, interview.interviewers, user, false)
     end
   end
 
@@ -84,4 +87,13 @@ class Interview < ActiveRecord::Base
     date_time ||= self.endtime
     date_time.strftime("%a, %b %d, %Y %I:%M %P") unless date_time.nil?
   end
+
+  def print_interviewer_names
+    self.interviewers.joins(:user).select("users.name").collect(&:name).join(', ')
+  end
+
+  def print_interviewer_emailids()
+    self.interviewers.joins(:user).select("users.email").collect(&:email).join(', ')
+  end
+
 end

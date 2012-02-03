@@ -97,7 +97,7 @@ $('#token-input-tag_autocomplete').focus(function() {
    }
  });
 
-$('.feedback').truncate({max_length: 25});
+$('.feedback').truncate({max_length: 100});
 
 });
 

@@ -48,10 +48,11 @@ class Notifier < ActionMailer::Base
       attachments[@candidate.resume_file_name] = open(@candidate.resume.url) { |f| f.read }
       attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => open("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics") { |f| f.read } }
     end
-    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Interview Scheduled for #{@candidate.name}"
+    mail :to => @user.email, :cc => interview.print_interviewer_emailids, :from => NO_REPLY_EMAIL, :subject => "Interview Scheduled for #{@candidate.name}"
   end
 
-  def interview_reschedule_mail(interview, changes, user=nil, attachment=true)
+  def interview_reschedule_mail(interview, changes, other_interviewers, user=nil, attachment=true)
+    @other_interviewers = other_interviewers
     @user, @follower = user.nil? ? [interview.user, false] : [user, true]
     @candidate = interview.candidate
     @interview = interview
@@ -61,15 +62,16 @@ class Notifier < ActionMailer::Base
       attachments[@candidate.resume_file_name] = open(@candidate.resume.url) { |f| f.read }
       attachments["calendar_invite.ics"] = {:mime_type => 'text/calendar', :content => open("/tmp/invite_#{interview.candidate.name}_#{interview.user.name}_#{interview.updated_at.to_i}.ics") { |f| f.read } }
     end
-    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "#{interview.interview_type} Interview Rescheduled for #{@candidate.name}"
+    mail :to => @user.email, :cc => interview.print_interviewer_emailids, :from => NO_REPLY_EMAIL, :subject => "#{interview.interview_type} Interview Rescheduled for #{@candidate.name}"
   end
 
-   def interview_cancel_mail(user_id,candidate_name,scheduled_at, user=nil)
+   def interview_cancel_mail(user_id, candidate_name, old_changes, old_interviewers, user=nil)
     @interviewer = User.find(user_id)
     @user, @follower = user.nil? ? [@interviewer, false] : [user, true]
     @candidate_name = candidate_name
-    @scheduled_at = scheduled_at
-    mail :to => @user.email, :from => NO_REPLY_EMAIL, :subject => "Interview Cancelled for #{@candidate_name} scheduled on #{scheduled_at}"
+    @changes = old_changes
+    @old_interviewers = old_interviewers
+    mail :to => @user.email, :cc => old_interviewers.joins(:user).select("users.email").collect(&:email).join(', '), :from => NO_REPLY_EMAIL, :subject => "Interview Cancelled for #{@candidate_name} scheduled on #{@changes[:int_schedule]}"
   end
 
 
@@ -82,7 +84,7 @@ class Notifier < ActionMailer::Base
     @interviewer = comment.interview.user
     @scheduled_at = comment.interview.formated_scheduled_at
     subject = comment.status == 'Cancelled' ? "Interview Cancelled for #{@candidate_name} scheduled on #{@scheduled_at}" : "Interview Feedback for #{@candidate_name}"
-    mail :to => @user.email, :from => @comment.user.email, :subject => subject
+    mail :to => @user.email, :cc => @interview.print_interviewer_emailids, :from => @comment.user.email, :subject => subject
   end
 
   def new_message(message)

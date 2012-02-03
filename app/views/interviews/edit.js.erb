@@ -1,1 +1,4 @@
+$('#edit_action').val('true');
+$('#new_interview_dialog').find('#other_interviewers').removeClass("token_input");
+$('#new_interview_dialog').find('#autocomplete').removeClass("token_input");
 $('#event_desc').html("<%= escape_javascript render(:partial => 'form') %>");

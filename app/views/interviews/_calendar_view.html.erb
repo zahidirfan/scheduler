@@ -36,7 +36,11 @@
             close: function(event, ui){
                 $('#interview_form')[0].reset();
                 $('.token-input-dropdown-facebook').hide();
-                $('#new_interview_dialog').dialog('destroy')
+                $('#edit-action').val('false');
+                $('#new_interview_dialog').find('#other_interviewers').addClass("token_input");
+                $('#new_interview_dialog').find('#autocomplete').addClass("token_input");
+                $('#new_interview_dialog').find('#other_interviewers').tokenInput("clear");
+                $('#new_interview_dialog').dialog('destroy');
               }
             });
           },

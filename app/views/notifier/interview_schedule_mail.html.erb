@@ -9,7 +9,7 @@
     </p>
     <p>
     <%= @follower ? ("#{@interview.interview_type} Interview is scheduled to <strong>#{@interviewer.name}</strong> ".html_safe) : "You are scheduled for an #{@interview.interview_type} interview "  %>
-    with the candidate <b><%= @candidate.name%></b> on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b>
+    with the candidate <b><%= @candidate.name%></b> on <b><%= @interview.formated_scheduled_at(@interview.scheduled_at) %></b> <%= unless (names = @interview.print_interviewer_names).blank?; " along with <strong>#{names}</strong>".html_safe end %>.
     </p>
     <p>
     <%= "#{@candidate.name}'s resume : #{download_resume(@candidate, true)}".html_safe %>

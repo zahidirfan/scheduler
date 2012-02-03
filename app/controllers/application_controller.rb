@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def convert_string_to_hash(str, key)
+    str.split(',').uniq.collect { |k| {key => k.to_i} }
+  end
+
   def check_admin_or_hr(t)
     return ["Administrator", "Hr"].include?(t) ? true : false
   end

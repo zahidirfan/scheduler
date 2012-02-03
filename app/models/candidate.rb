@@ -25,17 +25,8 @@ class Candidate < ActiveRecord::Base
   acts_as_taggable_on :tags
   acts_as_followable
 
-  def self.s3_config
-    @@s3_config ||= YAML.load(ERB.new(File.read("#{Rails.root}/config/s3.yml")).result)[Rails.env]
-  end
-
   has_attached_file :resume, :content_type => 'image/jpeg', :storage => :s3,
-     :s3_credentials => {
-                      :access_key_id => self.s3_config['access_key_id'],
-                      :secret_access_key => self.s3_config['secret_access_key'],
-                      :endpoint => self.s3_config['endpoint']
-                      },
-                    :bucket => self.s3_config['bucket'],
+     :s3_credentials => "#{Rails.root}/config/s3.yml",
      :path => "/:style/:id/:filename"
   validates_attachment_presence :resume
   validates_attachment_content_type :resume, :content_type => [ 'application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', "application/rtf"], :message => 'invalid file format'

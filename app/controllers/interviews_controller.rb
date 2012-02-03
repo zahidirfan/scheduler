@@ -62,6 +62,7 @@ class InterviewsController < ApplicationController
   def edit
     @interview = @candidate.interviews.find(params[:id])
     params[:interviewer_filter] ||= @interview.user_id
+    @other_interviewers = @interview.interviewers
   end
 
   # POST /interviews
@@ -69,6 +70,9 @@ class InterviewsController < ApplicationController
   def create
     params[:interview][:scheduler_id] = current_user.id
     @interview = @candidate.interviews.new(params[:interview])
+    params[:other_interviewers].split(",").each do |interviewer|
+      @interview.interviewers.new({:user_id => interviewer})
+    end
     respond_to do |format|
       if @interview.save
         format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully created.' }
@@ -88,11 +92,14 @@ class InterviewsController < ApplicationController
     params[:interview][:scheduler_id] = current_user.id
     @interview = @candidate.interviews.find(params[:id])
     params[:interview][:scheduled_at] = params[:edit][:date_scheduled_at]
-    respond_to do |format|
+    @interview.interviewers.create!(convert_string_to_hash(params[:interviewer_id], :user_id)) unless params[:interviewer_id].blank?
+    @interview.interviewers.destroy(*params[:mark_to_delete].split(',').uniq) unless params[:mark_to_delete].blank?
+
+      respond_to do |format|
       if @interview.update_attributes(params[:interview])
-       format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully updated.' }
-       format.js { render :index }
-       format.json { render json: @interview, status: :updated }
+        format.html { redirect_to candidate_path(@candidate), notice: 'Interview was successfully updated.' }
+        format.js { render :index }
+        format.json { render json: @interview, status: :updated }
       else
         format.html { render action: "edit" }
         format.js { render :index }
@@ -122,7 +129,7 @@ class InterviewsController < ApplicationController
       @interview.scheduled_at = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.scheduled_at))
       @interview.endtime = (params[:minute_delta].to_i).minutes.from_now((params[:day_delta].to_i).days.from_now(@interview.endtime))
       @interview.scheduler_id = current_user.id
-#      @interview.all_day = params[:all_day]
+      #      @interview.all_day = params[:all_day]
       @interview.save
     end
     respond_to do |format|

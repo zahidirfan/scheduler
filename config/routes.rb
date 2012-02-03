@@ -44,6 +44,7 @@ Resume::Application.routes.draw do
   match 'create_custom_tags' => 'candidates#create_custom_tags'
   match 'pull_tags' => 'candidates#pull_tags'
   match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'
+  match 'fetch_users/:assgined_id' => 'users#fetch_users', :as => 'fetch_users'
   match 'mark_archive_for_selected_candidates' => 'candidates#mark_archive_for_selected_candidates', :as => 'mark_archive_for_selected_candidates'
   match "my_trackings" => "candidates#my_trackings", :as => 'my_trackings'
   match "candidates/tag/:name" => "candidates#tag", :as => :tag_candidates, :constraints => { :name => /.+(?=\.(html|xml|js))|.+/ }

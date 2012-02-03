@@ -45,6 +45,6 @@ gem 'capistrano', '2.9.0'
 gem 'capistrano-ext', '1.2.1'
 
 # To use debugger
-#gem 'ruby-debug19', '0.11.6', :require => 'ruby-debug', :groups => [:development, :test]
+gem 'ruby-debug19', '0.11.6', :require => 'ruby-debug', :groups => [:development, :test]
 
 

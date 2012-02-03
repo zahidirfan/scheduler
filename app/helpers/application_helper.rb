@@ -13,12 +13,16 @@ module ApplicationHelper
     c.status.nil? ? "Not Scheduled" : c.status
   end
 
+  def show_candidate_feedback_status(i)
+    i.comments.exists? ? "#{i.comments.first.status} by #{clickable_user(i.comments.first.user)}" : "Scheduled to #{clickable_user(i.user)}"
+  end
+
   def show_candidate_interview_details(c)
     if i = c.interviews.upcoming.try(:first)
       "Scheduled for #{clickable_user(i.user)} on #{i.formated_scheduled_at}"
     elsif i = c.interviews.last
       ret_str = "Interviewed on #{i.formated_scheduled_at}"
-      ret_str << " | #{show_candidate_status(c)} by #{clickable_user(i.user)}" unless c.status.nil?
+      ret_str << " | #{show_candidate_feedback_status(i)}"
       p ret_str
     else
       "Posted on #{c.created_at.strftime("%b %d, %Y")} | #{show_candidate_status(c)}"

@@ -8,8 +8,8 @@
       Dear <%= @user.name %>,
     </p>
     <p>
-    <%= @follower ? ("The #{@interview.interview_type} interview scheduled to <strong>#{@interviewer.name}</strong>".html_safe) : "Your scheduled #{@interview.interview_type} interview"  %>
-      with the candidate <b><%= @candidate_name %></b> on <b><%= @scheduled_at %></b> has been cancelled due to some reason.
+    <%= @follower ? ("The #{@changes[:int_type]} interview scheduled to <strong>#{@interviewer.name}</strong>".html_safe) : "Your scheduled #{@changes[:int_type]} interview "  %>
+      with the candidate <b><%= @candidate_name %></b> on <b><%= @changes[:int_schedule] %></b> <%= " along with #{@old_interviewers.joins(:user).select("users.name").collect(&:name).join(', ')}" unless @old_interviewers.blank? %> has been cancelled due to some reason.
     </p>
     <p>
       Thank you for your co-operation.
