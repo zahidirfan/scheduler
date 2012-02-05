@@ -45,10 +45,10 @@ class Interview < ActiveRecord::Base
     new_changes = {:int_type => interview.interview_type, :int_schedule => interview.formated_scheduled_at(scheduled_at)}
     if interview.user_id != interview.user_id_was
     old_interviewers = Interview.find(interview.id).interviewers
-    Notifier.interview_cancel_mail(interview.user_id_was, interview.candidate.name, old_changes, old_interviewers).deliver
-    Notifier.interview_schedule_mail(interview).deliver
+    Notifier.delay.interview_cancel_mail(interview.user_id_was, interview.candidate.name, old_changes, old_interviewers)
+    Notifier.delay.interview_schedule_mail(interview)
     else
-    Notifier.interview_reschedule_mail(interview, new_changes, interview.interviewers).deliver
+    Notifier.delay.interview_reschedule_mail(interview, new_changes, interview.interviewers)
     end
     followers = interview.candidate.user_followers
     followers.each do |user|
