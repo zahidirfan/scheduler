@@ -105,7 +105,7 @@ TINY.editor=function(){
 		var m='<html><head>', bodyid=obj.bodyid?" id=\""+obj.bodyid+"\"":"";
 		if(obj.cssfile){m+='<link rel="stylesheet" href="'+obj.cssfile+'" />'}
 		if(obj.css){m+='<style type="text/css">'+obj.css+'</style>'}
-		m+='</head><body'+bodyid+'>'+(obj.content||this.t.value);
+		m+='</head><body'+bodyid+' style="font: 14px Verdana">'+(obj.content||this.t.value);
 		m+='</body></html>';
 		this.e.write(m);
 		this.e.close(); this.e.designMode='on'; this.d=1;
