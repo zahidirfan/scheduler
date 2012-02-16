@@ -59,4 +59,3 @@ Resume::Application.configure do
   config.active_support.deprecation = :notify
 
 end
-APP_HOST_URL = 'scheduler.pramati.com'

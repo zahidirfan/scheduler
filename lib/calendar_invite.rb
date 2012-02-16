@@ -5,10 +5,10 @@ module CalendarInvite
   def make_ical(interview)
     calendar = Icalendar::Calendar.new
     event = Icalendar::Event.new
-    event.start = interview.scheduled_at.strftime("%Y%m%dT%H%M%S")
-    event.end = interview.endtime.strftime("%Y%m%dT%H%M%S")
+    event.start = interview.formated_scheduled_at
+    event.end = interview.formated_scheduled_at(endtime)
     event.summary = "Interview Scheduled for : #{interview.candidate.name}"
-    event.description = "#{event.summary} \r\n Candidate Subject: #{interview.candidate.subject} \r\n Interview Scheduled at:#{interview.formated_scheduled_at} - #{interview.formated_schedule_endtime} \r\n "
+    event.description = "#{event.summary} \r\n Candidate Subject: #{interview.candidate.subject} \r\n Interview Scheduled at:#{event.start} - #{event.end} \r\n "
     event.description << "Candidate Email: #{interview.candidate.email} \r\n" if interview.candidate.email
     event.description << "Candidate Phone: #{interview.candidate.phone} \r\n" if interview.candidate.phone
     event.description << "Candidate Mobile: #{interview.candidate.mobile} \r\n" if interview.candidate.mobile

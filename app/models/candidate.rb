@@ -1,6 +1,7 @@
 class Candidate < ActiveRecord::Base
   include UserInfo
 
+  # before_destroy should be on top of associations, to get the assoicated objects of it, since we mentioned dependent as destroy.
   before_destroy do |candidate|
     candidate.interviews.upcoming.each do |interview|
       Notifier.delay.candidate_profile_delete_mail(candidate.name, interview.user, current_user, interview.formated_scheduled_at)
@@ -35,7 +36,6 @@ class Candidate < ActiveRecord::Base
 
   has_many :interviews, :dependent => :destroy
   has_many :users, :through => :interviews
-  #belongs_to :status
 
   scope :active, where("status !=  'Archive' or status is null")
 

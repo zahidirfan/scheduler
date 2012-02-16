@@ -1,6 +1,4 @@
 <h2>Today</h2>
-  <div id="rows">
-
 <% unless today_interview_schedule.blank?%>
 <%= render :partial => "show_interview_schedules", :locals => { :interview_schedules => today_interview_schedule } %>
 <%else%>

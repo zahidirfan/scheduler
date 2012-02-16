@@ -1,7 +1,4 @@
-class Interviewer < ActiveRecord::Base
-  belongs_to :interview
-  belongs_to :user
-  has_many :comments, :foreign_key => 'user_id'
-
+# STI Class for Interviewer user from User class
+class Interviewer < User
 
 end

@@ -102,7 +102,7 @@ module ApplicationHelper
   end
 
   def get_hostname
-    "http://#{request.nil? ? APP_HOST_URL : request.env['HTTP_HOST']}"
+    "http://#{request.nil? ? DEFAULT_HOST[Rails.env] : request.env['HTTP_HOST']}"
   end
 
 end

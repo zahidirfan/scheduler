@@ -33,12 +33,8 @@
     </p>
     <table class="mail_block" border="1">
       <tr>
-        <td class="label"> Interview Date </td>
-        <td class="value"> <%= @interview.scheduled_at.strftime("%d %b %Y")%> </td>
-      </tr>
-      <tr>
-        <td class="label"> Interview Time </td>
-        <td class="value"> <%= @interview.schedule_time %> </td>
+        <td class="label"> Interview Date & Time </td>
+        <td class="value"> <%= @interview.formatted_scheduled_at %> </td>
       </tr>
       <tr>
         <td class="label"> Status </td>

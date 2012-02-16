@@ -4,7 +4,7 @@ class Interview < ActiveRecord::Base
   belongs_to :user
   belongs_to :scheduler, :class_name => "User"
   has_many :comments, :dependent => :destroy
-  has_many :interviewers, :dependent => :destroy
+  has_many :interviewers, :class_name => "OtherInterviewer", :dependent => :destroy
 
   before_save :update_schedule
   after_save :update_candidate_status
@@ -12,33 +12,23 @@ class Interview < ActiveRecord::Base
   validates :scheduled_at, :presence => true
 
   def update_schedule
-    self.schedule_time = self.scheduled_at.strftime("%I:%M %p")
     self.endtime = self.scheduled_at.advance(:minutes => 30)
-#    self.endtime = default_endtime if self.endtime.nil? || ((self.endtime - default_endtime > 5400) && (default_endtime - self.endtime < 5400))
   end
 
   def update_candidate_status
     self.candidate.update_attribute("status", "Scheduled")
   end
 
-  def send_notification_to_followers(mail)
-    followers = self.candidate.user_followers
-    followers.each do |user|
-      Notifier.delay.mail(self)
-    end
-  end
-
   after_create do |interview|
-#    interview.send_notification_to_followers(interview_schedule_mail)
     make_ical(interview)
     Notifier.delay.interview_schedule_mail(interview)
-#    Notifier.interview_schedule_mail(interview).deliver
     followers = interview.candidate.user_followers
     followers.each do |user|
       Notifier.delay.interview_schedule_mail(interview, user, false)
     end
   end
 
+  # intentionally triggering to deliver mails before updating the invoking interview object, since to get the previously associated interviewers.
   before_update do |interview|
     make_ical(interview)
     old_changes = {:int_type => interview.interview_type_was, :int_schedule => interview.formated_scheduled_at(scheduled_at_was)}
@@ -56,24 +46,17 @@ class Interview < ActiveRecord::Base
     end
   end
 
-#  after_destroy do |interview|
-#    Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate.name,interview.formated_scheduled_at)
-#    followers = interview.candidate.user_followers
-#    followers.each do |user|
-#      Notifier.delay.interview_cancel_mail(interview.user_id,interview.candidate.name,interview.formated_scheduled_at, user)
-#    end
-#  end
-
-  scope :dummy, where("1 = 1")
   scope :uncancelled, joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("status is null or status != 'Cancelled'")
   scope :by_date, lambda { |date| where("scheduled_at like '#{date}%'").uncancelled.order("scheduled_at") }
-  scope :later, where("scheduled_at >= ? and scheduled_at < ?", Date.today.next_week, Date.today.end_of_month+1).uncancelled.order("scheduled_at,schedule_time")
+  scope :later, where("scheduled_at >= ? and scheduled_at < ?", Date.today.next_week, Date.today.end_of_month+1).uncancelled.order("scheduled_at")
   scope :upcoming, where("scheduled_at  >= ? ", DateTime.current).uncancelled.order("scheduled_at")
   scope :this_week, where("scheduled_at > ? and scheduled_at < ?", Date.tomorrow+1, Date.today.end_of_week+1).uncancelled.order("scheduled_at")
   scope :fetch_interviews, lambda { |start, endtime| where("scheduled_at between ? and ? ", Time.at(start.to_i).to_formatted_s(:db), Time.zone.at(endtime.to_i).to_formatted_s(:db)).uncancelled
  }
+  scope :dummy, where("1 = 1")
   scope :by_user_id, lambda { |user_id| where("interviews.user_id = ?", user_id).uncancelled }
 
+  # this will return the previous record of invoking interview object.
   def previous(offset = 0)
     self.class.joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("(status is null or status != 'Cancelled') && interviews.id < ? && interviews.candidate_id = ? && scheduled_at < ?", self.id, self.candidate_id, self.scheduled_at).limit(1).offset(offset).order("scheduled_at DESC")
   end
@@ -83,16 +66,11 @@ class Interview < ActiveRecord::Base
     date_time.strftime("%a, %b %d, %Y %I:%M %P") unless date_time.nil?
   end
 
-  def formated_schedule_endtime(date_time=nil)
-    date_time ||= self.endtime
-    date_time.strftime("%a, %b %d, %Y %I:%M %P") unless date_time.nil?
-  end
-
   def print_interviewer_names
     self.interviewers.joins(:user).select("users.name").collect(&:name).join(', ')
   end
 
-  def print_interviewer_emailids()
+  def print_interviewer_emailids
     self.interviewers.joins(:user).select("users.email").collect(&:email).join(', ')
   end
 
