@@ -1,9 +1,9 @@
 USER_ROLES = {
-  "Business Manager" => "Bm",
-  "Human Resource" => "Hr",
-  "Interviewer" => "Interviewer",
-  "Project Lead" => "Pl",
-  "Administrator" => "Administrator"
+      "Interviewer" => "Interviewer",
+      "Human Resource" => "Hr",
+      "Business Manager" => "Bm",
+      "Technical Manager" => "Pl",  
+      "Administrator" => "Administrator"
 }
 
 FEEDBACK_STATUS = {

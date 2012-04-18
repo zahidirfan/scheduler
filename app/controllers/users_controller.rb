@@ -103,7 +103,7 @@ class UsersController < ApplicationController
     users = User.all.order("name")
     users.delete_if {|x| x.id == params[:assigned_id]}
     end
-    list = users.map {|u| Hash[ id: u.id, name: u.name, subject: (u.type ? u.type : "")]}
+    list = users.map {|u| Hash[ id: u.id, name: u.name, subject: u.role]}
     render json: list
   end
 

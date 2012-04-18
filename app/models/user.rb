@@ -26,6 +26,10 @@ class User < ActiveRecord::Base
   def admin?
     false
   end
+  
+  def role
+    USER_ROLES.index(self.type)
+  end
 
   def self.inherited(child)
     child.instance_eval do
