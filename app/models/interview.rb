@@ -60,6 +60,10 @@ class Interview < ActiveRecord::Base
   def previous(offset = 0)
     self.class.joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("(status is null or status != 'Cancelled') && interviews.id < ? && interviews.candidate_id = ? && scheduled_at < ?", self.id, self.candidate_id, self.scheduled_at).limit(1).offset(offset).order("scheduled_at DESC")
   end
+  
+  def other_interviewers
+    User.joins(:interviewers).where("interview_id = ?", self.id).collect{ |u| {:o_name => u.name, :o_role => u.role}}
+  end
 
   def formated_scheduled_at(date_time=nil)
     date_time ||= self.scheduled_at

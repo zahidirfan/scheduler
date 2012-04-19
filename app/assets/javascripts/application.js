@@ -138,6 +138,13 @@ function cancelEvent(interview_id, candidate_id){
 function showEventDetails(event){
     $('#event_desc').html(event.description);
     title = event.title;
+	other_interviewers = $.parseJSON(event.other_int);
+	if(other_interviewers.length > 0) {
+		$('#event_desc').append("<br /><strong>Other Interviewers:</strong><br />");		
+		$.each(other_interviewers,function(i,key){
+			$('#event_desc').append("<ul style='margin:0px'><li> "+key.o_name+" - "+ key.o_role +"</li></ul>");			
+		});
+	}
     var allowable_types = [ "Administrator", "Hr" ];
     if($.inArray(event.user_type, allowable_types) > -1) {
     $('#edit_event').html("<a href = 'javascript:void(0);' onclick ='editEvent(" + event.id + ", " + event.candidate_id+", " + event.interviewer_id +")'>Edit</a>&nbsp;|");

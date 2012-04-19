@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   end
   
   def role
-    USER_ROLES.index(self.type)
+    USER_ROLES.key(self.type)
   end
 
   def self.inherited(child)

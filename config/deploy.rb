@@ -16,27 +16,21 @@ set :stages, %w(production staging)
 #	Settings
 #############################################################
 
-ssh_options[:keys] = %w(/Users/gokulamurthy/.ssh/id_rsa)
-set :ssh_options, { :forward_agent => true }
-set :rails_env, "production"
 set :keep_releases, 2
-set :branch, "master"
 set :user, "root"
 set :use_sudo, false
 default_run_options[:pty] = true
-set :rake, "rake"
 set :compile_assets, (ENV['COMPILE_ASSETS'] == 'true')
 
 #############################################################
 #	Git
 #############################################################
 
-set :repository,  "ssh://rapbhan@gitent-scm.com/git/imaginea/#{application}"
+set :repository,  "git@github.com:Imaginea/scheduler.git"
 set :repository_cache, "git_cache"
+set :branch, "master"
 set :deploy_via, :checkout
-set :git_shallow_clone, 1
 set :scm, :git
-set :scm_password, "p@ddy123"
 
 #############################################################
 #	Passenger
