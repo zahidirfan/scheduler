@@ -81,6 +81,7 @@ class Notifier < ActionMailer::Base
     @candidate_name = comment.candidate.name
     @interview = comment.interview
     @comment = comment
+    @changes = {:int_type => @interview.interview_type, :int_schedule => @interview.formated_scheduled_at}    
     @interviewer = comment.interview.user
     @scheduled_at = comment.interview.formated_scheduled_at
     subject = comment.status == 'Cancelled' ? "Interview Cancelled for #{@candidate_name} scheduled on #{@scheduled_at}" : "Interview Feedback for #{@candidate_name}"

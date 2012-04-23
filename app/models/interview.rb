@@ -1,32 +1,5 @@
 class Interview < ActiveRecord::Base
   include CalendarInvite
-  belongs_to :candidate
-  belongs_to :user
-  belongs_to :scheduler, :class_name => "User"
-  has_many :comments, :dependent => :destroy
-  has_many :interviewers, :class_name => "OtherInterviewer", :dependent => :destroy
-
-  before_save :update_schedule
-  after_save :update_candidate_status
-
-  validates :scheduled_at, :presence => true
-
-  def update_schedule
-    self.endtime = self.scheduled_at.advance(:minutes => 30)
-  end
-
-  def update_candidate_status
-    self.candidate.update_attribute("status", "Scheduled")
-  end
-
-  after_create do |interview|
-    make_ical(interview)
-    Notifier.delay.interview_schedule_mail(interview)
-    followers = interview.candidate.user_followers
-    followers.each do |user|
-      Notifier.delay.interview_schedule_mail(interview, user, false)
-    end
-  end
 
   # intentionally triggering to deliver mails before updating the invoking interview object, since to get the previously associated interviewers.
   before_update do |interview|
@@ -44,6 +17,34 @@ class Interview < ActiveRecord::Base
     followers.each do |user|
       Notifier.delay.interview_reschedule_mail(interview, new_changes, interview.interviewers, user, false)
     end
+  end
+    
+  belongs_to :candidate
+  belongs_to :user
+  belongs_to :scheduler, :class_name => "User"
+  has_many :comments, :dependent => :destroy
+  has_many :interviewers, :class_name => "OtherInterviewer", :dependent => :destroy
+
+  before_save :update_schedule
+  after_save :update_candidate_status
+
+  validates :scheduled_at, :presence => true
+  
+  after_create do |interview|
+    make_ical(interview)
+    Notifier.delay.interview_schedule_mail(interview)
+    followers = interview.candidate.user_followers
+    followers.each do |user|
+      Notifier.delay.interview_schedule_mail(interview, user, false)
+    end
+  end
+  
+  def update_schedule
+    self.endtime = self.scheduled_at.advance(:minutes => 30)
+  end
+
+  def update_candidate_status
+    self.candidate.update_attribute("status", "Scheduled")
   end
 
   scope :uncancelled, joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("status is null or status != 'Cancelled'")
