@@ -13,7 +13,10 @@
             </span>
       <span class="tags"></span>
       <div class="options">
-        <%=link_to 'Edit', edit_candidate_interview_comment_path(comment.candidate, comment.interview,comment)%>
+        <%if comment.user == current_user%>
+        <%=link_to 'Edit', edit_candidate_interview_comment_path(comment.candidate, comment.interview,comment)%> | 
+        <%= link_to 'Destroy', candidate_interview_comment_path(comment.candidate, comment.interview,comment), confirm: 'Are you sure?', method: :delete %>
+        <%end%>
       </div>
 					</li>
 				</ul>
