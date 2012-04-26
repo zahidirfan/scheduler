@@ -3,7 +3,8 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    @interview = Interview.find(params[:interview_id])
+    @comments = @interview.comments
 
     respond_to do |format|
       format.html # index.html.erb

@@ -5,7 +5,7 @@ module ApplicationHelper
     unless interview.comments.exists?
       link_to image_tag("feedback.jpg", :title => "Feedback", :alt => "Feedback"), new_candidate_interview_comment_path(interview.candidate, interview)
     else
-      link_to image_tag("feedback.jpg", :title => "Edit Feedback", :alt => "Edit Feedback"), edit_candidate_interview_comment_path(interview.candidate, interview, interview.comments.first)
+      link_to image_tag("feedback.jpg", :title => "Edit Feedback", :alt => "Edit Feedback"), candidate_interview_comments_path(interview.candidate, interview)
     end
   end
 

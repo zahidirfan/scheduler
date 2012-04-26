@@ -1,31 +1,24 @@
 <h1>Listing comments</h1>
 
-<table>
-  <tr>
-    <th>Description</th>
-    <th>User</th>
-    <th>Interview</th>
-    <th>Status</th>
-    <th>Candidate</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @comments.each do |comment| %>
-  <tr>
-    <td><%= comment.description %></td>
-    <td><%= comment.user_id %></td>
-    <td><%= comment.interview_id %></td>
-    <td><%= comment.status %></td>
-    <td><%= comment.candidate_id %></td>
-    <td><%= link_to 'Show', comment %></td>
-    <td><%= link_to 'Edit', edit_comment_path(comment) %></td>
-    <td><%= link_to 'Destroy', comment, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Comment', new_comment_path %>
+<div>
+<div id="create_event_dialog">
+  <div id="create_event">
+  </div>
+</div>
+  <h2></h2>
+         <%@comments.each do |comment|%>
+          <ul>
+          <li><div><%=comment.description%></div>
+          <span>commented by  <%=link_to comment.user.name, comment.user%> on <%=comment.created_at%> 
+            </span>
+      <span class="tags"></span>
+      <div class="options">
+        <%=link_to 'Edit', edit_candidate_interview_comment_path(comment.candidate, comment.interview,comment)%>
+      </div>
+					</li>
+				</ul>
+  <%end%>
+       <div >
+        <%=link_to 'New Comment', new_candidate_interview_comment_path(Candidate.find(params[:candidate_id]), @interview)%>
+      </div>
+</div>
