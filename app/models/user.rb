@@ -6,6 +6,8 @@ class User < ActiveRecord::Base
   has_many :schedules, :foreign_key => "scheduler_id", :class_name => "Interview"
   has_many :interviewers, :class_name => "OtherInterviewer", :dependent => :destroy
 
+  has_many :requests
+
   attr_accessible :name, :username, :type, :email, :password, :password_confirmation
 
   validates :name, :email, :presence => true

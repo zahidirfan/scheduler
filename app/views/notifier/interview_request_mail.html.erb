@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <p>
+      Dear All,
+    </p>
+    <p>
+      Request For Scheduled interview. And It is <%= @request.status%>ed
+    </p>
+    <p><%= "#{@candidate.name}'s resume : #{download_resume(@candidate, true)}".html_safe %></p>
+
+     <p> Click the below link to know more information about this interview schedule:<br />
+      <%= link_to "#{get_hostname}#{candidate_path(@candidate)}", "#{get_hostname}#{candidate_path(@candidate)}" %>
+      </p>
+    <p>
+      Thank you for your co-operation.
+    </p>
+    <p>
+      Pramati Technologies Pvt Ltd.
+    </p>
+  </body>
+</html>
+

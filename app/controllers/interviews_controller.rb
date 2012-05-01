@@ -4,7 +4,7 @@ class InterviewsController < ApplicationController
   #before_filter :check_interview_schedule, :only => [:new]
   before_filter :authenticate
   load_and_authorize_resource
-  before_filter :load_candidate, :except => [:index, :get_interviews, :export_interview, :move, :resize]
+  before_filter :load_candidate, :except => [:index, :get_interviews, :export_interview, :move, :resize, :status_change_request]
 
   def index
     if (params[:view] != 'calendar')
@@ -169,6 +169,11 @@ class InterviewsController < ApplicationController
       format.js { render :index }
       format.json { head :ok }
     end
+  end
+
+  def status_change_request 
+    Request.create(:status => params[:status], :interview_id => params[:id], :user_id => current_user.id)
+    redirect_to interviews_path
   end
 
   protected

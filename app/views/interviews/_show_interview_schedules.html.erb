@@ -5,6 +5,17 @@
   	<ul>
           <li><%= link_to interview.candidate.name, candidate_path(interview.candidate), :class => "title" %>
           <span ><%= "Scheduled for " %> <%= link_to interview.user.name, user_path(interview.user) %> on <%= interview.formated_scheduled_at %> <%= " | #{interview.comments.first.status} by #{clickable_user(interview.comments.first.user)}".html_safe if interview.comments.exists? && interview.comments.first.status != "Scheduled"  %>
+<%unless (request = Request.find_by_user_id_and_interview_id(interview.user_id,interview.id))%>
+<%= " | #{link_to('Accept',interview_status_change_path(interview,'accept'))}  | #{link_to('Decline',interview_status_change_path(interview,'decline'))} | #{link_to('Reschedule',interview_status_change_path(interview,'reschedule'))}".html_safe if current_user.id == interview.user_id %>
+<%else%>
+  <%if request.status == 'accept'%>
+    | Accepted
+  <%elsif request.status == 'decline'%> 
+    | Declined
+  <%elsif request.status == 'reschedule'%>
+    | Rescheduled
+  <%end%>
+<%end%>
             <% unless prev_schedule.nil? %>
               <br /><%= ("Previously " + (link_to prev_schedule.user.name, user_path(prev_schedule.user)) + " on #{prev_schedule.formated_scheduled_at}").html_safe  %>
               <%= " | #{prev_schedule.comments.first.status} by #{clickable_user(prev_schedule.comments.first.user)}".html_safe if prev_schedule.comments.exists? %>

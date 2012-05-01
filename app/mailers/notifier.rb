@@ -93,4 +93,14 @@ class Notifier < ActionMailer::Base
     attachments[message.resume.original_filename] = message.resume.read
     mail(:to => CAREER_FORM_EMAIL, :from => message.email, :subject => "[New Candidate] #{message.subject}")
   end
+
+  def interview_request_mail(request, user=nil)
+    interview = request.interview
+    @user, @follower = user.nil? ? [interview.user, false] : [user, true]
+    @candidate = interview.candidate
+    @interview = interview
+    @request = request
+    @interviewer = interview.user
+    mail :to => interview.print_interviewer_emailids, :from => NO_REPLY_EMAIL, :subject => "Request On Interview Scheduled for #{@candidate.name}"
+  end 
 end
