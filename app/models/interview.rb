@@ -47,7 +47,7 @@ class Interview < ActiveRecord::Base
     self.candidate.update_attribute("status", "Scheduled")
   end
 
-  scope :uncancelled, joins(:comments).where("status is null or status != 'Cancelled'").select('distinct interviews.id, interviews.*')
+  scope :uncancelled,where("status is null or status != 'Cancelled'")#.select('distinct interviews.id, interviews.*')
   scope :by_date, lambda { |date| where("scheduled_at like '#{date}%'").uncancelled.order("scheduled_at")}
   scope :later, where("scheduled_at >= ? and scheduled_at < ?", Date.today.next_week, Date.today.end_of_month+1).uncancelled.order("scheduled_at")
   scope :upcoming, where("scheduled_at  >= ? ", DateTime.current).uncancelled.order("scheduled_at")
@@ -58,7 +58,7 @@ class Interview < ActiveRecord::Base
 
   # this will return the previous record of invoking interview object.
   def previous(offset = 0)
-    self.class.joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("(status is null or status != 'Cancelled') && interviews.id < ? && interviews.candidate_id = ? && scheduled_at < ?", self.id, self.candidate_id, self.scheduled_at).limit(1).offset(offset).order("scheduled_at DESC")
+    self.class.joins("LEFT OUTER JOIN comments ON comments.interview_id = interviews.id").where("(interviews.status is null or interviews.status != 'Cancelled') && interviews.id < ? && interviews.candidate_id = ? && scheduled_at < ?", self.id, self.candidate_id, self.scheduled_at).limit(1).offset(offset).order("scheduled_at DESC")
   end
   
   def other_interviewers
