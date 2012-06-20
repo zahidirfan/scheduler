@@ -8,6 +8,7 @@ class InterviewsController < ApplicationController
 
   def index
     if (params[:view] != 'calendar')
+      params[:interviewer_filter] ||=0
       if(params[:interviewer_filter].to_i > 0)
         interviews = Interview.by_user_id(params[:interviewer_filter])
       elsif !params[:interviewer_filter].nil? && params[:interviewer_filter].to_i == 0

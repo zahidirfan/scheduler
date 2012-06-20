@@ -55,7 +55,7 @@ function Timepicker() {
 		showTimezone: false,
 		showTime: true,
 		stepHour: 0.05,
-		stepMinute: 0.05,
+		stepMinute: 15,
 		stepSecond: 0.05,
 		stepMillisec: 0.5,
 		hour: 0,
