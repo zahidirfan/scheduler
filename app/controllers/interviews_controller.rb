@@ -4,11 +4,11 @@ class InterviewsController < ApplicationController
   #before_filter :check_interview_schedule, :only => [:new]
   before_filter :authenticate
   load_and_authorize_resource
-  before_filter :load_candidate, :except => [:index, :get_interviews, :export_interview, :move, :resize, :status_change_request]
+  before_filter :load_candidate, :except => [:index, :get_interviews, :export_interview, :move, :resize, :status_change_request, :change_status_request]
 
   def index
     if (params[:view] != 'calendar')
-      params[:interviewer_filter] ||=0
+      params[:interviewer_filter] ||=0 if current_user.admin?
       if(params[:interviewer_filter].to_i > 0)
         interviews = Interview.by_user_id(params[:interviewer_filter])
       elsif !params[:interviewer_filter].nil? && params[:interviewer_filter].to_i == 0
@@ -173,7 +173,13 @@ class InterviewsController < ApplicationController
   end
 
   def status_change_request 
-    Request.create(:status => params[:status], :interview_id => params[:id], :user_id => current_user.id)
+     render :layout => false
+#    Request.create(:status => params[:status], :interview_id => params[:id], :user_id => current_user.id)
+#    redirect_to interviews_path
+  end
+
+  def change_status_request
+    Request.create(:status => params[:status], :interview_id => params[:id], :user_id => current_user.id, :comment => params[:request][:comment])
     redirect_to interviews_path
   end
 

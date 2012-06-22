@@ -20,11 +20,17 @@
 <br />
 <div class="field">
   <%= f.label :status %>:
+  <%if @interview.user == current_user%>
   <% if @comment.status == 'Cancelled' %>
     <%='Cancelled' %>
+  <%elsif @comment.status == 'Clear'%>
+    <%='Clear'%>
   <% else %>
     <%= f.select(:status, FEEDBACK_STATUS, :selected => @comment.status) %>
   <% end %>
+  <%else%>
+    <b><%= @comment.status ? @comment.status : "Inprocess"%></b>
+  <%end%>
 </div>
 <br />
 <div class="actions">

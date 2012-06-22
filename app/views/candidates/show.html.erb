@@ -1,4 +1,4 @@
-<h1>Candidate ~ <%= @candidate.name %></h1>
+<h1>Candidate <!--~ <%= @candidate.name %>--></h1>
 <%= render '/interviews/candidate_info' %>
 <%= render :partial => '/interviews/feed_back_info', :object => @candidate.interviews.uncancelled %>
 <%= render :partial => '/interviews/upcoming', :object => @candidate.interviews.upcoming %>

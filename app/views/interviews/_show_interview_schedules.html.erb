@@ -6,7 +6,7 @@
           <li><%= link_to interview.candidate.name, candidate_path(interview.candidate), :class => "title" %>
           <span ><%= "Scheduled for " %> <%= link_to interview.user.name, user_path(interview.user) %> on <%= interview.formated_scheduled_at %> <%= " | #{interview.comments.first.status} by #{clickable_user(interview.comments.first.user)}".html_safe if interview.comments.exists? && interview.comments.first.status != "Scheduled"  %>
 <%unless (request = Request.find_by_user_id_and_interview_id(interview.user_id,interview.id))%>
-<%= " | #{link_to('Accept',interview_status_change_path(interview,'accept'))}  | #{link_to('Decline',interview_status_change_path(interview,'decline'))} | #{link_to('Reschedule',interview_status_change_path(interview,'reschedule'))}".html_safe if current_user.id == interview.user_id %>
+<%= " | #{link_to('Accept',interview_status_change_path(interview,'accept'),:class=>'request_url')}  | #{link_to('Decline',interview_status_change_path(interview,'decline'), :class => 'request_url')} | #{link_to('Reschedule',interview_status_change_path(interview,'reschedule'), :class => 'request_url')}".html_safe if current_user.id == interview.user_id %>
 <%else%>
   <%if request.status == 'accept'%>
     | Accepted
@@ -28,3 +28,23 @@
 					</li>
 				</ul>
 <% end %>
+
+<script type="text/javascript">
+$('.request_url').live('click', function() {
+    var url = this.href;
+    var dialog = $("#dialog");
+    if ($("#dialog").length == 0) {
+        dialog = $('<div id="dialog" style="display:hidden;width:300px;height:400px"></div>').appendTo('body');
+    } 
+
+    // load remote content
+    dialog.load(
+            url,
+            {},
+            function(responseText, textStatus, XMLHttpRequest) {
+                dialog.dialog({width: 400, height: 400});
+            }
+        );
+    return false;
+});
+</script>

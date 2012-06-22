@@ -17,7 +17,7 @@ class Ability
         can :update, :user, [:password, :password_confirmation, :commit]
       elsif user_type == "Interviewer"
         can [:read, :create, :update], Comment, :user_id => user.id
-        can [:read, :get_interviews,:status_change_request], Interview
+        can [:read, :get_interviews,:status_change_request,:change_status_request], Interview
         can [:read], Candidate
         can :update, :user, [:password, :password_confirmation, :commit]
         cannot :assign_role, User

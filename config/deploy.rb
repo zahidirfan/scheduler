@@ -16,6 +16,8 @@ set :stages, %w(production staging)
 #	Settings
 #############################################################
 
+ssh_options[:keys] = %w(/home/manikandan/.ssh/id_rsa)
+ssh_options[:forward_agent] = true
 set :keep_releases, 2
 set :user, "root"
 set :use_sudo, false

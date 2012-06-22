@@ -1,0 +1,8 @@
+<h3> <%=params[:status].upcase%> the Request </h3>
+<%=form_tag "/interviews/#{params[:id]}/change_request" do |f|%>
+  <%=hidden_field_tag "status", params[:status]%>
+  <div>Give Your Comment</div>
+  <div><%=text_area :request, :comment ,:size=> "40x10"%></div>
+<div>  <%=submit_tag "submit"%></div>
+<%end%>
+

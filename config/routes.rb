@@ -45,6 +45,8 @@ Resume::Application.routes.draw do
   match "interviews/make_ical/:int_id" => "interviews#make_ical", :as => :make_ical
 
   match "interviews/:id/request/:status" => "interviews#status_change_request", :as => :interview_status_change
+  match "interviews/:id/change_request" => "interviews#change_status_request"
+
   match 'create_custom_tags' => 'candidates#create_custom_tags'
   match 'pull_tags' => 'candidates#pull_tags'
   match 'fetch_candidates' => 'candidates#fetch_candidates', :as => 'fetch_candidates'

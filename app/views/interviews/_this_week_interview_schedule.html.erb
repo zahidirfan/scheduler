@@ -1,6 +1,21 @@
 <h2>This week</h2>
 <% unless this_week_interview_schedule.blank?%>
-<%= render :partial => "show_interview_schedules", :locals => { :interview_schedules => this_week_interview_schedule } %>
+<%interview_schedules = this_week_interview_schedule[0..3]%>
+<%
+  interview_schedules.each do |interview|
+%>
+<ul style="width:300px;float:left;border:1px solid #fff !important;margin-left:5px;">
+          <li><%= link_to interview.candidate.name, candidate_path(interview.candidate), :class => "title" %>
+<span>          <%= "Scheduled for " %> <%= link_to interview.user.name, user_path(interview.user) %> <%#= interview.formated_scheduled_at %> <%#= " | #{interview.comments.first.status} by #{clickable_user(interview.comments.first.user)}".html_safe if interview.comments.exists? && interview.comments.first.status != "Scheduled"  %>
+</span>
+          </li>
+</ul>
+<% end %>
+<div style="clear:both"></div>
+
+<ul>
+<li> <%=link_to 'more > ', interviews_path(params.merge({:view => 'week'})) %></li></ul>
+<%#= render :partial => "show_interview_schedules", :locals => { :interview_schedules => this_week_interview_schedule } %>
 <%else%>
   <div id="rows">
     <ul>
