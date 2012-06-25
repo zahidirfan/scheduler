@@ -43,7 +43,13 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-      @current_user ||= User.find(session[:user_id]) if session[:user_id] && User.exists?(session[:user_id])
+      if session[:last_seen] and session[:last_seen]  < 15.minutes.ago
+        reset_session
+        #redirect_to root_url, :notice => "Your Session has been expired."
+      else
+        session[:last_seen] = Time.now
+        @current_user ||= User.find(session[:user_id]) if session[:user_id] && User.exists?(session[:user_id])
+      end
   end
 
   def load_candidate

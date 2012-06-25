@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
     user = User.authenticate(params[:email], params[:password])
     if user
       session[:user_id] = user.id
+      session[:last_seen] = Time.now
       redirect_to root_url, :notice => translate('quo_vadis.flash.sign_in.after')
     else
       flash.now.alert = translate('quo_vadis.flash.sign_in.failed')
